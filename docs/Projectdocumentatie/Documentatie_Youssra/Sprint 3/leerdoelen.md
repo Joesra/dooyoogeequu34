@@ -8,7 +8,9 @@ Learning Journey oppakken op 9 oktober
 
 # Software:
 Een interessante Python cursus volgen
+
 Mezelf "uitdagen" door complexere codes te schrijven
+
 Sprint poker met het groepje 
 
 Sprint poker uitvoeren op 9 oktober
