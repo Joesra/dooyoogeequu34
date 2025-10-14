@@ -39,3 +39,18 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+
+.stats {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: rgb(193, 191, 191); /* grijs omdat ik het niet kan zien op me monitor, wordt later veranderd naar wat meer wit */
+    padding: 20px;
+    flex: 1 1 200px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
