@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>{% block title %}De opdracht{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{url_for('static', filename='css/style.css')}}"
-    />
-  </head>
-
-  <body>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('main.index') }}">Home</a></li>
-        <li><a href="{{ url_for('events.index') }}">Events</a></li>
-      </ul>
-    </nav>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overheids Cloud Database</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">NL</div>
+        <ul>
+            <li>Dashboard</li>
+            <li>Data Beheren</li>
+            <li>Statistieken</li>
+            <li>Instellingen</li>
+        </ul>
+    </div>
     <div class="main">
-  </body>
+        <header>
+            <h1>Overheids Cloud Database</h1>
+            <button class="logout">Uitloggen</button>
+        </header>
+</div>
+</body>
 </html>
-
