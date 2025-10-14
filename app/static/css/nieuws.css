@@ -1,0 +1,80 @@
+css
+
+.nieuws-search {
+    display: block;margin: 0 auto;
+    padding-top: 2rem;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+.search-bar {
+  position: absolute;
+  top: 67%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.search-bar input {
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.nieuws-p {
+    padding-left: 4rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    size: 18.5px;
+}
+
+.artikel-container {
+    flex-direction: row;
+}
+
+.artikel {
+    border: 0.5px solid #333; 
+    border-radius: 8px;     /* Afgeronde hoeken (optioneel) */
+    width: 270px;
+    height: 160px;
+    border-radius: 22.85px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.artikel-beschrijving {
+    flex-direction: row;
+}
+
+.systeem {
+    border: none;
+    width: 70px;
+    height: 38.85px;
+    border-radius: 19px;
+    background-color: rgb(208, 208, 208);
+    justify-content: center;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.systeem-p {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 15px;
+    padding-top: 7.8px;
+}

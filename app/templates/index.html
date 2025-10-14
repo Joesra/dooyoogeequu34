@@ -1,9 +1,14 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block header %}
-<h1>{% block title %}De Opdracht{% endblock %}</h1>
-{% endblock %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 
-{% block content %}
-  <p>Creating Tomorrow</p>
-{% endblock %}
+<body>
+  <a href="{{ url_for('events.nieuws') }}">link naar nieuws pagina</a>
+</body>
+
+</html>
