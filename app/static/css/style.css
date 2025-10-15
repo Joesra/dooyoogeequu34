@@ -94,3 +94,12 @@ table th, table td {
     color: lightskyblue;
     font-weight: bold;
 }
+
+.logout {
+    padding: 8px 16px;
+    background-color: #3a76f5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
