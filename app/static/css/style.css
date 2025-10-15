@@ -84,3 +84,8 @@ table th, table td {
     border-bottom: 1px solid #ddd;
     text-align: left;
 }
+
+.active {
+    color: green;
+    font-weight: bold;
+}
