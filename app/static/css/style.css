@@ -89,3 +89,8 @@ table th, table td {
     color: green;
     font-weight: bold;
 }
+
+.processing {
+    color: lightskyblue;
+    font-weight: bold;
+}
