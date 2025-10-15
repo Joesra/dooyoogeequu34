@@ -70,3 +70,17 @@ header {
 .news-item.privacy { border-color: #dc2626; }
 .news-item.system { border-color: #2563eb; }
 .news-item.integratie { border-color: #16a34a; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
