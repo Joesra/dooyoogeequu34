@@ -1,4 +1,52 @@
-css
+.click-container {
+  display: flex;
+  justify-content: center;   /* horizontaal centreren */
+  align-items: center;       /* verticaal centreren */
+  height: 86.84px;
+  width: 134.07px;
+  border-radius: 19px;
+  border: 1px solid black;
+  position: relative;
+  right: 5px;
+  box-sizing: border-box;
+}
+
+.click-tekst {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15.24px;
+  position: relative;
+  left: 7px;
+}
+
+.click-img {
+    margin-left: 10px;
+    border-radius: 19.04px;
+    width: 117.31px;
+    height: 86.84px;
+}
+
+.beschrijving-tekst {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 15px;
+    color: rgb(135, 135, 135);
+    font-weight: bold;
+    position: relative;
+    right: 10px;
+}
+
+.calendar {
+    width: 32px;
+    height: 28px;
+}
+
+.artikel-beschrijving {
+  display: flex;
+  align-items: center;     /* Zorgt dat alle items verticaal gecentreerd zijn */
+  gap: 10px;               /* Ruimte tussen de objecten */
+  position: relative;
+  top: -5px;
+}
+
 
 .nieuws-search {
     display: block;margin: 0 auto;
@@ -42,12 +90,16 @@ css
 .nieuws-p {
     padding-left: 4rem;
     font-family: 'Roboto Condensed', sans-serif;
-    size: 18.5px;
+    font-size: 18.5px;
+    font-weight: bold;
 }
 
 .artikel-container {
-    flex-direction: row;
+  display: flex;           /* activeert Flexbox */
+  flex-direction: row;     /* zet items horizontaal naast elkaar */
+  gap: 15px;               /* optioneel: ruimte tussen de items */
 }
+
 
 .artikel {
     border: 0.5px solid #333; 
@@ -58,23 +110,63 @@ css
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-.artikel-beschrijving {
-    flex-direction: row;
+.systeem-alert {
+  width: 70px;
+  height: 38.85px;
+  border-radius: 19px;
+  background-color: rgb(208, 208, 208);
+  display: flex;                  /* Flexbox in plaats van inline-block */
+  justify-content: center;       /* Horizontaal centreren */
+  align-items: center;           /* Verticaal centreren */
+  margin-left: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.systeem {
-    border: none;
-    width: 70px;
-    height: 38.85px;
-    border-radius: 19px;
-    background-color: rgb(208, 208, 208);
-    justify-content: center;
-    text-align: center;
-    margin-left: 10px;
+.privacy-alert {
+  width: 70px;
+  height: 38.85px;
+  border-radius: 19px;
+  background-color: #FF0900;
+  display: flex;                  /* Flexbox in plaats van inline-block */
+  justify-content: center;       /* Horizontaal centreren */
+  align-items: center;           /* Verticaal centreren */
+  margin-left: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.systeem-p {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 15px;
-    padding-top: 7.8px;
+.design-alert {
+  width: 70px;
+  height: 38.85px;
+  border-radius: 19px;
+  background-color: #C800FF;
+  display: flex;                  /* Flexbox in plaats van inline-block */
+  justify-content: center;       /* Horizontaal centreren */
+  align-items: center;           /* Verticaal centreren */
+  margin-left: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
+
+.policy-alert {
+  width: 70px;
+  height: 38.85px;
+  border-radius: 19px;
+  background-color: #24AFEF;
+  display: flex;                  /* Flexbox in plaats van inline-block */
+  justify-content: center;       /* Horizontaal centreren */
+  align-items: center;           /* Verticaal centreren */
+  margin-left: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
