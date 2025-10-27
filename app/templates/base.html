@@ -10,7 +10,7 @@
 
 <body>
     <div class="sidebar">
-        <div class="logo">NL</div>
+        <div class="logo">"Wolken"</div>
         <ul>
             <li>Dashboard</li>
             <li>Data Beheren</li>
@@ -20,6 +20,7 @@
     </div>
     <div class="main">
         <header>
+            <button class="menu-toggle">☰</button>
             <h1>Overheids Cloud Database</h1>
             <button class="logout">Uitloggen</button>
         </header>
@@ -129,3 +130,10 @@
 </body>
 
 </html>
+<script>
+    const toggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    toggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
+</script>
