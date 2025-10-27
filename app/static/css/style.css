@@ -103,3 +103,97 @@ table th, table td {
     border-radius: 5px;
     cursor: pointer;
 }
+
+@media (max-width: 1200px) {
+    .stats {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .card {
+        flex: 1 1 calc(50% - 15px);
+    }
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .main {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 10px 15px;
+    }
+
+    .sidebar ul {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .sidebar li {
+        padding: 8px 0;
+    }
+
+    .main {
+        padding: 15px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+
+    .card {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sidebar li {
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding: 10px 0;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    table {
+        font-size: 14px;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .logout {
+        width: 100%;
+        text-align: center;
+    }
+}
