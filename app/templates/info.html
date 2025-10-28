@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overheids Cloud Database</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">"Wolken"</div>
+        <ul>
+            <li>Dashboard</li>
+            <li>Data Beheren</li>
+            <li>Statistieken</li>
+            <li>Instellingen</li>
+        </ul>
+    </div>
+    <div class="main">
+        <header>
+            <button class="menu-toggle">☰</button>
+            <h1>Overheids Cloud Database</h1>
+            <button class="logout">Uitloggen</button>
+        </header>
+
+</body>
+
+</html>
+<script>
+    const toggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    toggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
+</script>
