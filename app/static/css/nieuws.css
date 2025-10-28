@@ -1,3 +1,28 @@
+.categorie-container {
+  display: flex;           /* activeert Flexbox */
+  flex-direction: row;     /* zet items horizontaal naast elkaar */
+  gap: 40px;               /* optioneel: ruimte tussen de items */
+}
+
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* voorkomt uitrekken */
+  gap: 10px;
+}
+
+.vertical-container img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.categorie-p {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 25px;
+  text-align: center;
+}
+
 .click-container {
   display: flex;
   justify-content: center;   /* horizontaal centreren */
@@ -5,7 +30,6 @@
   height: 86.84px;
   width: 134.07px;
   border-radius: 19px;
-  border: 1px solid black;
   position: relative;
   right: 5px;
   box-sizing: border-box;
@@ -91,13 +115,12 @@
     padding-left: 4rem;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 18.5px;
-    font-weight: bold;
 }
 
 .artikel-container {
   display: flex;           /* activeert Flexbox */
   flex-direction: row;     /* zet items horizontaal naast elkaar */
-  gap: 15px;               /* optioneel: ruimte tussen de items */
+  gap: 20px;               /* optioneel: ruimte tussen de items */
 }
 
 
@@ -121,7 +144,20 @@
   margin-left: 10px;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 15px;
-  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.educatie-alert {
+  width: 70px;
+  height: 38.85px;
+  border-radius: 19px;
+  background-color: #00FF7B;
+  display: flex;                  /* Flexbox in plaats van inline-block */
+  justify-content: center;       /* Horizontaal centreren */
+  align-items: center;           /* Verticaal centreren */
+  margin-left: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
   margin-bottom: 10px;
 }
 
@@ -136,7 +172,6 @@
   margin-left: 10px;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 15px;
-  font-weight: bold;
   margin-bottom: 10px;
 }
 
@@ -151,7 +186,6 @@
   margin-left: 10px;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 15px;
-  font-weight: bold;
   margin-bottom: 10px;
 }
 
@@ -166,7 +200,21 @@
   margin-left: 10px;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 15px;
-  font-weight: bold;
   margin-bottom: 10px;
 }
+
+.gemeenschap-alert {
+  width: 70px;
+  height: 38.85px;
+  border-radius: 19px;
+  background-color: #24AFEF;
+  display: flex;                  /* Flexbox in plaats van inline-block */
+  justify-content: center;       /* Horizontaal centreren */
+  align-items: center;           /* Verticaal centreren */
+  margin-left: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
 
