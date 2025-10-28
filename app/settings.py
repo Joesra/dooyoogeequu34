@@ -1,5 +1,14 @@
-from os import environ
+import os
+from dotenv import load_dotenv
 
-API_KEY = environ.get("pb3bims2526_dooyoogeequu34.KkLoaTEClbiDD30b")
-API_URL = environ.get("https://api.hbo-ict.cloud")
-DATABASE = environ.get("dev")
+# .env staat in de bovenliggende map van 'app/'
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+load_dotenv(dotenv_path)
+
+DATABASE = {
+    'NAME': os.getenv("DATABASE_NAME"),
+    'USER': 'pb3bims2526_dooyoogeequu34',
+    'PASSWORD': os.getenv("DB_PASSWORD"),
+    'HOST': 'db.hbo-ict.cloud',
+    'PORT': 3366
+}
