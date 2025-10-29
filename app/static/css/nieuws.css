@@ -1,15 +1,58 @@
+.artikel-datum {
+  display: flex;
+  align-items: center;     /* Zorgt dat alle items verticaal gecentreerd zijn */
+  gap: 10px;
+  margin-bottom: 0px;               /* Ruimte tussen de objecten */
+}
+
+.artikel-titel {
+  font-family: "Hermeneus One", sans-serif;
+  font-weight: bold;
+  font-size: 72.26px;
+  width: 1380px;
+  height: 196.32px;
+  align-self: center;
+  align-self: flex-start;
+  
+}
+
+.beschrijving-tekst_artikel {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+  color: rgb(135, 135, 135);
+  font-weight: bold;
+  position: static;
+}
+
+.design_artikel-alert {
+  width: 117.88px;
+  height: 65px;
+  border-radius: 31.95px;
+  background-color: #C800FF;
+  display: flex;                  /* Flexbox in plaats van inline-block */
+  justify-content: center;       /* Horizontaal centreren */
+  align-items: center;           /* Verticaal centreren */
+  margin-left: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 25.56px;
+  margin-bottom: 10px;
+}
+
 .categorie-container {
   display: flex;           /* activeert Flexbox */
   flex-direction: row;     /* zet items horizontaal naast elkaar */
-  gap: 40px;               /* optioneel: ruimte tussen de items */
+  gap: 50px;               /* optioneel: ruimte tussen de items */
+  padding-left: 2rem;
 }
 
 .vertical-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* voorkomt uitrekken */
-  gap: 10px;
+  align-items: flex-start; /* Zorgt dat alles links uitgelijnd is */
+  gap: 0px;                /* Geen extra ruimte tussen de elementen */
 }
+
+
 
 .vertical-container img {
   max-width: 100%;
@@ -21,6 +64,8 @@
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 25px;
   text-align: center;
+  position: relative;
+  top: -1rem;
 }
 
 .click-container {
@@ -132,6 +177,13 @@
     border-radius: 22.85px;
     font-family: 'Roboto Condensed', sans-serif;
 }
+
+.link-container {
+  text-decoration: none; /* Verwijdert onderstreping */
+  color: inherit;        /* Neemt de kleur van de container over */
+  display: block;        /* Zorgt dat de hele container klikbaar is */
+}
+
 
 .systeem-alert {
   width: 70px;

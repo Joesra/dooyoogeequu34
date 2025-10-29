@@ -15,6 +15,10 @@ def index():
 def nieuws():
     return render_template("nieuws.html")
 
+@bp.route("/design1")
+def design1():
+    return render_template("design1.html")
+
 @bp.route("/view/<int:event_id>")
 def view(event_id):
     event = get_event(event_id) or abort(404)

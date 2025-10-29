@@ -47,19 +47,21 @@
             </div>
         </div>
 
-        <div class="artikel">
-            <div class="artikel-beschrijving">
-                <p class="design-alert">Design</p>
-                <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
-                <p class="beschrijving-tekst">10-10-2025</p>
-            </div>
-            <div class="artikel-beschrijving">
-                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
-                <div class="click-container">
-                    <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <div class="artikel-beschrijving">
+                    <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                    <div class="click-container">
+                        <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
 
         <div class="artikel">
             <div class="artikel-beschrijving">
@@ -180,15 +182,30 @@
     <div class="nieuws-p">
         <p>categorie artikelen:</p>
     </div>
-    <div class="category-container">
+    <div class="categorie-container">
         <div class="vertical-category">
             <img src="/static/img/policy_categorie.png" alt="">
-            <p class="categorie-p">dddd</p>
+            <p class="categorie-p">Policy</p>
         </div>
 
         <div class="vertical-category">
-            <img src="/static/img/chipkaart.jpg" alt="">
-            <p class="categorie-p">dddd</p>
+            <img src="/static/img/chipkaart.png" alt="">
+            <p class="categorie-p">Systeem</p>
+        </div>
+
+        <div class="vertical-category">
+            <img src="/static/img/schets.png" alt="">
+            <p class="categorie-p">Design</p>
+        </div>
+
+        <div class="vertical-category">
+            <img src="/static/img/privacy_categorie.png" alt="">
+            <p class="categorie-p">Privacy</p>
+        </div>
+
+        <div class="vertical-category">
+            <img src="/static/img/educatie-categorie.png" alt="">
+            <p class="categorie-p">Educatie</p>
         </div>
     </div>
 </body>
