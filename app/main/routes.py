@@ -21,7 +21,15 @@ def index():
 def informatie():
     return render_template("info.html")
 
-@bp.route("/offerte")
+@bp.route("/offerte", methods=["GET", "POST"])
 def offerte():
+    # Haalt data op van de form in offerte_aanvraag.html
+    if request.method == "POST":
+    naam = request.form["naam"]
+    email = request.form["email"]
+    organisatie = request.form["organisatie"]
+    omschrijving = request.form["omschrijving"]
+    )
+
     return render_template("offerte_aanvraag.html")
 
