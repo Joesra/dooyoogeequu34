@@ -27,19 +27,23 @@ def offerte():
     if request.method == "POST":
         naam = request.form["naam"]
         email = request.form["email"]
-        organisatie = request.form("organisatie")
-        omschrijving = request.form["omschrijving"]
+        onderwerp = request.form["onderwerp"]
+        bericht = request.form["bericht"]
 
         conn = get_db_connection() #verbinding maken met de database
         cursor = conn.cursor() 
+
+        #query om de aanvraag op te slaan
         query = """
-            INSERT INTO offerte_aanvragen (naam, email, organisatie, omschrijving)
+            INSERT INTO contact_aanvragen (naam, email, onderwerp, bericht)
             VALUES (%s, %s, %s, %s)
         """
-        cursor.execute(query, (naam, email, organisatie, omschrijving))
+        cursor.execute(query, (naam, email, onderwerp, bericht))
         conn.commit() #slaat de ingevulde variable op in de database
         cursor.close() 
         conn.close() #sluit de verbinding met de database af
+
+        return redirect("/offerte")  #blijft op dezelfde pagina voor nu, later naar iets van bedankt voor de aanvraag
 
     return render_template("offerte_aanvraag.html")
 
