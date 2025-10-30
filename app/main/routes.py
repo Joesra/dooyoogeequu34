@@ -10,3 +10,7 @@ def index():
 @bp.route("/info")
 def informatie():
     return render_template("info.html")
+
+@bp.route("/offerte")
+def offerte():
+    return render_template("offerte_aanvraag.html")
