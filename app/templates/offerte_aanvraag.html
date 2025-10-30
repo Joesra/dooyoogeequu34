@@ -2,24 +2,36 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offerte Aanvraag</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/offerte_aanvraag.css') }}">
 </head>
 <body>
-    <h1>Vraag een Offerte aan</h1>
-    <form method="POST" action="/offerte">
-        <label>Naam:</label><br>
-        <input type="text" name="naam" required><br><br>
+    <div class="main offerte-page">
+        <header class="offerte-header">
+            <h1>Vraag een Offerte aan</h1>
+            <p>Vul onderstaand formulier in en wij nemen zo snel mogelijk contact met u op.</p>
+        </header>
 
-        <label>E-mail:</label><br>
-        <input type="email" name="email" required><br><br>
+        <div class="form-container">
+            <form method="POST" action="/offerte">
+                <label>Naam*</label>
+                <input type="text" name="naam" required placeholder="Uw naam">
 
-        <label>Onderwerp van uw aanvraag:</label><br>
-        <input type="text" name="onderwerp"><br><br>
+                <label>E-mail*</label>
+                <input type="email" name="email" required placeholder="Uw e-mail">
 
-        <label>Bericht:</label><br>
-        <textarea name="bericht" required></textarea><br><br>
+                <label>Onderwerp</label>
+                <input type="text" name="onderwerp" placeholder="Kort onderwerp">
 
-        <button type="submit">Versturen</button>
-    </form>
+                <label>Bericht*</label>
+                <textarea name="bericht" required placeholder="Uw bericht"></textarea>
+
+                <button type="submit">Versturen</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
