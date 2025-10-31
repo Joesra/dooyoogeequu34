@@ -19,11 +19,13 @@
             <li><a href="#">Statistieken</a></li>
             <li class="{% if request.path == '/info' %}active-link{% endif %}">
                 <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                <a href="{{ url_for('main.contact') }}">Support</a>
             </li>
             <li><a href="#">Instellingen</a></li>
         </ul>
-
     </div>
+
     <div class="main">
         <header>
             <button class="menu-toggle">☰</button>
