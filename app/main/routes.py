@@ -23,7 +23,7 @@ def informatie():
 
 @bp.route("/contact", methods=["GET", "POST"])
 def contact():
-    # Haalt data op van de form in offerte_aanvraag.html
+    # Haalt data op van de form in support_aanvraag.html
     if request.method == "POST":
         naam = request.form["naam"]
         email = request.form["email"]
@@ -45,5 +45,5 @@ def contact():
 
         return redirect("/contact")  #blijft op dezelfde pagina voor nu, later naar iets van bedankt voor de aanvraag
 
-    return render_template("offerte_aanvraag.html")
+    return render_template("support_aanvraag.html")
 
