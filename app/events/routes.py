@@ -15,9 +15,17 @@ def index():
 def nieuws():
     return render_template("nieuws.html")
 
+@bp.route("/artikel_privacy1")
+def artikel_privacy1():
+    return render_template("artikel_privacy1.html")
+
 @bp.route("/design1")
 def design1():
     return render_template("design1.html")
+
+@bp.route("/artikel_systeem1")
+def artikel_systeem1():
+    return render_template("artikel_systeem1.html")
 
 @bp.route("/view/<int:event_id>")
 def view(event_id):
