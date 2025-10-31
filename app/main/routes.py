@@ -21,8 +21,8 @@ def index():
 def informatie():
     return render_template("info.html")
 
-@bp.route("/offerte", methods=["GET", "POST"])
-def offerte():
+@bp.route("/contact", methods=["GET", "POST"])
+def contact():
     # Haalt data op van de form in offerte_aanvraag.html
     if request.method == "POST":
         naam = request.form["naam"]
@@ -43,7 +43,7 @@ def offerte():
         cursor.close() 
         conn.close() #sluit de verbinding met de database af
 
-        return redirect("/offerte")  #blijft op dezelfde pagina voor nu, later naar iets van bedankt voor de aanvraag
+        return redirect("/contact")  #blijft op dezelfde pagina voor nu, later naar iets van bedankt voor de aanvraag
 
     return render_template("offerte_aanvraag.html")
 

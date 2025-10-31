@@ -9,29 +9,59 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/offerte_aanvraag.css') }}">
 </head>
 <body>
+    <div class="sidebar">
+        <div class="logo">"Wolken"</div>
+        <ul>
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
+            </li>
+            <li><a href="#">Data Beheren</a></li>
+            <li><a href="#">Statistieken</a></li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                <a href="{{ url_for('main.contact') }}">Support</a>
+            </li>
+            <li><a href="#">Instellingen</a></li>
+        </ul>
+    </div>
+
     <div class="main offerte-page">
-        <header class="offerte-header">
-            <h1>Vraag een Offerte aan</h1>
-            <p>Vul onderstaand formulier in en wij nemen zo snel mogelijk contact met u op.</p>
+        <header>
+            <h1>Support Aanvraag</h1>
         </header>
 
-        <div class="form-container">
-            <form method="POST" action="/offerte">
-                <label>Naam*</label>
-                <input type="text" name="naam" required placeholder="Uw naam">
+        <section>
+            <p>
+                Vul onderstaand formulier in en wij nemen zo snel mogelijk contact met u op met een vrijblijvende offerte.
+            </p>
 
-                <label>E-mail*</label>
-                <input type="email" name="email" required placeholder="Uw e-mail">
+            <div class="form-container">
+                <form method="POST" action="/contact" class="offerte-form">
+                    <div class="form-group">
+                        <label for="naam">Naam*</label>
+                        <input type="text" id="naam" name="naam" required placeholder="Uw naam">
+                    </div>
 
-                <label>Onderwerp</label>
-                <input type="text" name="onderwerp" placeholder="Kort onderwerp">
+                    <div class="form-group">
+                        <label for="email">E-mail*</label>
+                        <input type="email" id="email" name="email" required placeholder="Uw e-mailadres">
+                    </div>
 
-                <label>Bericht*</label>
-                <textarea name="bericht" required placeholder="Uw bericht"></textarea>
+                    <div class="form-group">
+                        <label for="onderwerp">Onderwerp*</label>
+                        <input type="text" id="onderwerp" name="onderwerp" required placeholder="Waar gaat uw aanvraag over?">
+                    </div>
 
-                <button type="submit">Versturen</button>
-            </form>
-        </div>
+                    <div class="form-group">
+                        <label for="bericht">Bericht*</label>
+                        <textarea id="bericht" name="bericht" required placeholder="Beschrijf uw aanvraag of project..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Verstuur Support Aanvraag</button>
+                </form>
+            </div>
+        </section>
     </div>
 </body>
 </html>
