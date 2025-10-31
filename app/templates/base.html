@@ -12,12 +12,17 @@
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
-            <li><a href="/home">Dashboard</a></li>
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
+            </li>
             <li><a href="#">Data Beheren</a></li>
             <li><a href="#">Statistieken</a></li>
-            <li><a href="/info">Informatie</a></li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            </li>
             <li><a href="#">Instellingen</a></li>
         </ul>
+
     </div>
     <div class="main">
         <header>
@@ -121,12 +126,9 @@
                         <td>👁️ ⬇️</td>
                     </tr>
                 </tbody>
-
-
-
-
     </div>
 
 
 </body>
+
 </html>
