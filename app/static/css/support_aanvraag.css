@@ -1,0 +1,78 @@
+.offerte-page {
+  background-color: #f5f6f8;
+}
+
+.form-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  max-width: 600px;
+  margin-top: 25px;
+}
+
+.offerte-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #111827;
+}
+
+.form-group input,
+.form-group textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+  background-color: #fff;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+.btn-submit {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.25s;
+  width: fit-content;
+}
+
+.btn-submit:hover {
+  background-color: #2563eb;
+}
+
+header h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+section p {
+  margin-bottom: 15px;
+  color: #374151;
+  max-width: 600px;
+}

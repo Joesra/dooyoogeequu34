@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offerte Aanvraag</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/support_aanvraag.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">"Wolken"</div>
+        <ul>
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
+            </li>
+            <li><a href="#">Data Beheren</a></li>
+            <li><a href="#">Statistieken</a></li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                <a href="{{ url_for('main.contact') }}">Support</a>
+            </li>
+            <li><a href="#">Instellingen</a></li>
+        </ul>
+    </div>
+
+    <div class="main offerte-page">
+        <header>
+            <h1>Support Aanvraag</h1>
+        </header>
+
+        <section>
+            <p>
+                Vul onderstaand formulier in en wij nemen zo snel mogelijk contact met u op over uw vraag.
+            </p>
+
+            <div class="form-container">
+                <form method="POST" action="/contact" class="contact-form">
+                    <div class="form-group">
+                        <label for="naam">Naam*</label>
+                        <input type="text" id="naam" name="naam" required placeholder="Uw naam">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail*</label>
+                        <input type="email" id="email" name="email" required placeholder="Uw e-mailadres">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="onderwerp">Onderwerp*</label>
+                        <input type="text" id="onderwerp" name="onderwerp" required placeholder="Waar gaat uw vraag over?">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bericht">Bericht*</label>
+                        <textarea id="bericht" name="bericht" required placeholder="Beschrijf uw vraag of project..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Verstuur Support Aanvraag</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

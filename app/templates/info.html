@@ -13,10 +13,16 @@
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
-            <li><a href="/home">Dashboard</a></li>
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
+            </li>
             <li><a href="#">Data Beheren</a></li>
             <li><a href="#">Statistieken</a></li>
-            <li><a href="/info">Informatie</a></li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                <a href="{{ url_for('main.contact') }}">Support</a>
+            </li>
             <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
@@ -116,7 +122,8 @@
             <div class="news-item integratie">
                 <h3>Verbeterde API integraties</h3>
                 <p>Q4 2025</p>
-                <p>We breiden de API functionaliteit uit voor meer compatibiliteit met bestaande gemeentelijke systemen.</p>
+                <p>We breiden de API functionaliteit uit voor meer compatibiliteit met bestaande gemeentelijke systemen.
+                </p>
             </div>
             <div class="news-item system">
                 <h3>Nieuwe security features</h3>
