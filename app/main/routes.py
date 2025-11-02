@@ -47,3 +47,7 @@ def contact():
 
     return render_template("support_aanvraag.html")
 
+@bp.route("/services")
+def informatie():
+    return render_template("services.html")
+
