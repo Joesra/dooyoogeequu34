@@ -26,9 +26,18 @@
         </ul>
     </div>
 
-    <section class="mainsection"> <!-- Main content overriden by other html files -->
-        <div>{% block content %}{% endblock %}</div>
-    </section>
+    <!-- Alle content komt hier te staan, afhankelijk van welke pagina op is -->
+    <div class="main">
+        <header>
+            <button class="menu-toggle">☰</button>
+            <h1>Informatie Over Cloud Database</h1>
+            <button class="logout">Uitloggen</button>
+        </header>
+        
+        <section class="mainsection">
+            <div>{% block content %}{% endblock %}</div>
+        </section>
+    </div>
 
 </body>
 </html>
