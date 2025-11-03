@@ -21,6 +21,10 @@ def index():
 def informatie():
     return render_template("info.html")
 
+@bp.route("/")
+def home():
+    return render_template("index.html")
+
 @bp.route("/contact", methods=["GET", "POST"])
 def contact():
     # Haalt data op van de form in support_aanvraag.html
