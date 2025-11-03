@@ -196,10 +196,12 @@
             <p class="categorie-p">Systeem</p>
         </div>
 
-        <div class="vertical-category">
-            <img src="/static/img/schets.png" alt="">
-            <p class="categorie-p">Design</p>
-        </div>
+        <a class="link-container" href="{{ url_for('events.categorie_design') }}">
+            <div class="vertical-category">
+                <img src="/static/img/schets.png" alt="">
+                <p class="categorie-p">Design</p>
+            </div>
+        </a>
 
         <div class="vertical-category">
             <img src="/static/img/privacy_categorie.png" alt="">

@@ -15,6 +15,10 @@ def index():
 def nieuws():
     return render_template("nieuws.html")
 
+@bp.route("/categorie_design")
+def categorie_design():
+    return render_template("categorie_design.html")
+
 @bp.route("/artikel_privacy1")
 def artikel_privacy1():
     return render_template("artikel_privacy1.html")
