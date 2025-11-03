@@ -1,39 +1,17 @@
-<!DOCTYPE html>
-<html lang="nl">
+{% extends 'base.html' %}
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informatie Over Cloud Database</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='css/info.css')}}" />
 </head>
 
-<body>
-    <div class="sidebar">
-        <div class="logo">"Wolken"</div>
-        <ul>
-            <li class="{% if request.path == '/home' %}active-link{% endif %}">
-                <a href="{{ url_for('main.index') }}">Dashboard</a>
-            </li>
-            <li><a href="#">Data Beheren</a></li>
-            <li><a href="#">Statistieken</a></li>
-            <li class="{% if request.path == '/info' %}active-link{% endif %}">
-                <a href="{{ url_for('main.informatie') }}">Informatie</a>
-            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
-                <a href="{{ url_for('main.contact') }}">Support</a>
-            </li>
-            <li><a href="#">Instellingen</a></li>
-        </ul>
-    </div>
+{% block header %}
+<h1>{% block title %}Informatie Over Cloud Database{% endblock %}</h1>
+{% endblock %}
 
-    <div class="main">
-        <header>
-            <button class="menu-toggle">☰</button>
-            <h1>Informatie Over Cloud Database</h1>
-            <button class="logout">Uitloggen</button>
-        </header>
-
+{% block content %}
         <!-- Misschien kleine over ons er in zetten -->
         <section class="info-overview">
             <h2>Wat is de Overheids Cloud Database?</h2>
@@ -146,6 +124,4 @@
             sidebar.classList.toggle('active');
         });
     </script>
-</body>
-
-</html>
+{% endblock %}
