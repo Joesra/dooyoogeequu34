@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatie Over Cloud Database</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/info.css')}}" />
+</head>
+
+{% block header %}
+<h1>{% block title %}Informatie Over Cloud Database{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+        <!-- Misschien kleine over ons er in zetten -->
+        <section class="info-overview">
+            <h2>Wat is de Overheids Cloud Database?</h2>
+            <p>
+                De Overheids Cloud Database is een centrale opslagplaats voor alle gemeentelijke data.
+                Het stelt gemeenten in staat om datasets veilig, efficiënt en gestructureerd te beheren.
+                Van bevolkingsregisters tot vergunningen en belastinggegevens, alles kan veilig worden opgeslagen en
+                geraadpleegd.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac diam quis velit vehicula
+                tincidunt.
+                Vestibulum non magna sed lectus lacinia hendrerit.
+            </p>
+        </section>
+
+        <!-- Voordelen -->
+        <section class="features">
+            <h2>Belangrijkste Voordelen</h2>
+            <div class="stats">
+                <div class="card">
+                    <p>Veiligheid</p>
+                    <h2>High</h2>
+                    <small>End-to-end encryptie en GDPR-compliance</small>
+                </div>
+                <div class="card">
+                    <p>Toegankelijkheid</p>
+                    <h2>24/7</h2>
+                    <small>Altijd online beschikbaar voor geautoriseerde gebruikers</small>
+                </div>
+                <div class="card">
+                    <p>Schaalbaarheid</p>
+                    <h2>Automatisch</h2>
+                    <small>Past zich aan groei en nieuwe datasets aan</small>
+                </div>
+                <div class="card">
+                    <p>Analyse</p>
+                    <h2>Realtime</h2>
+                    <small>Directe inzichten en rapportages mogelijk</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technische details -->
+        <section class="technical-info">
+            <h2>Technische Specificaties</h2>
+            <p>
+                De cloud database is gebouwd met de nieuwste cloudtechnologieën en volgt best practices voor
+                beveiliging,
+                betrouwbaarheid en prestaties. Alle data wordt opgeslagen in redundante servers en regelmatig
+                geback-upt.
+            </p>
+            <ul>
+                <li>Ondersteuning voor grote datasets (tot meerdere terabytes)</li>
+                <li>Realtime synchronisatie tussen gemeenten</li>
+                <li>Versleutelde opslag en veilige toegangscontrole</li>
+                <li>Ondersteuning voor verschillende dataformaten (CSV, JSON, XML)</li>
+                <li>REST API en geavanceerde query mogelijkheden</li>
+            </ul>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus
+                ante dapibus diam.
+            </p>
+        </section>
+
+        <!-- Gebruik en Toepassing -->
+        <section class="usage">
+            <h2>Hoe te gebruiken</h2>
+            <p>
+                Gemeenten kunnen de cloud database gebruiken om datasets te uploaden, te beheren en te analyseren.
+                Met het dashboard kunnen gebruikers rapportages genereren, statistieken bekijken en datasets delen met
+                andere gemeenten.
+            </p>
+            <ol>
+                <li>Inloggen met geautoriseerde account</li>
+                <li>Selecteer de gewenste dataset of upload een nieuwe</li>
+                <li>Beheer toegangsniveaus voor interne medewerkers</li>
+                <li>Genereer rapportages en analyses via het dashboard</li>
+                <li>Monitor systeemprestaties en uptime</li>
+            </ol>
+        </section>
+
+        <!-- Roadmap / Toekomstplannen -->
+        <section class="roadmap">
+            <h2>Toekomstige Updates</h2>
+            <div class="news-item integratie">
+                <h3>Verbeterde API integraties</h3>
+                <p>Q4 2025</p>
+                <p>We breiden de API functionaliteit uit voor meer compatibiliteit met bestaande gemeentelijke systemen.
+                </p>
+            </div>
+            <div class="news-item system">
+                <h3>Nieuwe security features</h3>
+                <p>Q1 2026</p>
+                <p>Extra lagen van authenticatie en encryptie voor maximale data beveiliging.</p>
+            </div>
+            <div class="news-item privacy">
+                <h3>AVG compliance update</h3>
+                <p>Q2 2026</p>
+                <p>Volledige naleving van nieuwe privacywetgeving met verbeterde audit logging.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const toggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+{% endblock %}
