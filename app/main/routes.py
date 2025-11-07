@@ -21,6 +21,10 @@ def index():
 def informatie():
     return render_template("info.html")
 
+@bp.route("/nieuws")
+def nieuws():
+    return render_template("nieuws.html")
+
 @bp.route("/")
 def home():
     return render_template("index.html")

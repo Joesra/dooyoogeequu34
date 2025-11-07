@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overheids Cloud Database</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/nieuws.css')}}" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -17,6 +19,9 @@
             </li>
             <li><a href="#">Data Beheren</a></li>
             <li><a href="#">Statistieken</a></li>
+            <li class="{% if request.path == '/nieuws' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuws') }}">nieuws</a>
+            </li>
             <li class="{% if request.path == '/info' %}active-link{% endif %}">
                 <a href="{{ url_for('main.informatie') }}">Informatie</a>
             <li class="{% if request.path == '/contact' %}active-link{% endif %}">
