@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block header %}
-<h1>{% block title %}Login{% endblock %}</h1>
+<h1>{% block title %}inloggen {% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -13,4 +13,7 @@
                         <label for="wachtwoord">Wachtwoord</label>
                         <input type="password" id="wachtwoord" name="wachtwoord" required placeholder="Voer uw wachtwoord in">
                     </div>
-{%endblock %}
+                    <button type="submit" class="btn-submit">Inloggen</button>
+                </form>
+            </div></p>
+{%endblock %}   
