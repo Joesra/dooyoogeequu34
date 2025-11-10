@@ -77,3 +77,25 @@ def registreer():
         return redirect("/registreer")  
     return render_template("registreer.html")
 
+@bp.route("/login", methods={ 'GET', 'POST' })
+def login():
+    if request.method == "POST":
+        gebruikersnaam = request.form["gebruikersnaam"]
+        wachtwoord = request.form["wachtwoord"]
+
+        conn = get_db_connection() 
+        cursor = conn.cursor() 
+
+        query = """
+            SELECT * FROM gebruikers WHERE gebruikersnaam = %s AND wachtwoord = %s
+        """
+        cursor.execute(query, (gebruikersnaam, wachtwoord))
+        user = cursor.fetchone()
+        cursor.close() 
+        conn.close() 
+
+        if user:
+            return redirect("/home")  
+        else:
+            return redirect("/login")  
+    return render_template("login.html")
