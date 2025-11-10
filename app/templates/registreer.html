@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Registreer{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <p> <div class="form-container">
+                <form method="POST" action="/contact" class="contact-form">
+                    <div class="form-group">
+                        <label for="naam">Naam*</label>
+                        <input type="text" id="naam" name="naam" required placeholder="Uw naam">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail*</label>
+                        <input type="email" id="email" name="email" required placeholder="Uw e-mailadres">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="onderwerp">Wachtwoord*</label>
+                        <input type="password" id="onderwerp" name="onderwerp" required placeholder="Voer uw wachtwoord in">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bericht">Bevestig Wachtwoord*</label>
+                        <textarea id="bericht" name="bericht" required placeholder="Bevestig uw wachtwoord"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Registreer</button>
+                </form>
+            </div>
+  </p>
+{% endblock %}

@@ -55,3 +55,25 @@ def contact():
 def services():
     return render_template("services.html")
 
+@bp.route("/registreer", methods={ 'GET', 'POST' })
+def registreer():
+    if request.method == "POST":
+        gebruikersnaam = request.form["gebruikersnaam"]
+        email = request.form["email"]
+        wachtwoord = request.form["wachtwoord"]
+
+        conn = get_db_connection() 
+        cursor = conn.cursor() 
+
+        query = """
+            INSERT INTO gebruikers (gebruikersnaam, email, wachtwoord)
+            VALUES (%s, %s, %s)
+        """
+        cursor.execute(query, (gebruikersnaam, email, wachtwoord))
+        conn.commit() 
+        cursor.close() 
+        conn.close() 
+
+        return redirect("/registreer")  
+    return render_template("registreer.html")
+
