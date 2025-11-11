@@ -55,4 +55,9 @@ def contact():
 def services():
     return render_template("services.html")
 
+
+@bp.route("/incidenten")
+def incidenten():
+    return render_template("incidenten.html")
+
  #test        
