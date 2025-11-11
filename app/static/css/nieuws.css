@@ -99,7 +99,7 @@
 }
 
 .categorie-artikel {
-  width: 380px;             /* kleiner formaat */
+  width: 385px;             /* kleiner formaat */
   height: 430px;            /* proportioneel aangepast */
   border: 0.5px solid rgb(135, 135, 135); 
   border-radius: 20px;
@@ -160,36 +160,24 @@
   display: none;                /* Chrome, Safari, Edge */
 }
 
-.categorie-container3 img{
+.categorie-container3 img {
+  margin-top: 1rem;
+  width: 90%;
+  height: 280px;
+  object-fit: cover;
+  align-self: center;
+  border-radius: 10px;
+}
+
+/* deze komt NA de algemene regel */
+.categorie-container3 img.uitzondering {
+  width: auto;
+  height: auto;
+  object-fit: contain;
   margin-top: 10px;
   border-radius: 10px;
   align-self: center;
-  max-width: 90%;
-  height: auto;
-  object-fit: contain;
 }
-
-.img-categorie {
-  width: 375px;
-  height: 295px;
-  object-fit: cover; /* vult het vlak, snijdt af indien nodig */
-  aspect-ratio: 4 / 3;
-  width: 100%;
-  overflow: hidden;
-}
-
-.img-categorie2 {
-  width: 375px;
-  height: 799px;
-  object-fit: cover; /* vult het vlak, snijdt af indien nodig */
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-}
-
-.img-categorie s{
-  height: 295px;
-}
-
 
 .categorie-container2 {
   display: flex;           /* activeert Flexbox */
