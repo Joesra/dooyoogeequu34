@@ -11,6 +11,25 @@ def index():
     events = get_events()
     return render_template("events/index.html", events=events)
 
+@bp.route("/nieuws")
+def nieuws():
+    return render_template("nieuws.html")
+
+@bp.route("/categorie_design")
+def categorie_design():
+    return render_template("categorie_design.html")
+
+@bp.route("/artikel_privacy1")
+def artikel_privacy1():
+    return render_template("artikel_privacy1.html")
+
+@bp.route("/design1")
+def design1():
+    return render_template("design1.html")
+
+@bp.route("/artikel_systeem1")
+def artikel_systeem1():
+    return render_template("artikel_systeem1.html")
 
 @bp.route("/view/<int:event_id>")
 def view(event_id):
