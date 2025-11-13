@@ -58,6 +58,24 @@ def services():
 
 @bp.route("/incidenten")
 def incidenten():
-    return render_template("incidenten.html")
-
- #test        
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = """
+        SELECT 
+            i.incidents_id,
+            i.incident_subject,
+            i.incident_category,
+            i.incident_message,
+            i.incident_date,
+            i.incident_priority,
+            c.firstname,
+            c.lastname
+        FROM incidents i
+        JOIN customer c ON i.Customer_customer_id = c.customer_id
+        ORDER BY i.incident_date DESC
+    """
+    cursor.execute(query)
+    incidenten = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template("incidenten.html", incidenten=incidenten)

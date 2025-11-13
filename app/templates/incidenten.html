@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/incidenten.css')}}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <div>
-	<!-- Tabel met placeholders; vervang later met dynamische data uit de database -->
 	<div>
 		<table>
 			<thead>
@@ -17,25 +16,26 @@
 					<th scope="col">Prioriteit</th>
 					<th scope="col">Titel</th>
 					<th scope="col">Aangemaakt</th>
-					<th scope="col">Gemaakt door</th>
+					<th scope="col">Klant</th>
 				</tr>
 			</thead>
 			<tbody>
-				<!-- Placeholder rij 1 -->
+				{% for incident in incidenten %}
 				<tr>
-					<td>INC-001</td>
-					<td><span>Hoog</span></td>
+					<td>{{ incident.incidents_id }}</td>
+					<td><span>{{ incident.incident_priority }}</span></td>
 					<td>
-						<div>Voorbeeld: Server down</div>
+						<div>{{ incident.incident_category }}</div>
+						<div style="font-size: 0.95em; color: #555;">{{ incident.incident_message }}</div>
 						<div>
-							<!-- FontAwesome plus icoon links naast LAADT DETAILS -->
 							<span><i class="fa-solid fa-plus"></i></span>
 							<span>LAADT DETAILS</span>
 						</div>
 					</td>
-					<td>2025-10-01</td>
-					<td>S. Legerstee</td>
+					<td>{{ incident.incident_date }}</td>
+					<td>{{ incident.firstname }} {{ incident.lastname }}</td>
 				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
