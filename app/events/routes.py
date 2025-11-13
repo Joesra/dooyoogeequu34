@@ -31,12 +31,23 @@ def design1():
 def artikel_systeem1():
     return render_template("artikel_systeem1.html")
 
+@bp.route("/artikel_categorie_design1")  
+def artikel_categorie_design1():
+    return render_template("artikel_categorie_design1.html")
+
+@bp.route("/artikel_categorie_design2")  
+def artikel_categorie_design2():
+    return render_template("artikel_categorie_design2.html")
+
+@bp.route("/artikel_categorie_design3")  
+def artikel_categorie_design3():
+    return render_template("artikel_categorie_design3.html")
+
 @bp.route("/view/<int:event_id>")
 def view(event_id):
     event = get_event(event_id) or abort(404)
     event["eventDate"] = isoparse(event["eventDate"])
     return render_template("events/view.html", event=event)
-
 
 @bp.route("/create", methods=["GET", "POST"])
 def create():

@@ -21,7 +21,7 @@ def index():
 def informatie():
     return render_template("info.html")
 
-@bp.route("/nieuws")
+@bp.route("/nieuws")        
 def nieuws():
     return render_template("nieuws.html")
 
