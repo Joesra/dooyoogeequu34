@@ -6,6 +6,9 @@
 
 {% block content %}
   <p> <div class="form-container">
+                                {% if error %}
+                                        <div class="form-error">{{ error }}</div>
+                                {% endif %}
                 <form method="POST" action="/registreer" class="registreer-form">
                     <div class="form-group">
                         <label for="voornaam">Voornaam*</label>
