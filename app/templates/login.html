@@ -10,10 +10,16 @@
                         <label for="gebruikersnaam">Gebruikersnaam</label>
                         <input type="text" id="gebruikersnaam" name="gebruikersnaam" required placeholder="Voer uw gebruikersnaam in">
                         <div class="form-group">
+                            <br>
                         <label for="wachtwoord">Wachtwoord</label>
                         <input type="password" id="wachtwoord" name="wachtwoord" required placeholder="Voer uw wachtwoord in">
                     </div>
+                    <br>
                     <button type="submit" class="btn-submit">Inloggen</button>
+                    <br>
+                    <p class="small">Nog geen account? <a href="{{ url_for('main.registreer') }}">Registreer hier</a></p>
                 </form>
-            </div></p>
-{%endblock %}   
+            </div>
+        </p>
+
+{% endblock %}

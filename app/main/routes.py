@@ -58,18 +58,21 @@ def services():
 @bp.route("/registreer", methods={ 'GET', 'POST' })
 def registreer():
     if request.method == "POST":
-        gebruikersnaam = request.form["gebruikersnaam"]
+        voornaam = request.form["voornaam"]
+        achternaam = request.form["achternaam"]
         email = request.form["email"]
+        telefoonnummer = request.form["telefoonnummer"]
+        gebruikersnaam = request.form["gebruikersnaam"]
         wachtwoord = request.form["wachtwoord"]
 
         conn = get_db_connection() 
         cursor = conn.cursor() 
 
         query = """
-            INSERT INTO gebruikers (gebruikersnaam, email, wachtwoord)
-            VALUES (%s, %s, %s)
+            INSERT INTO user(Voornaam, achternaam, email, Telefoonnummer, gebruikersnaam, wachtwoord)
+            VALUES (%s, %s, %s, %s,  %s, %s)
         """
-        cursor.execute(query, (gebruikersnaam, email, wachtwoord))
+        cursor.execute(query, (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, wachtwoord))
         conn.commit() 
         cursor.close() 
         conn.close() 
