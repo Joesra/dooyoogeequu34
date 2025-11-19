@@ -1,82 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/nieuws.css')}}" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Hermeneus+One&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wolken vernieuwt interface met focus op eenvoud</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nieuws.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Hermeneus+One&display=swap" rel="stylesheet" />
 </head>
-
 <body>
+
     <div class="breadcrumb">
-        Home / Nieuws / categorie/design /<span class="design-color">Artikel</span>
-    </div>
-    <div class="vertical-container">
-        <div class="artikel-datum">
-            <p class="design_artikel-alert">Design</p>
-            <img src="/static/img/calender_artikel.png" alt="">
-            <p class="beschrijving-tekst_artikel">5-10-2025</p>
-             <img class="spatie" src="\static\img\book_mark.png" alt="">
-            <img class="spatie" src="\static\img\thumbs_up.png" alt="">
-            <img class="spatie" src="\static\img\thumbs_down.png" alt="">
-        </div>
-        <p class="artikel-titel"> Wolken heeft zijn gebruikersinterface vernieuwd met een focus op eenvoud.</p>
+        Home / Nieuws / categorie/design / <span class="design-color">Artikel</span>
     </div>
 
-    <div class="horizontale-container">
-        <img class="img-artikel" src="\static\img\schets-design.png" alt="Tekening">">
-        <div class="artikel-tekst">
-            <p>In een tijd waarin digitale infrastructuur de ruggengraat vormt van publieke dienstverlening, staat één
-                principe centraal: vertrouwen. Voor cloudbedrijven die samenwerken met overheidsinstellingen is privacy
-                niet slechts een technische vereiste, maar een morele verantwoordelijkheid. Bij Wolken geloven we dat
-                echte innovatie begint bij bescherming van wat het meest waardevol is—de gegevens van -</p>
-            <p>Onze cloudoplossing is ontworpen met privacy by design als uitgangspunt. Dat betekent dat elke functie,
-                van dataopslag tot gebruikersinterface, is opgebouwd rond transparantie en controle. Gebruikers—zowel
-                ambtenaren als burgers—moeten kunnen begrijpen wat er met hun gegevens gebeurt, en daar invloed op
-                kunnen uitoefenen.</p>
-            <p>We combineren geavanceerde encryptie, gedecentraliseerde opslag en beleidsgestuurde toegang met een
-                interface die helder communiceert. Geen jargon, geen verborgen processen—maar visuele uitleg,
-                cartoonstijl illustraties en duidelijke meldingen. Zo maken we abstracte concepten als dataminimalisatie
-                en toestemming tastbaar en begrijpelijk.</p>
-            <p>Privacy is geen obstakel voor innovatie—het is de katalysator. Door vertrouwen centraal te stellen,
-                bouwen we aan een cloudomgeving waarin burgers zich veilig voelen, ambtenaren efficiënt kunnen werken,
-                en technologie dienstbaar blijft aan de samenleving.</p>
+    <div class="vertical-container">
+        <div id="artikel-datum2" class="artikel-datum">
+            <p class="design_artikel-alert">Design</p>
+            <img src="/static/img/calender_artikel.png" alt="kalender" />
+            <p class="beschrijving-tekst_artikel">05-10-2025</p>
+            <img class="spatie" src="/static/img/book_mark.png" alt="opslaan" />
+            <img class="spatie" src="/static/img/thumbs_up.png" alt="like" />
+            <img class="spatie" src="/static/img/thumbs_down.png" alt="dislike" />
+        </div>
+
+        <p class="artikel-titel">Wolken heeft zijn gebruikersinterface vernieuwd met een focus op eenvoud</p>
+
+        <div class="item">
+            <p>Foto: Lara Vermeer - @lara.vermeer@wolkencloud.nl</p>
+            <img src="/static/img/bron_1.png" alt="foto credit" />
         </div>
     </div>
-    <div class="horizontale-container_bron">
-        <div class="item"><p>Foto: Lara Vermeer  - @lara.vermeer@wolkencloud.nl</p><img src="\static\img\bron_1.png" alt=""></div>
-        <div class="item"><p>Schrijver: David Smith -@David.Smith@wolkencloud.nl</p><img src="\static\img\bron_2.png" alt=""></div>
+
+    <img class="img-tekst" src="/static/img/schets-design.png" alt="schets design" />
+
+    <div class="artikel-tekst">
+        <p>
+            De vernieuwde interface van Wolken is ontworpen met eenvoud als uitgangspunt. We hebben elementen
+            samengevoegd, visuele ruis verwijderd en workflows versimpeld zodat ambtenaren snel en foutloos kunnen
+            werken. Dit vermindert de leercurve en versnelt dagelijkse processen.
+        </p>
+
+        <p>
+            Belangrijke formulieren zijn geherstructureerd zodat de meest gebruikte velden als eerste verschijnen. We
+            introduceren ook contextuele hulp en inline-validatie die direct feedback geeft bij invoerfouten. Dit
+            beperkt frustratie en reduceert supportvragen.
+        </p>
+
+        <p>
+            Voor mobiele en tabletgebruikers is het ontwerp geoptimaliseerd: grotere hit-targets, vereenvoudigde
+            navigatie en adaptive lay-outs zorgen voor consistente ervaring op elk apparaat.
+        </p>
+
+        <p>
+            Deze interface-aanpassingen zijn het resultaat van gebruikerstesten en feedbacksessies met ambtenaren.
+            Iteratieve verbetering blijft centraal staan: we meten gebruikspatronen en passen aan waar nodig.
+        </p>
     </div>
+
+    <img class="img-tekst2" src="/static/img/lindsey.avif" alt="extra illustratie" />
+    <div class="artikel-tekst">
+        <p>
+            De vernieuwde interface van Wolken is ontworpen met eenvoud als uitgangspunt. We hebben elementen
+            samengevoegd, visuele ruis verwijderd en workflows versimpeld zodat ambtenaren snel en foutloos kunnen
+            werken. Dit vermindert de leercurve en versnelt dagelijkse processen.
+        </p>
+
+        <p>
+            Belangrijke formulieren zijn geherstructureerd zodat de meest gebruikte velden als eerste verschijnen. We
+            introduceren ook contextuele hulp en inline-validatie die direct feedback geeft bij invoerfouten. Dit
+            beperkt frustratie en reduceert supportvragen.
+        </p>
+
+        <p>
+            Voor mobiele en tabletgebruikers is het ontwerp geoptimaliseerd: grotere hit-targets, vereenvoudigde
+            navigatie en adaptive lay-outs zorgen voor consistente ervaring op elk apparaat.
+        </p>
+
+        <p>
+            Deze interface-aanpassingen zijn het resultaat van gebruikerstesten en feedbacksessies met ambtenaren.
+            Iteratieve verbetering blijft centraal staan: we meten gebruikspatronen en passen aan waar nodig.
+        </p>
+    </div>
+
+    <div id="item2" class="item">
+        <p>Schrijver: David Smith - @David.Smith@wolkencloud.nl</p>
+        <img src="/static/img/bron_2.png" alt="auteur credit" />
+    </div>
+
     <div class="weergaven-p">
         <p>aantal weergaven: 104538</p>
     </div>
+
     <div class="nieuws-p">
         <p>gerelateerde artikelen:</p>
     </div>
+
     <div class="categorie-container2">
-        <div class="vertical-category">
-            <img class="img-gerelateerd" src="\static\img\systeem-1.jpg" alt="">
-            <p class="categorie-p">Policy</p>
+        <div class="artikel">
+            <div class="artikel-beschrijving">
+                <p class="systeem-alert">Systeem</p>
+                <img class="Calendar" src="/static/img/calendar.png" alt="kalender" />
+                <p class="beschrijving-tekst">15-10-2025</p>
+            </div>
+            <img class="img-gerelateerd" src="/static/img/systeem-1.jpg" alt="gerelateerd systeem" />
+            <p class="click-tekst">De cloud verheffen</p>
         </div>
 
-        <div class="vertical-category">
-            <img class="img-gerelateerd" src="\static\img\variatie-design.png" alt="">
-            <p class="categorie-p">Systeem</p>
+        <div class="artikel">
+            <div class="artikel-beschrijving">
+                <p class="design-alert">Design</p>
+                <img class="Calendar" src="/static/img/calendar.png" alt="kalender" />
+                <p class="beschrijving-tekst">10-10-2025</p>
+            </div>
+            <img class="img-gerelateerd" src="/static/img/variatie-design.png" alt="gerelateerd design" />
+            <p class="click-tekst">Ontwerpen voor Vertrouwen</p>
         </div>
 
-        <div class="vertical-category">
-            <img class="img-gerelateerd" src="\static\img\policy_2.jpg" alt="">
-            <p class="categorie-p">Design</p>
+        <div class="artikel">
+            <div class="artikel-beschrijving">
+                <p class="privacy-alert">Privacy</p>
+                <img class="Calendar" src="/static/img/calendar.png" alt="kalender" />
+                <p class="beschrijving-tekst">13-10-2025</p>
+            </div>
+            <img class="img-gerelateerd" src="/static/img/policy_2.jpg" alt="gerelateerd privacy" />
+            <p class="click-tekst">De Wolken beschermen tegen aanvallen</p>
         </div>
 
-        <div class="vertical-category">
-            <img class="img-gerelateerd" src="/static/img/privacy_categorie.png" alt="">
-            <p class="categorie-p">Privacy</p>
+        <div class="artikel">
+            <div class="artikel-beschrijving">
+                <p class="educatie-alert">Educatie</p>
+                <img class="Calendar" src="/static/img/calendar.png" alt="kalender" />
+                <p class="beschrijving-tekst">09-10-2025</p>
+            </div>
+            <img class="img-gerelateerd" src="/static/img/privacy_categorie.png" alt="gerelateerd educatie" />
+            <p class="click-tekst">Cloudproblemen Ontcijferd</p>
         </div>
     </div>
-</body>
 
+</body>
 </html>
