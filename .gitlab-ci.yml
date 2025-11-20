@@ -6,11 +6,9 @@ deploy:
   rules:
     - if: '$CI_COMMIT_REF_NAME == "Stijn"'
   variables:
-    GIT_STRATEGY: none
+    GIT_STRATEGY: none  # voorkom lokale HTTPS clone
   before_script:
     - set -e
-    - apt-get -yq update
-    - apt-get -yqq install ssh git
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
