@@ -1,41 +1,20 @@
-image: python:3.11
-
 stages:
-  - test
   - deploy
 
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-
-before_script:
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
-
-test:
-  stage: test
-  script:
-    - pytest
-  only:
-    - Stijn
-
 deploy:
+  image: ubuntu:latest
   stage: deploy
-  before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  script: |
-    ssh $SERVER_USER@$SERVER_IP "
-    cd $SERVER_PATH &&
-    git reset --hard &&
-    git pull &&
-    source venv/bin/activate &&
-    pip install --upgrade pip &&
-    pip install -r requirements.txt &&
-    sudo systemctl restart flaskapp
-    "
   only:
     - Stijn
+  before_script:
+    - apt-get -yq update
+    - apt-get -yqq install ssh
+    - install -m 600 -D /dev/null ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+  script:
+    - ssh "$SSH_USER@$SSH_HOST" "cd '$WORK_DIR' && git checkout 'Stijn' && git pull && exit"
+  after_script:
+    - rm -rf ~/.ssh
