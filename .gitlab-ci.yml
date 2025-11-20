@@ -1,42 +1,28 @@
-image: python:3.11
-
-stages:
-  - test
-  - deploy
+# This file is based on a template, taken from 
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Docker.gitlab-ci.yml
+# Docker-in-Docker documentation: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
+# Set the environment variables in your project
+# Following https://www.digitalocean.com/community/tutorials/how-to-set-up-a-continuous-deployment-pipeline-with-gitlab-ci-cd-on-ubuntu-18-04
 
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  DEPLOY_MKDOCS: "true"
 
-before_script:
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
-
-test:
-  stage: test
-  script:
-    - pytest
-  only:
-    - Stijn
-
-deploy:
-  stage: deploy
+# NOTE: This job has to be called "pages" to be able to deploy to Gitlab Pages!
+pages:
+  image: python:3.9-slim
+  stage: build
+  when: always
+  tags:
+  - hva
   before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - time apt update && apt-get install -y git
+  - time pip install -r docs/requirements.txt
+  - time git clone https://uva-hva.gitlab.host/hbo-ict/mdocotion.git mdocotion
+  - time cd mdocotion && python setup.py install && cd ..
   script:
-    - ssh $SERVER_USER@$SERVER_IP "
-      cd $SERVER_PATH &&
-      git reset --hard &&
-      git pull &&
-      source venv/bin/activate &&
-      pip install --upgrade pip &&
-      pip install -r requirements.txt &&
-      sudo systemctl restart flaskapp
-    "
-  only:
-    - Stijn
-
+  - time mkdocs build --site-dir public --config-file mkdocs.yml
+  artifacts:
+    paths:
+    - public
+  rules:
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $DEPLOY_MKDOCS == "true"
