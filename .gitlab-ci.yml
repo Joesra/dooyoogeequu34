@@ -27,16 +27,15 @@ deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  script:
-    - ssh $SERVER_USER@$SERVER_IP "
-      cd $SERVER_PATH &&
-      git reset --hard &&
-      git pull &&
-      source venv/bin/activate &&
-      pip install --upgrade pip &&
-      pip install -r requirements.txt &&
-      sudo systemctl restart flaskapp
+  script: |
+    ssh $SERVER_USER@$SERVER_IP "
+    cd $SERVER_PATH &&
+    git reset --hard &&
+    git pull &&
+    source venv/bin/activate &&
+    pip install --upgrade pip &&
+    pip install -r requirements.txt &&
+    sudo systemctl restart flaskapp
     "
   only:
     - Stijn
-
