@@ -6,7 +6,7 @@ deploy:
   rules:
     - if: '$CI_COMMIT_REF_NAME == "Stijn"'
   variables:
-    GIT_STRATEGY: none  # voorkom lokale HTTPS clone
+    GIT_STRATEGY: none
   before_script:
     - set -e
     - mkdir -p ~/.ssh
