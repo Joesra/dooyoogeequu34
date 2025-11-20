@@ -3,17 +3,24 @@ deploy:
   stage: deploy
   tags:
     - deploy
-  only:
-    - Stijn
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "Stijn"'
   before_script:
+    - set -e
     - apt-get -yq update
-    - apt-get -yqq install ssh
-    - install -m 600 -D /dev/null ~/.ssh/id_rsa
+    - apt-get -yqq install ssh git
+    - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
-    - mkdir -p ~/.ssh
     - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
   script:
-    - ssh "$SSH_USER@$SSH_HOST" "cd '$WORK_DIR' && git checkout 'Stijn' && git pull && exit"
+    - |
+      set -e
+      ssh "$SSH_USER@$SSH_HOST" "
+        cd '$WORK_DIR' &&
+        git remote set-url origin git@$SSH_HOST:$REPO_PATH &&
+        git checkout '$CI_COMMIT_REF_NAME' &&
+        git pull
+      "
   after_script:
     - rm -rf ~/.ssh
