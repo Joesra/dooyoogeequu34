@@ -5,6 +5,8 @@ deploy:
     - deploy
   rules:
     - if: '$CI_COMMIT_REF_NAME == "Stijn"'
+  variables:
+    GIT_STRATEGY: none
   before_script:
     - set -e
     - apt-get -yq update
