@@ -6,6 +6,8 @@ deploy:
   stage: deploy
   only:
     - Stijn
+  tags:
+    - deploy
   before_script:
     - apt-get -yq update
     - apt-get -yqq install ssh
