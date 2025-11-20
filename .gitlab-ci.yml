@@ -10,17 +10,19 @@ deploy:
   before_script:
     - set -e
     - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
   script:
     - |
       set -e
       ssh "$SSH_USER@$SSH_HOST" "
+        mkdir -p '$WORK_DIR' &&
         cd '$WORK_DIR' &&
         git remote set-url origin git@$SSH_HOST:$REPO_PATH &&
+        git fetch --all &&
         git checkout '$CI_COMMIT_REF_NAME' &&
-        git pull
+        git reset --hard origin/'$CI_COMMIT_REF_NAME'
       "
   after_script:
     - rm -rf ~/.ssh
