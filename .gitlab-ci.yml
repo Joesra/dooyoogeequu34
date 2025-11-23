@@ -3,14 +3,12 @@
 # Gitlab Runner is geïnstalleerd en geregistreerd met rpi_runner tag die is opgezet op GitLab 
 # Volg deze video om flask applicatie te hosten: https://www.youtube.com/watch?v=KWIIPKbdxD0
 
-
 # geen perms om folders te verwijderen? sudo chown -R gitlab-runner:gitlab-runner /var/www
-
-
 
 stages:
   - fetch
   - create_venv
+  - deploy_env_file
   - deploy
 
 # Clone de repository naar de server
@@ -24,10 +22,8 @@ fetch:
   script:
     - cd /var/www/
     - if [ -d "$REPO_NAME" ]; then sudo rm -rf "$REPO_NAME"; fi # Checkt of de directory al bestaat en verwijdert deze indien nodig zonder waarschuwing
-    # Clone de repository
     - git clone https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/$REPO_URL
     - cd /var/www/$REPO_NAME
-
 
 # Bouw een Python Virtual Environment en installeer dependencies uit requirements.txt
 create_venv:
@@ -44,8 +40,23 @@ create_venv:
     - pip install --upgrade pip
     - pip install -r requirements.txt
 
-# Deploy de applicatie door te kijken of de bestanden up-to-date zijn
-# en de service te herstarten, zodat nieuwe aanpassingen doorgevoerd worden
+# Nieuwe stage: maak .env-bestand aan met database gegevens
+deploy_env_file:
+  image: ubuntu:latest
+  stage: deploy_env_file
+  only:
+    - Stijn
+  tags:
+    - rpi_runner
+  script:
+    - cd /var/www/$REPO_NAME
+    - echo "DB_NAME=$ENV_NAME" > .env
+    - echo "DB_USER=$ENV_USER" >> .env
+    - echo "DB_PASSWORD=$ENV_PASSWORD" >> .env
+    - echo "DB_HOST=$ENV_HOST" >> .env
+    - echo "DB_PORT=$ENV_PORT" >> .env
+
+# Deploy door te updaten en de service opnieuw te starten
 deploy:
   image: ubuntu:latest
   stage: deploy
