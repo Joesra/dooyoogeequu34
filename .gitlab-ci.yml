@@ -13,15 +13,20 @@ deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
 
-      # Private key direct opslaan (NIET base64)
+    # Private key opslaan
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
     - chmod 600 ~/.ssh/id_ed25519
+    - dos2unix ~/.ssh/id_ed25519
 
-      # Known hosts toevoegen
+    # SSH agent starten en key toevoegen
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_ed25519
+
+    # Known hosts toevoegen
     - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
   script:
-    - ssh -i ~/.ssh/id_ed25519 "$SSH_USER@$SSH_HOST" "
+    - ssh "$SSH_USER@$SSH_HOST" "
         cd $WORK_DIR &&
         git remote set-url origin https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34.git &&
         git checkout Stijn &&
@@ -29,4 +34,5 @@ deploy:
       "
 
   after_script:
+    - ssh-agent -k
     - rm -rf ~/.ssh
