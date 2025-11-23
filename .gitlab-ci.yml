@@ -49,7 +49,7 @@ deploy_env_file:
   tags:
     - rpi_runner
   script:
-    - cd /var/www/$REPO_NAME
+    - cd /var/www/$REPO_NAME/app
     - echo "DB_NAME=$ENV_NAME" > .env
     - echo "DB_USER=$ENV_USER" >> .env
     - echo "DB_PASSWORD=$ENV_PASSWORD" >> .env
@@ -70,4 +70,3 @@ deploy:
     - git checkout Stijn
     - git pull origin Stijn
     - sudo /bin/systemctl restart flaskapp.service
-
