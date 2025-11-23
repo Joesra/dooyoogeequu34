@@ -9,9 +9,9 @@ deploy:
   tags:
     - deploy
 
-  script:
-    - git config --global --add safe.directory $WORK_DIR
-    - cd $WORK_DIR
-    - git remote set-url origin https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34/
-    - git checkout Stijn
-    - git pull origin Stijn
+script:
+  - cd $WORK_DIR
+  - git remote set-url origin https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34/
+  - git checkout Stijn
+  - git pull origin Stijn
+
