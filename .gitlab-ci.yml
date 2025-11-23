@@ -2,7 +2,7 @@ stages:
   - deploy
 
 deploy:
-  image: ubuntu:24.04
+  image: ubuntu:latest
   stage: deploy
   only:
     - Stijn
@@ -17,12 +17,7 @@ deploy:
     - ssh-keyscan -H $SSH_HOST > ~/. ssh/known_hosts
 
   script:
-    - ssh "$SSH_USER@$SSH_HOST" "
-        cd $WORK_DIR &&
-        git remote set-url origin https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34.git &&
-        git checkout Stijn &&
-        git pull
-      "
+    - ssh $SSH_USER@$SSH_HOST "cd $WORK_DIR && git checkout Stijn && git pull && exit"
 
   after_script:
     - rm -rf ~/.ssh
