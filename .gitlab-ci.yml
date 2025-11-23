@@ -49,7 +49,7 @@ deploy_env_file:
   tags:
     - rpi_runner
   script:
-    - cd /var/www/$REPO_NAME/app
+    - cd /var/www/$REPO_NAME
     - echo "DB_NAME=$ENV_NAME" > .env
     - echo "DB_USER=$ENV_USER" >> .env
     - echo "DB_PASSWORD=$ENV_PASSWORD" >> .env
