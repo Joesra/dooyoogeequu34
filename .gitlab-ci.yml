@@ -2,7 +2,7 @@ stages:
   - deploy
 
 deploy:
-  image: ubuntu:latest
+  image: bitnami/git:latest
   stage: deploy
   only:
     - Stijn
