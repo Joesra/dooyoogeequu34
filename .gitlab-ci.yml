@@ -9,12 +9,12 @@ deploy:
   tags:
     - deploy
 
-  # before_script:
-  #   - mkdir -p ~/.ssh
-  #   - chmod 700 ~/.ssh
-  #   - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
-  #   - chmod 600 ~/.ssh/id_rsa
-  #   - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+  before_script:
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
   script:
     - ssh "$SSH_USER@$SSH_HOST" "
