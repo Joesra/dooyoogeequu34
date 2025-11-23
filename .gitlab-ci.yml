@@ -10,14 +10,17 @@ deploy:
     - deploy
 
   before_script:
+    # Prepare SSH directory and key
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    # Decode PEM-format private key
     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
+    # Add host to known_hosts
     - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
   script:
-    - ssh "$SSH_USER@$SSH_HOST" "
+    - ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "
         cd $WORK_DIR &&
         git remote set-url origin https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34.git &&
         git checkout Stijn &&
