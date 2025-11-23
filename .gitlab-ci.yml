@@ -1,14 +1,33 @@
 stages:
   - deploy
+  - build
+
+build:
+  image: python:3.11
+  stage: build
+  only:
+    - Stijn
+  script:
+    # Virtuele omgeving maken
+    - python -m venv venv
+    - source venv/bin/activate
+
+    # Upgrade pip en installeer dependencies
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+
+    - flask run
 
 deploy:
   image: ubuntu:latest
   stage: deploy
   only:
     - Stijn
+  # Tag zorgt ervoor dat deze job alleen op specifieke runners draait
+  # die het naar de juiste server gaat deployen
+  # in dit geval naar de Raspberry Pi van Stijn
   tags:
-    - deploy
-
+    - deploy_to_rpi
   script:
     - git config --global user.name "CI Pipeline RPI"
     - git config --global user.email "cipipelinerpi@example.com"
