@@ -17,4 +17,3 @@ deploy:
     - git checkout Stijn
     - git pull origin Stijn
     - systemctl restart flaskapp.service
-    
