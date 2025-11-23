@@ -1,36 +1,49 @@
 stages:
-  - build
+  - fetch
+  - create_venv
   - deploy
 
-build:
-  image: python:3.11
-  stage: build
+# Clone de repository naar de server
+fetch:
+  image: ubuntu:latest
+  stage: fetch
   only:
     - Stijn
+  tags:
+    - rpi_runner
   script:
-    # Virtuele omgeving maken
+    - cd /var/www/
+    # Check of de folder bestaat en verwijder die
+    - if [ -d "$REPO_NAME" ]; then rm -rf "$REPO_NAME"; fi
+    # Clone de repository
+    - git clone https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/$REPO_URL
+    - cd /var/www/$REPO_NAME
+
+
+# Download en installeer de benodigde dependencies
+create_venv:
+  image: python:latest
+  stage: create_venv
+  only:
+    - Stijn
+  tags:
+    - rpi_runner
+  script:
+    - cd /var/www/$REPO_NAME
     - python -m venv venv
     - source venv/bin/activate
-
-    # Upgrade pip en installeer dependencies
     - pip install --upgrade pip
     - pip install -r requirements.txt
 
-    - flask run
-
+# Deploy de applicatie door de service te herstarten
 deploy:
   image: ubuntu:latest
   stage: deploy
   only:
     - Stijn
-  # Tag zorgt ervoor dat deze job alleen op specifieke runners draait
-  # die het naar de juiste server gaat deployen
-  # in dit geval naar de Raspberry Pi van Stijn
   tags:
-    - deploy_to_rpi
+    - rpi_runner
   script:
-    - git config --global user.name "CI Pipeline RPI"
-    - git config --global user.email "cipipelinerpi@example.com"
     - cd /var/www/$REPO_NAME
     - git remote set-url origin https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34/
     - git checkout Stijn
