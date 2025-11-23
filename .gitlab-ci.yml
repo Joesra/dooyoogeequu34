@@ -70,3 +70,4 @@ deploy:
     - git checkout Stijn
     - git pull origin Stijn
     - sudo /bin/systemctl restart flaskapp.service
+
