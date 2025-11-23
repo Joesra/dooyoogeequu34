@@ -9,14 +9,10 @@ deploy:
   tags:
     - deploy
 
-  before_script:
-    - sudo apt-get -yqq install ssh
-    - install -m 600 -D /dev/null ~/.ssh/id_rsa
-    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
-    - ssh-keyscan -H $SSH_HOST > ~/. ssh/known_hosts
-
   script:
-    - "cd $WORK_DIR && git checkout Stijn && git pull && exit"
-
-  after_script:
-    - rm -rf ~/.ssh
+    - cd $WORK_DIR
+    # Configureer remote met access token
+    - git remote set-url origin https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34/
+    # Checkout de branch en haal laatste wijzigingen
+    - git checkout Stijn
+    - git pull origin Stijn
