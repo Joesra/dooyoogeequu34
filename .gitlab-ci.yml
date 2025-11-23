@@ -4,6 +4,7 @@
 # Volg deze video om flask applicatie te hosten: https://www.youtube.com/watch?v=KWIIPKbdxD0
 
 # geen perms om folders te verwijderen? sudo chown -R gitlab-runner:gitlab-runner /var/www
+# het is belangrijk dat de gitlab-runner de juiste rechten heeft voor sommige scripts.
 
 stages:
   - fetch
