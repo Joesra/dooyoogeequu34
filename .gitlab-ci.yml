@@ -10,9 +10,9 @@ deploy:
     - deploy
 
   before_script:
-    - echo "Start before_script..."
-    - sudo apt-get -yq update
-    - sudo apt-get -yqq install ssh
+    - echo ">>>>>>>>> Executing before script <<<<<<<<<<"
+    - apt-get update -yq
+    - apt-get install -yq openssh-client
     - install -m 600 -D /dev/null ~/.ssh/id_rsa
     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
     - ssh-keyscan -H $SSH_HOST > ~/.ssh/known_hosts
@@ -22,7 +22,7 @@ deploy:
     - echo "https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl" > ~/.git-credentials
 
   script:
-    - echo "Start script..."
+    - echo ">>>>>>>>> Executing start script <<<<<<<<<<"
     - ssh $SSH_USER@$SSH_HOST "
         cd $WORK_DIR &&
         git remote set-url origin https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34.git &&
@@ -32,4 +32,5 @@ deploy:
       "
 
   after_script:
+    - echo ">>>>>>>>> Executing after script <<<<<<<<<<"
     - rm -rf ~/.ssh
