@@ -14,7 +14,8 @@ fetch:
   script:
     - cd /var/www/
     # Check of de folder bestaat en verwijder die
-    - if [ -d "$REPO_NAME" ]; then sudo rm -rf "$REPO_NAME"; fi # sudo chown -R gitlab-runner:gitlab-runner /var/www
+    # geen perms? sudo chown -R gitlab-runner:gitlab-runner /var/www
+    - if [ -d "$REPO_NAME" ]; then sudo rm -rf "$REPO_NAME"; fi
     # Clone de repository
     - git clone https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/$REPO_URL
     - cd /var/www/$REPO_NAME
