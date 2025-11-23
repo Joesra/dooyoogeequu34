@@ -10,21 +10,17 @@ deploy:
     - deploy
 
   before_script:
-    - echo "\n\n>>>>>>>>> Executing before script <<<<<<<<<<"
+    - \n\n echo ">>>>>>>>> Executing before script <<<<<<<<<<"
     - apt-get update -yq
     - apt-get install -yq openssh-client
     - install -m 600 -D /dev/null ~/.ssh/id_rsa
     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
     - ssh-keyscan -H $SSH_HOST > ~/.ssh/known_hosts
 
-    ### GitLab token authenticatie voor de runner zelf
-    - git config --global credential.helper store
-    - echo "https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl" > ~/.git-credentials
-
     - echo ">>>>>>>>> End before script <<<<<<<<<<"
 
   script:
-    - echo "\n\n>>>>>>>>> Executing start script <<<<<<<<<<"
+    - \n\n echo ">>>>>>>>> Executing start script <<<<<<<<<<"
     - ssh $SSH_USER@$SSH_HOST "
         cd $WORK_DIR &&
         git remote set-url origin https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34.git &&
@@ -35,6 +31,6 @@ deploy:
     - echo ">>>>>>>>> End start script <<<<<<<<<<"
 
   after_script:
-    - echo "\n\n>>>>>>>>> Executing after script <<<<<<<<<<"
+    - \n\n echo ">>>>>>>>> Executing after script <<<<<<<<<<"
     - rm -rf ~/.ssh
     - echo ">>>>>>>>> End after script <<<<<<<<<<"
