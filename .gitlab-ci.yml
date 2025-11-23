@@ -9,21 +9,12 @@ deploy:
   tags:
     - deploy
 
-  before_script:
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-
-    # Private key opslaan
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-    - chmod 600 ~/.ssh/id_ed25519
-    - dos2unix ~/.ssh/id_ed25519
-
-    # SSH agent starten en key toevoegen
-    - eval $(ssh-agent -s)
-    - ssh-add ~/.ssh/id_ed25519
-
-    # Known hosts toevoegen
-    - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+  # before_script:
+  #   - mkdir -p ~/.ssh
+  #   - chmod 700 ~/.ssh
+  #   - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+  #   - chmod 600 ~/.ssh/id_rsa
+  #   - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
   script:
     - ssh "$SSH_USER@$SSH_HOST" "
@@ -34,5 +25,4 @@ deploy:
       "
 
   after_script:
-    - ssh-agent -k
     - rm -rf ~/.ssh
