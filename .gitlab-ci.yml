@@ -17,7 +17,9 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
     - ssh-keyscan -H $SSH_HOST > ~/.ssh/known_hosts
 
-
+    ### GitLab token authenticatie voor de runner zelf
+    - git config --global credential.helper store
+    - echo "https://oauth2:${CI_CD_TOKEN}@gitlab.fdmci.hva.nl" > ~/.git-credentials
 
     - echo ">>>>>>>>> End before script <<<<<<<<<<"
 
