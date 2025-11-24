@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static', filename='css/nieuws.css')}}" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
-    <title>nieuws</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hermeneus+One&display=swap" rel="stylesheet">
+    <title>Design</title>
 </head>
 
 <body>
+    <div class="horizontale-container_bron">
+        <div class="breadcrumb">
+            Home / Nieuws / <span class="design-color">categorie/design</span>
+        </div>
+        <img class="search_icon" src="/static/img/search_icon.png" alt="">
+    </div>
     <div class="image-container">
         <img class="nieuws-search" src="/static/img/design_search.png" alt="nieuws-search">
         <form class="search-bar">
@@ -18,15 +25,256 @@
     </div>
 
     <div class="nieuws-p">
-        <p>Recente artikelen met snel stijgende popolariteit:</p>
+        <p>artikelen met snel stijgende popolariteit</p>
     </div>
     <div class="categorie-container3">
-        <div class="categorie-artikel">
-            <img src="\static\img\variatie-design.png" >
-        </div>
-        <div class="categorie-artikel"></div>
-        <div class="categorie-artikel"></div>
-        <div class="categorie-artikel"></div>
+        <a class="link-container" href="{{ url_for('events.artikel_categorie_design1') }}">
+            <div class="categorie-artikel">
+                <img src="\static\img\variatie-design.png" alt="Variatie design">
+                <div class="categorie-beschrijving">
+                    <div class="design_categorie-alert">design</div>
+                    <img class="uitzondering" src="/static/img/categorie_calender.png" alt="Kalender icoon">
+                    <p class="beschrijving-tekst">7-11-2025</p>
+                </div>
+                <p class="categorie-titel">
+                    Een overzicht van de nieuwste interfaceverbeteringen en privacycommunicatie.
+                </p>
+            </div>
+        </a>
+        <a class="link-container" href="{{ url_for('events.artikel_categorie_design2') }}">
+            <div class="categorie-artikel">
+                <img src="\static\img\schets-design.png" alt="Tekening">
+                <div class="categorie-beschrijving">
+                    <div class="design_categorie-alert">design</div>
+                    <img class="uitzondering" src="/static/img/categorie_calender.png" alt="Kalender icoon">
+                    <p class="beschrijving-tekst">5-11-2025</p>
+                </div>
+                <p class="categorie-titel">
+                    Wolken heeft zijn gebruikersinterface vernieuwd met een focus op eenvoud.
+                </p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="categorie-artikel">
+                <img src="\static\img\schilder-design.png" alt="Cloudinnovatie">
+                <div class="categorie-beschrijving">
+                    <div class="design_categorie-alert">design</div>
+                    <img class="uitzondering" src="/static/img/categorie_calender.png" alt="Kalender icoon">
+                    <p class="beschrijving-tekst">3-11-2025</p>
+                </div>
+                <p class="categorie-titel">
+                    Ontwerpen met Vertrouwen: Privacy als Fundament van Cloudinnovatie.
+                </p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.artikel_categorie_design3') }}">
+            <div class="categorie-artikel">
+                <img src="\static\img\constructie-design.png" alt="Cloudinnovatie">
+                <div class="categorie-beschrijving">
+                    <div class="design_categorie-alert">design</div>
+                    <img class="uitzondering" src="/static/img/categorie_calender.png" alt="Kalender icoon">
+                    <p class="beschrijving-tekst">1-11-2025</p>
+                </div>
+                <p class="categorie-titel">
+                    Ontwerpen met Impact: Visuele sleutel.
+                </p>
+            </div>
+        </a>
     </div>
+    <div class="nieuws-p">
+        <p>alle design artikelen:</p>
+    </div>
+
+    <div class="artikel-container">
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="artikel-container">
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+        <a class="link-container" href="{{ url_for('events.design1') }}">
+            <div class="artikel">
+                <div class="artikel-beschrijving">
+                    <p class="design-alert">Design</p>
+                    <img class="Calendar" src="/static/img/calendar.png" alt="systeem afbeelding">
+                    <p class="beschrijving-tekst">10-10-2025</p>
+                </div>
+                <img class="click-img" src="/static/img/design-1.png" alt="design afbeelding">
+                <p class="click-tekst">Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</p>
+            </div>
+        </a>
+
+    </div>
+
+
 
 </body>
