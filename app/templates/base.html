@@ -27,6 +27,9 @@
             <li class="{% if request.path == '/contact' %}active-link{% endif %}">
                 <a href="{{ url_for('main.contact') }}">Support</a>
             </li>
+            <li class="{% if request.path == '/login' %}active-link{% endif %}">
+                <a href="{{ url_for('main.login') }}">login</a>
+            </li>
             <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
