@@ -1,9 +1,35 @@
-{% extends 'base.html' %}
-{% block header %}
-<h1>{% block title %}inloggen {% endblock %}</h1>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<head>   
+<body>
+    <div class="sidebar">
+        <div class="logo">"Wolken"</div>
+        <ul>
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
+            </li>
+            <li><a href="#">Data Beheren</a></li>
+            <li><a href="#">Statistieken</a></li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                <a href="{{ url_for('main.contact') }}">Support</a>
+            </li>
+            <li><a href="#">Instellingen</a></li>
+        </ul>
+    </div>
+
+    <div class="main login-page">
+        <header>
+            <h1>inloggen</h1>
+        </header>
+
+        {% block content %}
   <p> <div class="form-container">
                                 {% if error %}
                                         <div class="form-error">{{ error }}</div>
