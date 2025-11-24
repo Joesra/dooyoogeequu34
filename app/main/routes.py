@@ -56,7 +56,7 @@ def contact():
 def services():
     return render_template("services.html")
 
-@bp.route("/registreer", methods={ 'GET', 'POST' })
+@bp.route("/registreer", methods=["GET", "POST"])
 def registreer():
     if request.method == "POST":
         voornaam = request.form["voornaam"]
@@ -67,15 +67,12 @@ def registreer():
         wachtwoord = request.form["wachtwoord"]
         wachtwoord_confirm = request.form.get("wachtwoord_confirm")
 
-        # eenvoudige validatie: controleer of wachtwoorden overeenkomen
         if wachtwoord_confirm is not None and wachtwoord != wachtwoord_confirm:
-            # geef de fout direct terug aan de template (geen flash/redirect)
             return render_template("registreer.html", error="Wachtwoorden komen niet overeen.")
 
         conn = get_db_connection() 
         cursor = conn.cursor() 
 
-        # Hash het wachtwoord voordat we het opslaan
         hashed = generate_password_hash(wachtwoord)
 
         query = """
@@ -87,8 +84,8 @@ def registreer():
         cursor.close() 
         conn.close() 
 
-    # na succesvolle registratie doorsturen naar login
-    return redirect("/login")
+        return redirect("/login")
+
     return render_template("registreer.html")
 
 @bp.route("/login", methods={ 'GET', 'POST' })
