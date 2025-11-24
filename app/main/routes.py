@@ -122,3 +122,44 @@ def login():
             # toon foutmelding zonder flash door de template opnieuw te renderen
             return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
     return render_template("login.html")
+
+@bp.route("/dev", methods=["GET"])
+def dev_dashboard():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM contact_aanvragen ORDER BY id DESC")
+    aanvragen = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("dev.html", aanvragen=aanvragen)
+
+@bp.route("/dev/aanvraag/<int:id>", methods=["GET"])
+def aanvraag_detail(id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM contact_aanvragen WHERE id = %s", (id,))
+    aanvraag = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("aanvraag_detail.html", aanvraag=aanvraag)
+
+@bp.route("/dev/aanvraag/<int:id>", methods=["POST"])
+def aanvraag_beantwoorden(id):
+    antwoord = request.form["antwoord"]
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("UPDATE contact_aanvragen SET antwoord = %s WHERE id = %s", (antwoord, id))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return redirect("/dev")

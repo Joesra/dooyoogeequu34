@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Aanvragen - Dev Dashboard</title>
+</head>
+<body>
+
+<h1>Binnengekomen support aanvragen</h1>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Naam</th>
+        <th>Email</th>
+        <th>Onderwerp</th>
+        <th>Bericht</th>
+        <th>Actie</th>
+    </tr>
+
+    {% for aanvraag in aanvragen %}
+    <tr>
+        <td>{{ aanvraag.id }}</td>
+        <td>{{ aanvraag.naam }}</td>
+        <td>{{ aanvraag.email }}</td>
+        <td>{{ aanvraag.onderwerp }}</td>
+        <td>{{ aanvraag.bericht }}</td>
+        <td>
+            <a href="/dev/aanvraag/{{ aanvraag.id }}">Beantwoorden</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
