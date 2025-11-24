@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Registreer{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <p> <div class="form-container">
+                                {% if error %}
+                                        <div class="form-error">{{ error }}</div>
+                                {% endif %}
+                <form method="POST" action="/registreer" class="registreer-form">
+                    <div class="form-group">
+                        <label for="voornaam">Voornaam*</label>
+                        <input type="text" id="voornaam" name="voornaam" required placeholder="Uw voornaam">
+                    </div>
+                    <div class="form-group">
+                        <label for="achternaam">Achternaam*</label>
+                        <input type="text" id="achternaam" name="achternaam" required placeholder="Uw achternaam">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail*</label>
+                        <input type="email" id="email" name="email" required placeholder="Uw e-mailadres">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefoonnummer">Telefoonnummer*</label>
+                        <input type="tel" id="telefoonnummer" name="telefoonnummer" required placeholder="Uw telefoonnummer">
+                    </div>
+                    <div class="form-group">
+                        <label for="gebruikersnaam">Gebruikersnaam*</label>
+                        <input type="text" id="gebruikersnaam" name="gebruikersnaam" required placeholder="Kies een gebruikersnaam">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wachtwoord">Wachtwoord*</label>
+                        <input type="password" id="wachtwoord" name="wachtwoord" required placeholder="Voer uw wachtwoord in">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wachtwoord_confirm">Bevestig Wachtwoord*</label>
+                        <input type="password" id="wachtwoord_confirm" name="wachtwoord_confirm" required placeholder="Bevestig uw wachtwoord">
+                    </div>
+
+                    <button type="submit" class="btn-submit">Registreer</button>
+                </form>
+            </div>
+  </p>
+{% endblock %}

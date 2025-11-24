@@ -2,6 +2,7 @@ from flask import render_template, request, redirect
 from app.main import bp
 from app.settings import DATABASE
 import mysql.connector
+from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_db_connection():
     """Connectie maken met mysql database"""
@@ -60,3 +61,64 @@ def services():
     return render_template("services.html")
 
  #test        
+@bp.route("/registreer", methods=["GET", "POST"])
+def registreer():
+    if request.method == "POST":
+        voornaam = request.form["voornaam"]
+        achternaam = request.form["achternaam"]
+        email = request.form["email"]
+        telefoonnummer = request.form["telefoonnummer"]
+        gebruikersnaam = request.form["gebruikersnaam"]
+        wachtwoord = request.form["wachtwoord"]
+        wachtwoord_confirm = request.form.get("wachtwoord_confirm")
+
+        if wachtwoord_confirm is not None and wachtwoord != wachtwoord_confirm:
+            return render_template("registreer.html", error="Wachtwoorden komen niet overeen.")
+
+        conn = get_db_connection() 
+        cursor = conn.cursor() 
+
+        hashed = generate_password_hash(wachtwoord)
+
+        query = """
+            INSERT INTO user(Voornaam, achternaam, email, Telefoonnummer, gebruikersnaam, wachtwoord)
+            VALUES (%s, %s, %s, %s,  %s, %s)
+        """
+        cursor.execute(query, (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, hashed))
+        conn.commit() 
+        cursor.close() 
+        conn.close() 
+
+        return redirect("/login")
+
+    return render_template("registreer.html")
+
+@bp.route("/login", methods={ 'GET', 'POST' })
+def login():
+    if request.method == "POST":
+        gebruikersnaam = request.form["gebruikersnaam"]
+        wachtwoord = request.form["wachtwoord"]
+
+        conn = get_db_connection() 
+        cursor = conn.cursor() 
+
+        query = """
+            SELECT wachtwoord FROM user WHERE gebruikersnaam = %s
+        """
+        cursor.execute(query, (gebruikersnaam,))
+        row = cursor.fetchone()
+        user = None
+        if row:
+            # cursor.fetchone() geeft meestal een tuple; wachtwoord staat in eerste kolom
+            stored_hash = row[0]
+            if check_password_hash(stored_hash, wachtwoord):
+                user = True
+        cursor.close() 
+        conn.close() 
+
+        if user:
+            return redirect("/home")
+        else:
+            # toon foutmelding zonder flash door de template opnieuw te renderen
+            return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
+    return render_template("login.html")
