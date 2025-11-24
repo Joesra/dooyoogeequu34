@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Incident aanmaken{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/nieuwe_incident.css')}}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<form method="POST" action="/incident/nieuw" class="incident-form">
+
+    <label for="incident_onderwerp">Incident onderwerp</label>
+    <input type="text" id="incident_onderwerp" name="incident_onderwerp" required>
+
+    <label for="incident_categorie">Incident categorie</label>
+    <input type="text" id="incident_categorie" name="incident_categorie" required>
+
+    <label for="incident_bericht">Incident bericht</label>
+    <textarea id="incident_bericht" name="incident_bericht" rows="6" required></textarea>
+
+    <label for="incident_prioriteit">Incident prioriteit</label>
+    <select id="incident_prioriteit" name="incident_prioriteit" required>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+    </select>
+
+    <label for="customer_zoek">Klant zoeken</label>
+    <input type="text" id="customer_zoek" name="customer_zoek" placeholder="Zoek klant..." autocomplete="off">
+
+    <div id="customer_results"></div>
+
+    <button type="submit">Aanmaken</button>
+</form>
+{% endblock %}

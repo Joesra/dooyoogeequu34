@@ -79,3 +79,12 @@ def incidenten():
     cursor.close()
     conn.close()
     return render_template("incidenten.html", incidenten=incidenten)
+
+@bp.route("/nieuwe_incident")
+def nieuwe_incident():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    query = "SELECT * FROM incident_categories"
+    
+    return render_template("nieuwe_incident.html")

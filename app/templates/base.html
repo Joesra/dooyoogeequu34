@@ -22,8 +22,11 @@
             <li class="{% if request.path == '/contact' %}active-link{% endif %}">
                 <a href="{{ url_for('main.contact') }}">Support</a>
             </li>
-            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+            <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
                 <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
+            </li>
+            <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
             </li>
             <li><a href="#">Instellingen</a></li>
         </ul>
