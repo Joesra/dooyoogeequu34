@@ -1,0 +1,73 @@
+# Voorbereidingen:
+# Ubuntu server is opgezet
+# Gitlab Runner is geïnstalleerd en geregistreerd met rpi_runner tag die is opgezet op GitLab 
+# Volg deze video om flask applicatie te hosten: https://www.youtube.com/watch?v=KWIIPKbdxD0
+
+# geen perms om folders te verwijderen? sudo chown -R gitlab-runner:gitlab-runner /var/www
+# het is belangrijk dat de gitlab-runner de juiste rechten heeft voor sommige scripts.
+
+stages:
+  - fetch
+  - create_venv
+  - deploy_env_file
+  - deploy
+
+# Clone de repository naar de server
+fetch:
+  image: ubuntu:latest
+  stage: fetch
+  only:
+    - Stijn
+  tags:
+    - rpi_runner
+  script:
+    - cd /var/www/
+    - if [ -d "$REPO_NAME" ]; then sudo rm -rf "$REPO_NAME"; fi # Checkt of de directory al bestaat en verwijdert deze indien nodig zonder waarschuwing
+    - git clone https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/$REPO_URL
+    - cd /var/www/$REPO_NAME
+
+# Bouw een Python Virtual Environment en installeer dependencies uit requirements.txt
+create_venv:
+  image: python:latest
+  stage: create_venv
+  only:
+    - Stijn
+  tags:
+    - rpi_runner
+  script:
+    - cd /var/www/$REPO_NAME
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+
+# Nieuwe stage: maak .env-bestand aan met database gegevens
+deploy_env_file:
+  image: ubuntu:latest
+  stage: deploy_env_file
+  only:
+    - Stijn
+  tags:
+    - rpi_runner
+  script:
+    - cd /var/www/$REPO_NAME/app
+    - echo "DB_NAME=$ENV_NAME" > .env
+    - echo "DB_USER=$ENV_USER" >> .env
+    - echo "DB_PASSWORD=$ENV_PASSWORD" >> .env
+    - echo "DB_HOST=$ENV_HOST" >> .env
+    - echo "DB_PORT=$ENV_PORT" >> .env
+
+# Deploy door te updaten en de service opnieuw te starten
+deploy:
+  image: ubuntu:latest
+  stage: deploy
+  only:
+    - Stijn
+  tags:
+    - rpi_runner
+  script:
+    - cd /var/www/$REPO_NAME
+    - git remote set-url origin https://oauth2:$ACCESS_TOKEN_RPI@gitlab.fdmci.hva.nl/propedeuse-hbo-ict/onderwijs/student-projecten/2025-2026/spiegelonderwijs-bim/b3-2425-deopdracht/dooyoogeequu34/
+    - git checkout Stijn
+    - git pull origin Stijn
+    - sudo /bin/systemctl restart flaskapp.service
