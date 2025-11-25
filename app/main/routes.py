@@ -163,3 +163,36 @@ def aanvraag_beantwoorden(id):
     conn.close()
 
     return redirect("/dev")
+
+@bp.route("/incidenten")
+def incidenten():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = """
+        SELECT 
+            i.incidents_id,
+            i.incident_subject,
+            i.incident_category,
+            i.incident_message,
+            i.incident_date,
+            i.incident_priority,
+            c.firstname,
+            c.lastname
+        FROM incidents i
+        JOIN customer c ON i.Customer_customer_id = c.customer_id
+        ORDER BY i.incident_date DESC
+    """
+    cursor.execute(query)
+    incidenten = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template("incidenten.html", incidenten=incidenten)
+
+@bp.route("/nieuwe_incident")
+def nieuwe_incident():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    query = "SELECT * FROM incident_categories"
+    
+    return render_template("nieuwe_incident.html")

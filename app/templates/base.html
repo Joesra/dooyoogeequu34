@@ -29,6 +29,11 @@
             </li>
             <li class="{% if request.path == '/login' %}active-link{% endif %}">
                 <a href="{{ url_for('main.login') }}">login</a>
+            <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
+                <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
+            </li>
+            <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
             </li>
             <li><a href="#">Instellingen</a></li>
         </ul>
@@ -41,7 +46,7 @@
             <h1>{% block header %}{% endblock %}</h1>
             <button class="logout">Uitloggen</button>
         </header>
-
+<!-- 
         <section class="stats">
             <div class="card">
                 <p>Totaal Datasets</p>
@@ -138,7 +143,7 @@
                     </tr>
                 </tbody>
     </div>
-
+ -->
 
     <section class="mainsection">
         <div>{% block content %}{% endblock %}</div>

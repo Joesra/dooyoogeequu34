@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Incidenten Overzicht{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/incidenten.css')}}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<div>
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Incident nummer</th>
+					<th scope="col">Prioriteit</th>
+					<th scope="col">Titel</th>
+					<th scope="col">Aangemaakt</th>
+					<th scope="col">Klant</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for incident in incidenten %}
+				<tr>
+					<td>{{ incident.incidents_id }}</td>
+					<td><span>{{ incident.incident_priority }}</span></td>
+					<td>
+						<div>{{ incident.incident_category }}</div>
+						<div style="font-size: 0.95em; color: #555;">{{ incident.incident_message }}</div>
+						<div>
+							<span><i class="fa-solid fa-plus"></i></span>
+							<span>LAADT DETAILS</span>
+						</div>
+					</td>
+					<td>{{ incident.incident_date }}</td>
+					<td>{{ incident.firstname }} {{ incident.lastname }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
