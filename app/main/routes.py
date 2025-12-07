@@ -123,6 +123,19 @@ def login():
             return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
     return render_template("login.html")
 
+@bp.route("/nieuws/<int:article_id>")
+def nieuws_article(article_id):
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor(dictionary=True)  # levert dicts in plaats van tuples
+        sql = "SELECT id, title, content, likes, DATE_FORMAT(publish_date, '%Y-%m-%d') AS publish_date FROM newsarticles WHERE id = %s"
+        cursor.execute(sql, (article_id,))
+        row = cursor.fetchone()
+        return render_template("design1.html", newsarticle=row)
+    finally:
+        cursor.close()
+        conn.close()
+
 @bp.route("/dev", methods=["GET"])
 def dev_dashboard():
     conn = get_db_connection()

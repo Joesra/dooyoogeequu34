@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</title>
+    <title>{{ newsarticle.title }}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/nieuws.css')}}" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hermeneus+One&display=swap" rel="stylesheet">
 </head>
+
 
 <body>
     <div class="horizontale-container_bron">
@@ -24,7 +25,7 @@
             <p class="beschrijving-tekst_artikel">5-10-2025</p>
             <img class="spatie" src="\static\img\book_mark.png" alt="">
             <img class="spatie" src="\static\img\thumbs_up.png" alt="">
-            <img class="spatie" src="\static\img\thumbs_down.png" alt="">
+            <p>{{ newsarticle.likes }}</p>
         </div>
         <p class="artikel-titel">Ontwerpen met Vertrouwen: Privacy als Fundament van Cloudinnovatie</p>
 
