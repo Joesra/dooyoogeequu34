@@ -3,7 +3,20 @@ from dateutil.parser import isoparse
 from flask import abort, redirect, render_template, request, url_for
 
 from app.events import bp, create_event, get_event, get_events, update_event
+from flask import render_template, request, redirect
+from app.settings import DATABASE
+import mysql.connector
+from werkzeug.security import generate_password_hash, check_password_hash
 
+def get_db_connection():
+    """Connectie maken met mysql database"""
+    return mysql.connector.connect(
+        host=DATABASE["HOST"],
+        user=DATABASE["USER"],
+        password=DATABASE["PASSWORD"],
+        database=DATABASE["NAME"],
+        port=DATABASE["PORT"]
+    )
 
 @bp.route("/")
 def index():
@@ -23,9 +36,21 @@ def categorie_design():
 def artikel_privacy1():
     return render_template("artikel_privacy1.html")
 
-@bp.route("/design1")
-def design1():
-    return render_template("design1.html")
+@bp.route("/design1/<int:article_id>")
+def design1(article_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT newsArticle_id, title, likes FROM newsarticle WHERE newsArticle_id = %s", (article_id,))
+    newsarticle = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if newsarticle is None:
+        return "Artikel niet gevonden", 404
+
+    return render_template("design1.html", newsarticle=newsarticle)
 
 @bp.route("/artikel_systeem1")
 def artikel_systeem1():
