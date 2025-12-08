@@ -11,22 +11,7 @@ def get_db_connection():
         user=DATABASE["USER"],
         password=DATABASE["PASSWORD"],
         database=DATABASE["NAME"],
-        port=DATABASE["PORT"]
     )
 
-# @bp.route("/nieuws/<int:article_id>")
-# def nieuws_article(article_id):
-#     conn = get_db_connection()
-#     try:
-#         cursor = conn.cursor(dictionary=True)  # levert dicts in plaats van tuples
-#         sql = "SELECT id, title, content, likes, DATE_FORMAT(publish_date, '%Y-%m-%d') AS publish_date FROM newsarticles WHERE id = %s"
-#         cursor.execute(sql, (article_id,))
-#         row = cursor.fetchone()
-#         if row is None:
-#             # 404 als artikel niet bestaat
-#             abort(404)
-#         # row is een dictionary, geef die door aan de template als 'newsarticle'
-#         return render_template("design1.html", newsarticle=row)
-#     finally:
-#         cursor.close()
-#         conn.close()
+
+
