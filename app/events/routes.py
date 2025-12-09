@@ -40,7 +40,6 @@ def artikel_privacy1():
 def design1(article_id):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-
     cursor.execute("SELECT newsArticle_id, title, likes FROM newsarticle WHERE newsArticle_id = %s", (article_id,))
     newsarticle = cursor.fetchone()
 
