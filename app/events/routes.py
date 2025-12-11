@@ -3,7 +3,7 @@ from dateutil.parser import isoparse
 from flask import abort, redirect, render_template, request, url_for
 
 from app.events import bp, create_event, get_event, get_events, update_event
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 from app.settings import DATABASE
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -37,19 +37,41 @@ def artikel_privacy1():
     return render_template("artikel_privacy1.html")
 
 @bp.route("/design1/<int:article_id>")
-def design1(article_id):
+def design1 (article_id):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT newsArticle_id, title, likes FROM newsarticle WHERE newsArticle_id = %s", (article_id,))
-    newsarticle = cursor.fetchone()
+    newsarticle = cursor.fetchone()   
 
     cursor.close()
     conn.close()
 
     if newsarticle is None:
         return "Artikel niet gevonden", 404
+    
+    liked_list = session.get("liked_articles", [])
+    is_liked = article_id in liked_list
 
-    return render_template("design1.html", newsarticle=newsarticle)
+
+    return render_template("design1.html", newsarticle=newsarticle, is_liked=is_liked,)
+
+@bp.route("/design1<int:article_id>/like", methods=["post"])
+def like_functie (article_id, liked_list):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        cursor.execute("UPDATE newsarticle SET likes = likes + 1 WHERE newsarticle_id = %s", (article_id,))
+        conn.commit
+    if:
+        article_id in liked_list
+        cursor.execute("UPDATE liked_list DELETE newsarticle_id WHERE newsarticle_id = %S", (article_id))
+        
+    
+
+    return render_template("design1.html")
+
+
+
 
 @bp.route("/artikel_systeem1")
 def artikel_systeem1():

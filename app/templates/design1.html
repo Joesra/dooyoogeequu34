@@ -26,6 +26,7 @@
             <img class="spatie" src="\static\img\book_mark.png" alt="">
             <img class="spatie" src="\static\img\thumbs_up.png" alt="">
             <p>{{ newsarticle.likes }}</p>
+            {% if is_liked %}ALREADY LIKED{% else %}NOT LIKED{% endif %}
         </div>
         <p class="artikel-titel">Ontwerpen met Vertrouwen: Privacy als Fundament van Cloudinnovatie</p>
 
