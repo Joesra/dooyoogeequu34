@@ -3,7 +3,7 @@ from dateutil.parser import isoparse
 from flask import abort, redirect, render_template, request, url_for
 
 from app.events import bp, create_event, get_event, get_events, update_event
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, jsonify, current_app
 from app.settings import DATABASE
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -55,6 +55,8 @@ def design1 (article_id):
 
     return render_template("design1.html", newsarticle=newsarticle, is_liked=is_liked,)
 
+
+
 @bp.route("/design1<int:article_id>/like", methods=["post"])
 def like_functie (article_id, liked_list):
     conn = get_db_connection()
@@ -70,6 +72,59 @@ def like_functie (article_id, liked_list):
 
     return render_template("design1.html")
 
+@bp.route("/design1/<int:article_id>/like", methods=["POST"])
+def toggle_like(article_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        liked_set = set(session.get("liked_articles", []))
+
+        if article_id in liked_set:
+            # correct parameter als tuple
+            cursor.execute(
+                "UPDATE newsarticle SET likes = GREATEST(likes - 1, 0) WHERE newsarticle_id = %s",
+                (article_id,)
+            )
+            liked_set.discard(article_id)
+            liked = False
+        else:
+            cursor.execute(
+                "UPDATE newsarticle SET likes = likes + 1 WHERE newsarticle_id = %s",
+                (article_id,)
+            )
+            liked_set.add(article_id)
+            liked = True
+
+        conn.commit()
+
+        # let op: gebruik exact dezelfde kolomnaam als in DB (newsarticle_id)
+        cursor.execute(
+            "SELECT likes FROM newsarticle WHERE newsarticle_id = %s",
+            (article_id,)
+        )
+        row = cursor.fetchone()
+        if not row:
+            return jsonify({"error": "Artikel niet gevonden"}), 404
+
+        new_likes = int(row.get("likes") or 0)
+
+        session["liked_articles"] = list(liked_set)
+
+        return jsonify({"likes": new_likes, "liked": liked})
+
+    except Exception:
+        current_app.logger.exception("Fout bij toggle_like")
+        conn.rollback()
+        return jsonify({"error": "Serverfout"}), 500
+    finally:
+        try:
+            cursor.close()
+        except Exception:
+            pass
+        try:
+            conn.close()
+        except Exception:
+            pass
 
 
 
