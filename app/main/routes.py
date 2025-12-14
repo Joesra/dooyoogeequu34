@@ -2,7 +2,7 @@ from flask import render_template, request, redirect
 from app.main import bp
 from app.settings import DATABASE
 import mysql.connector
-from app.contact_model import ContactAanvraag
+from app.contact_model import ContactAanvraag #maakt connectie met contact_model.py, daar gebeurt alle magie
 
 from werkzeug.security import generate_password_hash, check_password_hash
 

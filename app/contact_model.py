@@ -13,12 +13,13 @@ class ContactAanvraag:
         conn = mysql.connector.connect(**DATABASE)
         cursor = conn.cursor()
 
+        #query om de aanvraag op te slaan
         query = """
             INSERT INTO contact_aanvragen (naam, email, onderwerp, bericht)
             VALUES (%s, %s, %s, %s)
         """
         cursor.execute(query, (self.naam, self.email, self.onderwerp, self.bericht))
-        conn.commit()
+        conn.commit() #slaat de ingevulde variable op in de database
 
-        cursor.close()
-        conn.close()
+        cursor.close() 
+        conn.close() #sluit de verbinding met de database af
