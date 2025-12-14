@@ -22,16 +22,3 @@ class ContactAanvraag:
 
         cursor.close()
         conn.close()
-
-    def beantwoorden(self, antwoord):
-        conn = mysql.connector.connect(**DATABASE)
-        cursor = conn.cursor()
-
-        cursor.execute(
-            "UPDATE contact_aanvragen SET antwoord = %s WHERE id = %s",
-            (antwoord, self.id)
-        )
-        conn.commit()
-
-        cursor.close()
-        conn.close()

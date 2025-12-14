@@ -2,6 +2,8 @@ from flask import render_template, request, redirect
 from app.main import bp
 from app.settings import DATABASE
 import mysql.connector
+from app.contact_model import ContactAanvraag
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_db_connection():
@@ -30,29 +32,18 @@ def nieuws():
 def home():
     return render_template("index.html")
 
+
 @bp.route("/contact", methods=["GET", "POST"])
 def contact():
-    # Haalt data op van de form in support_aanvraag.html
     if request.method == "POST":
-        naam = request.form["naam"]
-        email = request.form["email"]
-        onderwerp = request.form["onderwerp"]
-        bericht = request.form["bericht"]
-
-        conn = get_db_connection() #verbinding maken met de database
-        cursor = conn.cursor() 
-
-        #query om de aanvraag op te slaan
-        query = """
-            INSERT INTO contact_aanvragen (naam, email, onderwerp, bericht)
-            VALUES (%s, %s, %s, %s)
-        """
-        cursor.execute(query, (naam, email, onderwerp, bericht))
-        conn.commit() #slaat de ingevulde variable op in de database
-        cursor.close() 
-        conn.close() #sluit de verbinding met de database af
-
-        return redirect("/contact")  #blijft op dezelfde pagina voor nu, later naar iets van bedankt voor de aanvraag
+        aanvraag = ContactAanvraag(
+            naam=request.form["naam"],
+            email=request.form["email"],
+            onderwerp=request.form["onderwerp"],
+            bericht=request.form["bericht"]
+        )
+        aanvraag.opslaan()
+        return redirect("/contact")
 
     return render_template("support_aanvraag.html")
 
@@ -141,9 +132,10 @@ def design1(article_id):
 
 
 
-@bp.route("/dev", methods=["GET"])
+
+@bp.route("/dev")
 def dev_dashboard():
-    conn = get_db_connection()
+    conn = mysql.connector.connect(**DATABASE)
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("SELECT * FROM contact_aanvragen ORDER BY id DESC")
@@ -154,32 +146,11 @@ def dev_dashboard():
 
     return render_template("dev.html", aanvragen=aanvragen)
 
-@bp.route("/dev/aanvraag/<int:id>", methods=["GET"])
-def aanvraag_detail(id):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM contact_aanvragen WHERE id = %s", (id,))
-    aanvraag = cursor.fetchone()
-
-    cursor.close()
-    conn.close()
-
-    return render_template("aanvraag_detail.html", aanvraag=aanvraag)
 
 @bp.route("/dev/aanvraag/<int:id>", methods=["POST"])
 def aanvraag_beantwoorden(id):
-    antwoord = request.form["antwoord"]
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("UPDATE contact_aanvragen SET antwoord = %s WHERE id = %s", (antwoord, id))
-    conn.commit()
-
-    cursor.close()
-    conn.close()
-
+    aanvraag = ContactAanvraag(id=id)
+    aanvraag.beantwoorden(request.form["antwoord"])
     return redirect("/dev")
 
 @bp.route("/incidenten")
