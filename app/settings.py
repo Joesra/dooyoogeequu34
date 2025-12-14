@@ -1,14 +1,14 @@
 import os
 from dotenv import load_dotenv
 
-# .env staat in de bovenliggende map van 'app/'
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+#.env staat in de bovenliggende map van 'app/'
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(file)), '.env')
 load_dotenv(dotenv_path)
 
 DATABASE = {
-    'NAME': os.getenv("DB_NAME"),
-    'USER': os.getenv("DB_USER"),
+    'NAME': os.getenv("DATABASE_NAME"),
+    'USER': 'pb3bims2526_dooyoogeequu34',
     'PASSWORD': os.getenv("DB_PASSWORD"),
-    'HOST': os.getenv("DB_HOST"),
-    'PORT': int(os.getenv("DB_PORT")) if os.getenv("DB_PORT") else None
+    'HOST': 'db.hbo-ict.cloud',
+    'PORT': 3366
 }
