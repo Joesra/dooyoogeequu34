@@ -1,5 +1,5 @@
 import mysql.connector
-from app.settings import DATABASE
+from app.settings import get_connection
 
 class ContactAanvraag:
     def __init__(self, id=None, naam=None, email=None, onderwerp=None, bericht=None):
@@ -10,7 +10,7 @@ class ContactAanvraag:
         self.bericht = bericht
 
     def opslaan(self):
-        conn = mysql.connector.connect(**DATABASE)
+        conn = get_connection()
         cursor = conn.cursor()
 
         #query om de aanvraag op te slaan
