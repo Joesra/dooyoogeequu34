@@ -24,9 +24,12 @@
             <img src="/static/img/calender_artikel.png" alt="">
             <p class="beschrijving-tekst_artikel">5-10-2025</p>
             <img class="spatie" src="\static\img\book_mark.png" alt="">
-            <img class="spatie" src="\static\img\thumbs_up.png" alt="">
-            <p>{{ newsarticle.likes }}</p>
-            {% if is_liked %}ALREADY LIKED{% else %}NOT LIKED{% endif %}
+            <button class="like-btn" data-article-id="{{ newsarticle.newsarticle_id }}">
+                <img class="spatie" src="/static/img/thumbs_up.png" alt="">
+            </button>
+            <span id="likes-count-{{ newsarticle.newsarticle_id }}">
+                {{ newsarticle.likes }}
+            </span>
         </div>
         <p class="artikel-titel">Ontwerpen met Vertrouwen: Privacy als Fundament van Cloudinnovatie</p>
 
@@ -123,5 +126,56 @@
 
     </div>
 </body>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".like-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                toggleLike(button);
+            });
+        });
+    });
+
+    function toggleLike(button) {
+        const articleId = button.dataset.articleId;
+
+        if (!articleId) {
+            console.error("❌ Geen articleId gevonden!");
+            return;
+        }
+
+        fetch(`/design1/${articleId}/like`, {
+            method: "POST"
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                updateLikeUI(button, articleId, data);
+            })
+            .catch(error => {
+                console.error("Fout bij liken:", error);
+            });
+    }
+    function updateLikeUI(button, articleId, data) {
+        const likesSpan = document.getElementById(`likes-count-${articleId}`);
+
+        likesSpan.textContent = data.likes;
+
+        if (data.liked) {
+            button.classList.add("liked");
+            button.textContent = "Geliked";
+        } else {
+            button.classList.remove("liked");
+            button.textContent = "Like";
+        }
+    }
+
+
+</script>
 
 </html>
