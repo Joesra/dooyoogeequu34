@@ -47,6 +47,26 @@ def contact():
 
     return render_template("support_aanvraag.html")
 
+@bp.route("/dev")
+def dev_dashboard():
+    conn = mysql.connector.connect(**DATABASE)
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM contact_aanvragen ORDER BY id DESC")
+    aanvragen = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("dev.html", aanvragen=aanvragen)
+
+
+@bp.route("/dev/aanvraag/<int:id>", methods=["POST"])
+def aanvraag_beantwoorden(id):
+    aanvraag = ContactAanvraag(id=id)
+    aanvraag.beantwoorden(request.form["antwoord"])
+    return redirect("/dev")
+
 @bp.route("/services")
 def services():
     return render_template("services.html")
@@ -129,29 +149,6 @@ def design1(article_id):
         return "Artikel niet gevonden", 404
 
     return render_template("design1.html", newsarticle=newsarticle)
-
-
-
-
-@bp.route("/dev")
-def dev_dashboard():
-    conn = mysql.connector.connect(**DATABASE)
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM contact_aanvragen ORDER BY id DESC")
-    aanvragen = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    return render_template("dev.html", aanvragen=aanvragen)
-
-
-@bp.route("/dev/aanvraag/<int:id>", methods=["POST"])
-def aanvraag_beantwoorden(id):
-    aanvraag = ContactAanvraag(id=id)
-    aanvraag.beantwoorden(request.form["antwoord"])
-    return redirect("/dev")
 
 @bp.route("/incidenten")
 def incidenten():
