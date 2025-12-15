@@ -1,13 +1,15 @@
-import mysql.connector
-from app.settings import get_connection
+from app.database import get_connection
 
 class ContactAanvraag:
-    def __init__(self, id=None, naam=None, email=None, onderwerp=None, bericht=None):
+    repo = True  #geeft aan dat deze class database-logica bevat
+
+    def __init__(self, id=None, naam=None, email=None, onderwerp=None, bericht=None, antwoord=None):
         self.id = id
         self.naam = naam
         self.email = email
         self.onderwerp = onderwerp
         self.bericht = bericht
+        self.antwoord = antwoord
 
     def opslaan(self):
         conn = get_connection()
@@ -19,7 +21,46 @@ class ContactAanvraag:
             VALUES (%s, %s, %s, %s)
         """
         cursor.execute(query, (self.naam, self.email, self.onderwerp, self.bericht))
-        conn.commit() #slaat de ingevulde variable op in de database
 
-        cursor.close() 
-        conn.close() #sluit de verbinding met de database af
+        conn.commit() #slaat de ingevulde variable op in de database
+        cursor.close()
+        conn.close()  #sluit de verbinding met de database af
+
+    @staticmethod
+    def get_open_vragen():
+        #maakt verbinding met de database
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        #query om alle vragen zonder antwoord op te halen
+        query = """
+            SELECT * FROM contact_aanvragen
+            WHERE antwoord IS NULL
+        """
+        cursor.execute(query)
+
+        rows = cursor.fetchall()  #haalt alle resultaten op
+
+        cursor.close()
+        conn.close()  #sluit de databaseverbinding
+
+        #zet elke database rij om in een ContactAanvraag object
+        return [ContactAanvraag(**row) for row in rows]
+
+    @staticmethod
+    def beantwoord(vraag_id, antwoord):
+        #maakt verbinding met de database
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        #query om een vraag te beantwoorden
+        query = """
+            UPDATE contact_aanvragen
+            SET antwoord = %s
+            WHERE id = %s
+        """
+        cursor.execute(query, (antwoord, vraag_id))
+
+        conn.commit()  #slaat het antwoord op in de database
+        cursor.close()
+        conn.close()  #sluit de databaseverbinding

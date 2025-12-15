@@ -42,30 +42,26 @@ def contact():
             onderwerp=request.form["onderwerp"],
             bericht=request.form["bericht"]
         )
-        aanvraag.opslaan()
-        return redirect("/contact")
+        aanvraag.opslaan()  #slaat de aanvraag op in de database
+        return redirect("/contact")  #stuurt gebruiker terug naar contactpagina
 
     return render_template("support_aanvraag.html")
 
-@bp.route("/dev")
-def dev_dashboard():
-    conn = mysql.connector.connect(**DATABASE)
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM contact_aanvragen ORDER BY id DESC")
-    aanvragen = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
+@bp.route("/admin/contact")
+def admin_contact():
+    #haalt alle open contactaanvragen op
+    aanvragen = ContactAanvraag.get_open_vragen()
     return render_template("dev.html", aanvragen=aanvragen)
 
+@bp.route("/contact/beantwoord/<int:id>", methods=["POST"])
+def beantwoord_contact(id):
+    antwoord = request.form["antwoord"]
 
-@bp.route("/dev/aanvraag/<int:id>", methods=["POST"])
-def aanvraag_beantwoorden(id):
-    aanvraag = ContactAanvraag(id=id)
-    aanvraag.beantwoorden(request.form["antwoord"])
-    return redirect("/dev")
+    #slaat het antwoord op bij de juiste aanvraag
+    ContactAanvraag.beantwoord(id, antwoord)
+
+    #redirect naar admin overzicht (PRG pattern)
+    return redirect("/admin/contact")
 
 @bp.route("/services")
 def services():
