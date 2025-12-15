@@ -3,13 +3,15 @@ from app.database import get_connection
 class ContactAanvraag:
     repo = True  #geeft aan dat deze class database-logica bevat
 
-    def __init__(self, id=None, naam=None, email=None, onderwerp=None, bericht=None, antwoord=None):
+    def __init__(self, id=None, naam=None, email=None, onderwerp=None, bericht=None, antwoord=None, status=None, datum_ingediend=None):
         self.id = id
         self.naam = naam
         self.email = email
         self.onderwerp = onderwerp
         self.bericht = bericht
         self.antwoord = antwoord
+        self.status = status
+        self.datum_ingediend = datum_ingediend
 
     def opslaan(self):
         conn = get_connection()
