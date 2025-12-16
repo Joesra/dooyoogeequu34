@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect
+from flask import render_template, redirect, request, flash
 from app.main import bp
 from app.settings import DATABASE
 import mysql.connector
@@ -43,6 +43,12 @@ def contact():
             bericht=request.form["bericht"]
         )
         aanvraag.opslaan()  #slaat de aanvraag op in de database
+
+        flash(
+            "Bedankt voor je vraag, we zullen het zo spoedig beantwoorden!",
+            "success"
+        ) #support_aanvraag.html
+
         return redirect("/contact")  #stuurt gebruiker terug naar contactpagina
 
     return render_template("support_aanvraag.html")

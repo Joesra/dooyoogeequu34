@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/support_aanvraag.css') }}">
 </head>
+
 <body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash flash-{{ category }}">
+        {{ message }} 
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
@@ -50,12 +63,14 @@
 
                     <div class="form-group">
                         <label for="onderwerp">Onderwerp*</label>
-                        <input type="text" id="onderwerp" name="onderwerp" required placeholder="Waar gaat uw vraag over?">
+                        <input type="text" id="onderwerp" name="onderwerp" required
+                            placeholder="Waar gaat uw vraag over?">
                     </div>
 
                     <div class="form-group">
                         <label for="bericht">Bericht*</label>
-                        <textarea id="bericht" name="bericht" required placeholder="Beschrijf uw vraag of project..."></textarea>
+                        <textarea id="bericht" name="bericht" required
+                            placeholder="Beschrijf uw vraag of project..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">Verstuur Support Aanvraag</button>
@@ -64,4 +79,5 @@
         </section>
     </div>
 </body>
+
 </html>
