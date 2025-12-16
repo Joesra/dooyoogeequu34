@@ -12,16 +12,6 @@
 
 <body>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="flash flash-{{ category }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
@@ -48,6 +38,15 @@
             <p>
                 Vul onderstaand formulier in en wij nemen zo snel mogelijk contact met u op over uw vraag.
             </p>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
 
             <div class="form-container">
                 <form method="POST" action="/contact" class="contact-form">

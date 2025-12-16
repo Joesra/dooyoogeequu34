@@ -323,14 +323,24 @@ form button[type="submit"] {
 }
 
 .flash {
-    position: fixed;
     top: 20px;
-    right: 20px;
-    padding: 15px 20px;
+    padding: 15px 25px;
     border-radius: 8px;
     font-weight: 500;
     z-index: 9999;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    margin-top: 15px;
+    margin-bottom: 35px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flash.inline {
+    margin: 15px 0 25px 0;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-weight: 500;
 }
 
 .flash-success {
