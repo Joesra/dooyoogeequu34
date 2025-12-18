@@ -27,4 +27,22 @@
             </li>
             <li><a href="#">Instellingen</a></li>
         </ul>
+
+
+        <h1>Aanvraag #{{ aanvraag.id }}</h1>
+
+        <p><strong>Naam:</strong> {{ aanvraag.naam }}</p>
+        <p><strong>Email:</strong> {{ aanvraag.email }}</p>
+        <p><strong>Onderwerp:</strong> {{ aanvraag.onderwerp }}</p>
+        <p><strong>Bericht:</strong> {{ aanvraag.bericht }}</p>
+
+        <hr>
+
+        <h2>Beantwoord aanvraag</h2>
+
+        <form method="POST">
+            <textarea name="antwoord" rows="6" cols="60" required></textarea><br><br>
+            <button type="submit">Opslaan</button>
+        </form>
+
     </div>
