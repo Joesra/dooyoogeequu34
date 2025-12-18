@@ -59,6 +59,10 @@ def admin_contact():
     aanvragen = ContactAanvraag.get_open_vragen()
     return render_template("dev.html", aanvragen=aanvragen)
 
+@bp.route("/admin")
+def home():
+    return render_template("admin.html")
+
 @bp.route("/contact/beantwoord/<int:id>", methods=["POST"])
 def beantwoord_contact(id):
     antwoord = request.form["antwoord"]
