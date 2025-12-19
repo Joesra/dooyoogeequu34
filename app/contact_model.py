@@ -66,3 +66,19 @@ class ContactAanvraag:
         conn.commit()  #slaat het antwoord op in de database
         cursor.close()
         conn.close()  #sluit de databaseverbinding
+
+    @staticmethod
+    def get_by_id(vraag_id): #haalt specifieke id op die wordt gekozen
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        query = "SELECT * FROM contact_aanvragen WHERE id = %s" #selecteert id in de database
+        cursor.execute(query, (vraag_id,))
+        row = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        if row:
+            return ContactAanvraag(**row)
+        return None
