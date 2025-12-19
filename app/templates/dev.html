@@ -5,6 +5,31 @@
     <title>Support Aanvragen - Dev Dashboard</title>
 </head>
 <body>
+    <div class="sidebar">
+        <div class="logo">"Wolken"</div>
+        <ul>
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
+            </li>
+            <li><a href="#">Data Beheren</a></li>
+            <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
+                <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
+            </li>
+            <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
+            </li>
+            <li class="{% if request.path == '/nieuws' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuws') }}">Nieuws</a>
+            </li>
+
+            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                <a href="{{ url_for('main.contact') }}">Support</a>
+            </li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li><a href="#">Instellingen</a></li>
+        </ul>
+    </div>
 
 <h1>Binnengekomen support aanvragen</h1>
 
