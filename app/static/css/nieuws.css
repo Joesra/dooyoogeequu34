@@ -387,6 +387,18 @@
   display: none;                /* Chrome, Safari, Edge */
 }
 
+.like-button {
+  background: none;
+  border: black;
+  padding-right: 0rem;
+}
+
+.like-count {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 20px;
+  color: rgb(135, 135, 135);
+  font-weight: bold;
+}
 
 .artikel {
     width: 450px;

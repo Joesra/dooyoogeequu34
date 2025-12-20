@@ -18,6 +18,19 @@ def get_db_connection():
         port=DATABASE["PORT"]
     )
 
+@bp.route("/design1")
+def design1():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM newsarticle")
+    articles = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("design1.html", articles=articles)
+
 @bp.route("/design1/<int:article_id>/like", methods=["POST"])
 def toggle_like(article_id):
     conn = get_db_connection()

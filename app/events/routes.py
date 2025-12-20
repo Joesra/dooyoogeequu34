@@ -7,6 +7,8 @@ from flask import render_template, request, redirect, session, jsonify, current_
 from app.settings import DATABASE
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Blueprint
+
 
 def get_db_connection():
     """Connectie maken met mysql database"""
@@ -36,68 +38,74 @@ def categorie_design():
 def artikel_privacy1():
     return render_template("artikel_privacy1.html")
 
-@bp.route("/design1/<int:article_id>")
-def design1 (article_id):
+@bp.route("/design1")
+def design1():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT newsarticle_id, title, likes FROM newsarticle WHERE newsarticle_id = %s", (article_id,))
-    newsarticle = cursor.fetchone()   
+
+    cursor.execute("SELECT * FROM newsarticle")
+    articles = cursor.fetchall()
 
     cursor.close()
     conn.close()
 
-    if newsarticle is None:
-        return "Artikel niet gevonden", 404
-    
-    liked_list = session.get("liked_articles", [])
-    is_liked = article_id in liked_list
+    return render_template("design1.html", articles=articles)
 
 
-    return render_template("design1.html", newsarticle=newsarticle, is_liked=is_liked,)
-        
 
 @bp.route("/design1/<int:article_id>/like", methods=["POST"])
 def toggle_like(article_id):
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True) 
+    service = LikeService(conn)
+
     try:
-        #gelikte artikelen worden in liked_set opgeslagen
-        liked_set = set(session.get("liked_articles", []))
+        result = service.toggle_like(article_id, session)
+        return jsonify(result), 200
 
-        # if statement voor als de gebruiker al een artikel heeft geliked
-        if article_id in liked_set:
-            cursor.execute("UPDATE newsarticle SET likes = GREATEST(likes - 1, 0) WHERE newsarticle_id = %s",(article_id,))
-            liked_set.discard(article_id)
-            liked = False
-        else:
-            # else stament voor als iemand nog niet heeft geliked
-            cursor.execute("UPDATE newsarticle SET likes = likes + 1 WHERE newsarticle_id = %s",(article_id,))
-            liked_set.add(article_id)
-            liked = True
-
-        conn.commit()
-
-        # likes worden opgehaald van een specifiek rij met row
-        cursor.execute("SELECT likes FROM newsarticle WHERE newsarticle_id = %s",(article_id,))
-        row = cursor.fetchone()
-        if not row:
-            return jsonify({"error": "Artikel niet gevonden"}), 404
-        
-        #de variable new_likes verandert alle likes in een int en ophaalt informatie op met row
-        new_likes = int(row.get("likes"))
-
-        #liked_articles worden verandert in een list 
-        session["liked_articles"] = list(liked_set)
-
-        return jsonify({"likes": new_likes, "liked": liked})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
 
     except Exception:
         current_app.logger.exception("Fout bij toggle_like")
-        conn.rollback()
         return jsonify({"error": "Serverfout"}), 500
+
     finally:
-        cursor.close()
-      
+        conn.close()
+
+class LikeService:
+    def __init__(self, conn):
+        self.conn = conn
+
+    def toggle_like(self, article_id, session):
+        liked_set = set(session.get("liked_articles", []))
+        cursor = self.conn.cursor(dictionary=True)
+        try:
+            if article_id in liked_set:
+                cursor.execute('UPDATE newsarticle SET likes = GREATEST(likes - 1, 0) WHERE newsarticle_id = %s', (article_id,))
+                liked_set.remove(article_id)
+                liked = False
+            else:
+                cursor.execute('UPDATE newsarticle SET likes = likes + 1 WHERE newsarticle_id = %s', (article_id,))
+                liked_set.add(article_id)
+                liked = True
+            self.conn.commit()
+            cursor.execute('SELECT likes FROM newsarticle WHERE newsarticle_id = %s', (article_id,))
+            row = cursor.fetchone()
+            if row is None:
+                raise ValueError('artikel niet gevonden')
+            session["liked_articles"] = list(liked_set)
+            return {
+                'liked': liked,
+                'likes': row['likes']
+            }
+        except Exception as e:
+            self.conn.rollback()
+            raise e
+        
+        finally:
+            cursor.close()
+
+
 @bp.route("/artikel_systeem1")
 def artikel_systeem1():
     return render_template("artikel_systeem1.html")
