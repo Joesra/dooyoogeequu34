@@ -33,6 +33,21 @@
         </ul>
     </div>
 
+    <h1>Support aanvraag beantwoorden</h1>
+
+    <p><strong>Naam:</strong> {{ aanvraag.naam }}</p>
+    <p><strong>Email:</strong> {{ aanvraag.email }}</p>
+    <p><strong>Onderwerp:</strong> {{ aanvraag.onderwerp }}</p>
+    <p><strong>Bericht:</strong> {{ aanvraag.bericht }}</p>
+
+    <hr>
+
+    <form method="POST" action="/contact/beantwoord/{{ aanvraag.id }}">
+        <label>Antwoord</label><br>
+        <textarea name="antwoord" rows="6" required></textarea><br><br>
+        <button type="submit">Verstuur antwoord</button>
+    </form>
+
 </body>
 
 </html>
