@@ -22,15 +22,55 @@ def get_db_connection():
 CREATE TABLE comments (
     comment_id INT AUTO_INCREMENT PRIMARY KEY,
     newsarticle_id INT NOT NULL,
-    customer_id INT NOT NULL,
     author VARCHAR(100) NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (newsarticle_id) REFERENCES newsarticle(newsarticle_id),
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
 );
 
-#opdracht 2
-@app.route("/add_comment", methods=["post"])
-def add_comment():
-    article_id =
+#opdracht 3
+def comments_article(conn, article_id):
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT author, content FROM comments WHERE newsarticle_id = %s",
+        (article_id,)
+    )
+
+    comments = cursor.fetchall()
+    cursor.close()
+
+    return comments
+
+@bp.route("/design1")
+def design1():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM newsarticle")
+    articles = cursor.fetchall()
+
+    # 👇 NIEUW: comments per artikel ophalen
+    comments_per_article = {}
+    for article in articles:
+        article_id = article["newsarticle_id"]
+        comments_per_article[article_id] = comments_article(conn, article_id)
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "design1.html",
+        articles=articles,
+        comments_per_article=comments_per_article
+    )
+
+
+<h2>Comments</h2>
+
+{% for comment in comments %}
+    <p>
+        <strong>{{ comment.author }}</strong><br>
+        {{ comment.content }}
+    </p>
+{% endfor %}

@@ -45,7 +45,6 @@ def design1():
 
     cursor.execute("SELECT * FROM newsarticle")
     articles = cursor.fetchall()
-
     cursor.close()
     conn.close()
 
