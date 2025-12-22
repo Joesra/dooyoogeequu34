@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ newsarticle.title }}</title>
+    <title>Ontwerpen voor Vertrouwen: Privacy als Kern van Cloudinnovatie</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/nieuws.css')}}" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hermeneus+One&display=swap" rel="stylesheet">
@@ -18,17 +18,21 @@
         </div>
         <img class="search_icon" src="/static/img/search_icon.png" alt="">
     </div>
+    {% for article in articles %}
     <div class="vertical-container">
         <div id="artikel-datum2" class="artikel-datum">
             <p class="design_artikel-alert">Design</p>
             <img src="/static/img/calender_artikel.png" alt="">
             <p class="beschrijving-tekst_artikel">5-10-2025</p>
             <img class="spatie" src="\static\img\book_mark.png" alt="">
-            <img class="spatie" src="\static\img\thumbs_up.png" alt="">
-            <p>{{ newsarticle.likes }}</p>
-        </div>
-        <p class="artikel-titel">Ontwerpen met Vertrouwen: Privacy als Fundament van Cloudinnovatie</p>
 
+            <button class="like-button" data-article-id="{{ article.newsArticle_id }}">
+                <img class="spatie" src="/static/img/thumbs_up.png" alt="">
+            </button>
+            <span class="like-count" data-article-id="{{ article.newsArticle_id }}">{{ article.likes }}</span>
+        </div>
+        <p class="artikel-titel">{{ article.title }}</p>
+        {% endfor %}
         <div class="item">
             <p>Foto: Lara Vermeer - @lara.vermeer@wolkencloud.nl</p><img src="\static\img\bron_1.png" alt="">
         </div>
@@ -122,5 +126,51 @@
 
     </div>
 </body>
+
+<script>
+    // Template for the like endpoint; replace the 0 placeholder with the article id
+    const likeUrlTemplate = "{{ url_for('events.toggle_like', article_id=0) }}";
+
+    document.querySelectorAll(".like-button").forEach(button => {
+        button.addEventListener("click", async () => {
+            const articleId = button.dataset.articleId;
+            const url = likeUrlTemplate.replace("0", articleId);
+
+            try {
+                // disable button while request is in progress
+                button.disabled = true;
+
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    console.error("Server error:", response.status);
+                    return;
+                }
+
+                const data = await response.json();
+                console.log(data);
+
+                // update the like count in the DOM
+                const countEl = document.querySelector(`.like-count[data-article-id="${articleId}"]`);
+                if (countEl && typeof data.likes !== 'undefined') {
+                    countEl.textContent = data.likes;
+                }
+
+                // toggle an active class on the button if you want visual feedback
+                button.classList.toggle('liked', data.liked);
+
+            } catch (err) {
+                console.error('Request failed', err);
+            } finally {
+                button.disabled = false;
+            }
+        });
+    });
+</script>
 
 </html>

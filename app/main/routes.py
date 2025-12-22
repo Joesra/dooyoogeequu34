@@ -123,22 +123,6 @@ def login():
             return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
     return render_template("login.html")
 
-@bp.route("/design1/<int:article_id>")
-def design1(article_id):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT id, title, likes FROM newsarticle WHERE id = %s", (article_id,))
-    newsarticle = cursor.fetchone()
-
-    cursor.close()
-    conn.close()
-
-    if newsarticle is None:
-        return "Artikel niet gevonden", 404
-
-    return render_template("design1.html", newsarticle=newsarticle)
-
 
 
 @bp.route("/dev", methods=["GET"])
