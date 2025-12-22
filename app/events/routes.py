@@ -156,3 +156,4 @@ def edit(event_id):
     event = get_event(event_id) or abort(404)
     event["eventDate"] = isoparse(event["eventDate"])
     return render_template("events/edit.html", event=event)
+
