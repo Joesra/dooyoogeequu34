@@ -60,10 +60,26 @@ def design1():
     conn.close()
 
     return render_template(
-        "design1.html",
-        articles=articles,
-        comments_per_article=comments_per_article
+        "design1.html", articles=articles, comments_per_article=comments_per_article
     )
+
+bp.route("/design1/<int:article_id>/comment", methods=["post"])
+def add_comment(article_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    author = request.form["author"]
+    content = request.form["content"]
+    cursor.execute(
+        "INSERT INTO comments (newsarticle_id, author, content) VALUES (%s, %s, %s)", (article_id, author, content)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for("/design1"))
+
+      
 
 
 <h2>Comments</h2>
@@ -73,4 +89,4 @@ def design1():
         <strong>{{ comment.author }}</strong><br>
         {{ comment.content }}
     </p>
-{% endfor %}
+{% endfor %}  

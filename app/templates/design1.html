@@ -24,10 +24,10 @@
             <p class="design_artikel-alert">Design</p>
             <img src="/static/img/calender_artikel.png" alt="">
             <p class="beschrijving-tekst_artikel">5-10-2025</p>
-            <img class="spatie" src="\static\img\book_mark.png" alt="">
+            <img src="\static\img\book_mark.png" alt="">
 
             <button class="like-button" data-article-id="{{ article.newsArticle_id }}">
-                <img class="spatie" src="/static/img/thumbs_up.png" alt="">
+                <img src="/static/img/thumbs_up.png" alt="">
             </button>
             <span class="like-count" data-article-id="{{ article.newsArticle_id }}">{{ article.likes }}</span>
         </div>
@@ -125,6 +125,11 @@
         </div>
 
     </div>
+    <form method="POST" action="/design1/{{ article.newsarticle_id }}/comment">
+        <input type="text" name="author" placeholder="je naam" required>
+        <textarea name="content" placeholder="je comment" required></textarea>
+        <button type="submit"> plaats comment</button>
+    </form>
 </body>
 
 <script>
