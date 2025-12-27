@@ -80,13 +80,3 @@ def add_comment(article_id):
     return redirect(url_for("/design1"))
 
       
-
-
-<h2>Comments</h2>
-
-{% for comment in comments %}
-    <p>
-        <strong>{{ comment.author }}</strong><br>
-        {{ comment.content }}
-    </p>
-{% endfor %}  

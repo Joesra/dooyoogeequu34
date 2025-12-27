@@ -45,12 +45,54 @@ def design1():
 
     cursor.execute("SELECT * FROM newsarticle")
     articles = cursor.fetchall()
+
+    comments_per_article = {}
+    for article in articles:
+        article_id = article["newsarticle_id"]
+        comments_per_article[article_id] = comments_article(conn, article_id)
+
     cursor.close()
     conn.close()
 
-    return render_template("design1.html", articles=articles)
+    return render_template(
+        "design1.html", articles=articles, comments_per_article=comments_per_article
+    )
 
+def comments_article(conn, article_id):
+    cursor = conn.cursor(dictionary=True)
 
+    cursor.execute(
+        "SELECT author, content FROM comments WHERE newsarticle_id = %s",
+        (article_id,)
+    )
+
+    comments = cursor.fetchall()
+    cursor.close()
+
+    return comments
+
+@bp.route("/design1/<int:article_id>/comment", methods=["POST"])
+def add_comment(article_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    author = request.form["author"]
+    content = request.form["content"]
+
+    cursor.execute(
+        """
+        INSERT INTO comments (newsarticle_id, author, content)
+        VALUES (%s, %s, %s)
+        """,
+        (article_id, author, content)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for("events.design1"))
+    
 
 @bp.route("/design1/<int:article_id>/like", methods=["POST"])
 def toggle_like(article_id):

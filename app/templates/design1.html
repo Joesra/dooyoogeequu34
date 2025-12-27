@@ -26,10 +26,10 @@
             <p class="beschrijving-tekst_artikel">5-10-2025</p>
             <img src="\static\img\book_mark.png" alt="">
 
-            <button class="like-button" data-article-id="{{ article.newsArticle_id }}">
+            <button class="like-button" data-article-id="{{ article.newsarticle_id }}">
                 <img src="/static/img/thumbs_up.png" alt="">
             </button>
-            <span class="like-count" data-article-id="{{ article.newsArticle_id }}">{{ article.likes }}</span>
+            <span class="like-count" data-article-id="{{ article.newsarticle_id }}">{{ article.likes }}</span>
         </div>
         <p class="artikel-titel">{{ article.title }}</p>
         {% endfor %}
@@ -125,11 +125,33 @@
         </div>
 
     </div>
-    <form method="POST" action="/design1/{{ article.newsarticle_id }}/comment">
-        <input type="text" name="author" placeholder="je naam" required>
-        <textarea name="content" placeholder="je comment" required></textarea>
-        <button type="submit"> plaats comment</button>
-    </form>
+
+    {% for article in articles %}
+    <div class="comment-section">
+        <h3>comments</h3>
+
+        <div class="comment-list">
+            <form class="comment-form" method="POST"
+                action="{{ url_for('events.add_comment', article_id=article.newsarticle_id) }}">
+                <input type="text" name="author" placeholder="Je naam" required>
+                <textarea name="content" placeholder="Plaats je comment..." required></textarea>
+                <button type="submit">Plaats comment</button>
+            </form>
+            {% for comment in comments_per_article[article.newsarticle_id] %}
+            <div class="comment">
+                <div class="comment-author">
+                    {{ comment.author}}
+                </div>
+                <div class="comment-content">
+                    {{ comment.content}}
+                </div>
+            </div>
+            {% else %}
+            <p>Geen comments geplaatst.</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
 </body>
 
 <script>

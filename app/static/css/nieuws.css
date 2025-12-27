@@ -1,3 +1,51 @@
+.comment-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.comment-list {
+    margin-bottom: 1rem;
+}
+
+.comment {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.comment-content {
+    line-height: 1.4;
+}
+
+.no-comments {
+    font-style: italic;
+    color: #777;
+}
+
+.comment-form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.comment-form input,
+.comment-form textarea {
+    padding: 0.5rem;
+    font-family: inherit;
+}
+
+.comment-form button {
+    align-self: flex-start;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+}
+
 
 .img-tekst {
   width: 1000px;
