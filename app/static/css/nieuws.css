@@ -1,51 +1,93 @@
 .comment-section {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #ddd;
+    margin: 40px auto;   
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 800px;    
 }
 
-.comment-list {
-    margin-bottom: 1rem;
-}
-
-.comment {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.comment-author {
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-}
-
-.comment-content {
-    line-height: 1.4;
-}
-
-.no-comments {
-    font-style: italic;
-    color: #777;
+.comment-section h3 {
+   font-family: 'Roboto Condensed', sans-serif;
+    font-size: 18.5px;
+    margin-bottom: 16px;
+    align-self: center;
 }
 
 .comment-form {
-    margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
 .comment-form input,
 .comment-form textarea {
-    padding: 0.5rem;
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: none;
     font-family: inherit;
 }
 
-.comment-form button {
-    align-self: flex-start;
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
+.comment-form input:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
 }
 
+.comment-form button {
+    align-self: center;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    background-color: #4a90e2;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.comment-form button:hover {
+    background-color: #357abf;
+}
+
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: center;
+}
+
+
+.comment {
+    padding: 12px 16px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #e6e6e6;
+}
+
+.comment-author {
+    font-weight: 600;
+    font-size: 14px;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+
+.comment-content {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+
+.comment-list p {
+    font-style: italic;
+    color: #888;
+}
 
 .img-tekst {
   width: 1000px;
@@ -81,9 +123,9 @@
 }
 
 .item {
-  display: flex;            /* Activeert Flexbox */
-  flex-direction: row;      /* Zorgt dat items horizontaal staan */
-  align-items: center;      /* Verticaal uitlijnen van items */
+  display: flex;            
+  flex-direction: row;      
+  align-items: center;     
   gap: 10px;
   padding: 20px;
   color: #9d9d9d;
