@@ -1,0 +1,201 @@
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  display: flex;
+  background-color: #f5f6f8;
+  color: #111827;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  background-color: #1f2937;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.sidebar .logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 12px 0;
+  cursor: pointer;
+  font-weight: 500;
+  opacity: 0.9;
+  transition: all 0.2s;
+}
+
+.sidebar li:hover {
+  opacity: 1;
+  color: #3b82f6;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: #3b82f6;
+}
+
+.sidebar a:visited {
+  color: white;
+}
+
+.active-link {
+  background: linear-gradient(90deg, rgba(59,130,246,0.25) 0%, rgba(59,130,246,0.15) 100%);
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.active-link a {
+  display: block;
+  padding: 10px 10px;
+  color: #ffffff;
+  font-weight: 600;
+  background: transparent;
+}
+
+.sidebar li:hover:not(.active-link) a {
+  color: #60a5fa;
+}
+
+.main {
+  margin-left: 220px;
+  flex-grow: 1;
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.ticket-container {
+  display: flex;
+  flex-direction: column; 
+  gap: 20px;
+  align-items: center;
+}
+
+.ticket-info, .ticket-reply {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  flex: unset; 
+  width: 100%;          
+  max-width: 500px;     
+  box-sizing: border-box; 
+  margin: 0 auto;         
+}
+
+.ticket-info h2, .ticket-reply h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.ticket-info p {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.ticket-message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #111827;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  white-space: pre-line;
+}
+
+.ticket-reply form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket-reply label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.ticket-reply textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  resize: vertical;
+  min-height: 120px;
+  box-sizing: border-box;
+}
+
+.ticket-reply button[type="submit"] {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ticket-reply button[type="submit"]:hover {
+  background-color: #2563eb;
+}
+
+@media (max-width: 900px) {
+  .main {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
