@@ -16,9 +16,12 @@ def get_db_connection():
         port=DATABASE["port"]
     )
 
-@bp.route("/home")
+@bp.route("/")
 def index():
+    if "user_id" not in session:
+        return redirect("/login")
     return render_template("base.html")
+
 
 @bp.route("/info")
 def informatie():
@@ -28,9 +31,9 @@ def informatie():
 def nieuws():
     return render_template("nieuws.html")
 
-@bp.route("/")
-def home():
-    return render_template("index.html")
+# @bp.route("/")
+# def home():
+#     return render_template("index.html")
 
 
 @bp.route("/contact", methods=["GET", "POST"])
@@ -92,57 +95,79 @@ def registreer():
         telefoonnummer = request.form["telefoonnummer"]
         gebruikersnaam = request.form["gebruikersnaam"]
         wachtwoord = request.form["wachtwoord"]
-        wachtwoord_confirm = request.form.get("wachtwoord_confirm")
+        wachtwoord_confirm = request.form["wachtwoord_confirm"]
 
-        if wachtwoord_confirm is not None and wachtwoord != wachtwoord_confirm:
-            return render_template("registreer.html", error="Wachtwoorden komen niet overeen.")
+        # 1. Wachtwoorden controleren
+        if wachtwoord != wachtwoord_confirm:
+            return render_template(
+                "registreer.html",
+                error="Wachtwoorden komen niet overeen."
+            )
 
-        conn = get_db_connection() 
-        cursor = conn.cursor() 
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-        hashed = generate_password_hash(wachtwoord)
+        # 2. Check of gebruikersnaam al bestaat
+        cursor.execute(
+            "SELECT id FROM users WHERE gebruikersnaam = %s",
+            (gebruikersnaam,)
+        )
+        if cursor.fetchone():
+            cursor.close()
+            conn.close()
+            return render_template(
+                "registreer.html",
+                error="Gebruikersnaam bestaat al."
+            )
 
-        query = """
-            INSERT INTO user(Voornaam, achternaam, email, Telefoonnummer, gebruikersnaam, wachtwoord)
-            VALUES (%s, %s, %s, %s,  %s, %s)
-        """
-        cursor.execute(query, (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, hashed))
-        conn.commit() 
-        cursor.close() 
-        conn.close() 
+        # 3. Wachtwoord hashen
+        hashed_password = generate_password_hash(wachtwoord)
+
+        # 4. Gebruiker opslaan
+        cursor.execute(
+            """
+            INSERT INTO users
+            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, wachtwoord)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, hashed_password)
+        )
+
+        conn.commit()
+        cursor.close()
+        conn.close()
 
         return redirect("/login")
 
     return render_template("registreer.html")
 
-@bp.route("/login", methods={ "GET", "POST" })
+from flask import session
+
+@bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         gebruikersnaam = request.form["gebruikersnaam"]
         wachtwoord = request.form["wachtwoord"]
 
-        conn = get_db_connection() 
-        cursor = conn.cursor() 
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-        query = """
-            SELECT wachtwoord FROM user WHERE gebruikersnaam = %s
-        """
-        cursor.execute(query, (gebruikersnaam,))
+        cursor.execute(
+            "SELECT id, wachtwoord FROM users WHERE gebruikersnaam = %s",
+            (gebruikersnaam,)
+        )
         row = cursor.fetchone()
-        user = None
-        if row:
-            # cursor.fetchone() geeft meestal een tuple; wachtwoord staat in eerste kolom
-            stored_hash = row[0]
-            if check_password_hash(stored_hash, wachtwoord):
-                user = True
-        cursor.close() 
-        conn.close() 
 
-        if user:
-            return redirect("/home")
-        else:
-            # toon foutmelding zonder flash door de template opnieuw te renderen
-            return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
+        cursor.close()
+        conn.close()
+
+        if row and check_password_hash(row[1], wachtwoord):
+            session["user_id"] = row[0]
+            session["gebruikersnaam"] = gebruikersnaam
+            return redirect("/")
+
+        return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
+
     return render_template("login.html")
 
 @bp.route("/design1/<int:article_id>")
