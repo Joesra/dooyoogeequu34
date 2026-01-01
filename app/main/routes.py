@@ -1,22 +1,29 @@
-from flask import render_template, request, redirect
+from flask import render_template, redirect, request, flash
 from app.main import bp
 from app.settings import DATABASE
 import mysql.connector
+from app.contact_model import ContactAanvraag #maakt connectie met contact_model.py, daar gebeurt alle magie
+from flask import url_for
+
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_db_connection():
     """Connectie maken met mysql database"""
     return mysql.connector.connect(
-        host=DATABASE["HOST"],
-        user=DATABASE["USER"],
-        password=DATABASE["PASSWORD"],
-        database=DATABASE["NAME"],
-        port=DATABASE["PORT"]
+        host=DATABASE["host"],
+        user=DATABASE["user"],
+        password=DATABASE["password"],
+        database=DATABASE["database"],
+        port=DATABASE["port"]
     )
 
-@bp.route("/home")
+@bp.route("/")
 def index():
-    return render_template("base.html")
+    if "user_id" not in session:
+        return redirect("/login")
+    return render_template("base.html") 
+
 
 @bp.route("/info")
 def informatie():
@@ -26,35 +33,55 @@ def informatie():
 def nieuws():
     return render_template("nieuws.html")
 
-@bp.route("/")
-def home():
-    return render_template("index.html")
+# @bp.route("/")
+# def home():
+#     return render_template("index.html")
+
 
 @bp.route("/contact", methods=["GET", "POST"])
 def contact():
-    # Haalt data op van de form in support_aanvraag.html
     if request.method == "POST":
-        naam = request.form["naam"]
-        email = request.form["email"]
-        onderwerp = request.form["onderwerp"]
-        bericht = request.form["bericht"]
+        aanvraag = ContactAanvraag(
+            naam=request.form["naam"],
+            email=request.form["email"],
+            onderwerp=request.form["onderwerp"],
+            bericht=request.form["bericht"]
+        )
+        aanvraag.opslaan()  #slaat de aanvraag op in de database
 
-        conn = get_db_connection() #verbinding maken met de database
-        cursor = conn.cursor() 
+        flash(
+            "Bedankt voor je vraag, we zullen het zo spoedig beantwoorden!",
+            "success"
+        ) #support_aanvraag.html
 
-        #query om de aanvraag op te slaan
-        query = """
-            INSERT INTO contact_aanvragen (naam, email, onderwerp, bericht)
-            VALUES (%s, %s, %s, %s)
-        """
-        cursor.execute(query, (naam, email, onderwerp, bericht))
-        conn.commit() #slaat de ingevulde variable op in de database
-        cursor.close() 
-        conn.close() #sluit de verbinding met de database af
-
-        return redirect("/contact")  #blijft op dezelfde pagina voor nu, later naar iets van bedankt voor de aanvraag
+        return redirect("/contact")  #stuurt gebruiker terug naar contactpagina
 
     return render_template("support_aanvraag.html")
+
+@bp.route("/admin/contact")
+def admin_contact():
+    #haalt alle open contactaanvragen op
+    aanvragen = ContactAanvraag.get_open_vragen()
+    return render_template("dev.html", aanvragen=aanvragen)
+
+@bp.route("/admin")
+def admin():
+    return render_template("admin.html")
+
+@bp.route("/admin/contact/<int:id>")
+def contact_detail(id):
+    aanvraag = ContactAanvraag.get_by_id(id)
+    return render_template("contact_beantwoorden.html", aanvraag=aanvraag)
+
+@bp.route("/contact/beantwoord/<int:id>", methods=["POST"])
+def beantwoord_contact(id):
+    antwoord = request.form["antwoord"]
+
+    #slaat het antwoord op bij de juiste aanvraag
+    ContactAanvraag.beantwoord(id, antwoord)
+
+    #redirect naar admin overzicht (PRG pattern)
+    return redirect("/admin/contact")
 
 @bp.route("/services")
 def services():
@@ -70,58 +97,102 @@ def registreer():
         telefoonnummer = request.form["telefoonnummer"]
         gebruikersnaam = request.form["gebruikersnaam"]
         wachtwoord = request.form["wachtwoord"]
-        wachtwoord_confirm = request.form.get("wachtwoord_confirm")
+        wachtwoord_confirm = request.form["wachtwoord_confirm"]
 
-        if wachtwoord_confirm is not None and wachtwoord != wachtwoord_confirm:
-            return render_template("registreer.html", error="Wachtwoorden komen niet overeen.")
+        # 1. Wachtwoorden controleren
+        if wachtwoord != wachtwoord_confirm:
+            return render_template(
+                "registreer.html",
+                error="Wachtwoorden komen niet overeen."
+            )
 
-        conn = get_db_connection() 
-        cursor = conn.cursor() 
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-        hashed = generate_password_hash(wachtwoord)
+        # 2. Check of gebruikersnaam al bestaat
+        cursor.execute(
+            "SELECT id FROM users WHERE gebruikersnaam = %s",
+            (gebruikersnaam,)
+        )
+        if cursor.fetchone():
+            cursor.close()
+            conn.close()
+            return render_template(
+                "registreer.html",
+                error="Gebruikersnaam bestaat al."
+            )
 
-        query = """
-            INSERT INTO user(Voornaam, achternaam, email, Telefoonnummer, gebruikersnaam, wachtwoord)
-            VALUES (%s, %s, %s, %s,  %s, %s)
-        """
-        cursor.execute(query, (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, hashed))
-        conn.commit() 
-        cursor.close() 
-        conn.close() 
+        # 3. Wachtwoord hashen
+        hashed_password = generate_password_hash(wachtwoord)
+
+        # 4. Gebruiker opslaan
+        cursor.execute(
+            """
+            INSERT INTO users
+            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, wachtwoord)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, hashed_password)
+        )
+
+        conn.commit()
+        cursor.close()
+        conn.close()
 
         return redirect("/login")
 
     return render_template("registreer.html")
 
-@bp.route("/login", methods={ 'GET', 'POST' })
+from flask import session
+
+@bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         gebruikersnaam = request.form["gebruikersnaam"]
         wachtwoord = request.form["wachtwoord"]
 
-        conn = get_db_connection() 
-        cursor = conn.cursor() 
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-        query = """
-            SELECT wachtwoord FROM user WHERE gebruikersnaam = %s
-        """
-        cursor.execute(query, (gebruikersnaam,))
+        cursor.execute(
+            "SELECT id, wachtwoord FROM users WHERE gebruikersnaam = %s",
+            (gebruikersnaam,)
+        )
         row = cursor.fetchone()
-        user = None
-        if row:
-            # cursor.fetchone() geeft meestal een tuple; wachtwoord staat in eerste kolom
-            stored_hash = row[0]
-            if check_password_hash(stored_hash, wachtwoord):
-                user = True
-        cursor.close() 
-        conn.close() 
 
-        if user:
-            return redirect("/home")
-        else:
-            # toon foutmelding zonder flash door de template opnieuw te renderen
-            return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
+        cursor.close()
+        conn.close()
+
+        if row and check_password_hash(row[1], wachtwoord):
+            session["user_id"] = row[0]
+            session["gebruikersnaam"] = gebruikersnaam
+            return redirect(url_for("main.index"))
+
+        return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
+
     return render_template("login.html")
+
+@bp.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
+
+@bp.route("/design1/<int:article_id>")
+def design1(article_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT id, title, likes FROM newsarticle WHERE id = %s", (article_id,))
+    newsarticle = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if newsarticle is None:
+        return "Artikel niet gevonden", 404
+
+    return render_template("design1.html", newsarticle=newsarticle)
 
 
 

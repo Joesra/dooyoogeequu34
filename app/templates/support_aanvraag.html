@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/support_aanvraag.css') }}">
 </head>
+
 <body>
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
@@ -16,12 +18,21 @@
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
             <li><a href="#">Data Beheren</a></li>
-            <li><a href="#">Statistieken</a></li>
-            <li class="{% if request.path == '/info' %}active-link{% endif %}">
-                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
+                <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
+            </li>
+            <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
+            </li>
+            <li class="{% if request.path == '/nieuws' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuws') }}">Nieuws</a>
+            </li>
+
             <li class="{% if request.path == '/contact' %}active-link{% endif %}">
                 <a href="{{ url_for('main.contact') }}">Support</a>
             </li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
             <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
@@ -35,6 +46,15 @@
             <p>
                 Vul onderstaand formulier in en wij nemen zo snel mogelijk contact met u op over uw vraag.
             </p>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
 
             <div class="form-container">
                 <form method="POST" action="/contact" class="contact-form">
@@ -50,12 +70,14 @@
 
                     <div class="form-group">
                         <label for="onderwerp">Onderwerp*</label>
-                        <input type="text" id="onderwerp" name="onderwerp" required placeholder="Waar gaat uw vraag over?">
+                        <input type="text" id="onderwerp" name="onderwerp" required
+                            placeholder="Waar gaat uw vraag over?">
                     </div>
 
                     <div class="form-group">
                         <label for="bericht">Bericht*</label>
-                        <textarea id="bericht" name="bericht" required placeholder="Beschrijf uw vraag of project..."></textarea>
+                        <textarea id="bericht" name="bericht" required
+                            placeholder="Beschrijf uw vraag of project..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">Verstuur Support Aanvraag</button>
@@ -64,4 +86,5 @@
         </section>
     </div>
 </body>
+
 </html>

@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
-    <title>Support Aanvragen - Dev Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offerte Aanvraag</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/support_aanvraag.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
+
 <body>
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
@@ -31,31 +38,20 @@
         </ul>
     </div>
 
-<h1>Binnengekomen support aanvragen</h1>
+        <h1>Aanvraag #{{ aanvraag.id }}</h1>
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>Naam</th>
-        <th>Email</th>
-        <th>Onderwerp</th>
-        <th>Bericht</th>
-        <th>Actie</th>
-    </tr>
+        <p><strong>Naam:</strong> {{ aanvraag.naam }}</p>
+        <p><strong>Email:</strong> {{ aanvraag.email }}</p>
+        <p><strong>Onderwerp:</strong> {{ aanvraag.onderwerp }}</p>
+        <p><strong>Bericht:</strong> {{ aanvraag.bericht }}</p>
 
-    {% for aanvraag in aanvragen %}
-    <tr>
-        <td>{{ aanvraag.id }}</td>
-        <td>{{ aanvraag.naam }}</td>
-        <td>{{ aanvraag.email }}</td>
-        <td>{{ aanvraag.onderwerp }}</td>
-        <td>{{ aanvraag.bericht }}</td>
-        <td>
-            <a href="/admin/contact/{{ aanvraag.id }}">Beantwoorden</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+        <hr>
 
-</body>
-</html>
+        <h2>Beantwoord aanvraag</h2>
+
+        <form method="POST">
+            <textarea name="antwoord" rows="6" cols="60" required></textarea><br><br>
+            <button type="submit">Opslaan</button>
+        </form>
+
+    </div>

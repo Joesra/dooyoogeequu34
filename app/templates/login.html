@@ -14,17 +14,25 @@
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
             <li><a href="#">Data Beheren</a></li>
-            <li><a href="#">Statistieken</a></li>
-            <li class="{% if request.path == '/info' %}active-link{% endif %}">
-                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
+                <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
+            </li>
+            <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
+            </li>
+            <li class="{% if request.path == '/nieuws' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuws') }}">Nieuws</a>
+            </li>
+
             <li class="{% if request.path == '/contact' %}active-link{% endif %}">
                 <a href="{{ url_for('main.contact') }}">Support</a>
-            <li class="{% if request.path == '/login' %}active-link{% endif %}">
-                <a href="{{ url_for('main.login') }}">login</a>
             </li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
             <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
+
     <div class="main login-page">
         <header>
             <h1>inloggen</h1>
