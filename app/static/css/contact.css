@@ -199,3 +199,158 @@ header h1 {
     padding: 20px;
   }
 }
+
+body > h1,
+body > p,
+body > hr,
+body > h2,
+body > form {
+  margin-left: 220px; /* sidebar ruimte */
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Container-gevoel voor deze pagina */
+body > h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+body > p {
+  max-width: 500px;
+  margin: 0 auto 8px auto;
+  font-size: 14px;
+  color: #374151;
+}
+
+body > hr {
+  max-width: 500px;
+  margin: 25px auto;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}
+
+body > h2 {
+  max-width: 500px;
+  margin: 0 auto 15px auto;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Formulier styling */
+body > form {
+  max-width: 500px;
+  margin: 0 auto 40px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+body > form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+body > form button {
+  margin-top: 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+body > form button:hover {
+  background-color: #2563eb;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  body > h1,
+  body > p,
+  body > hr,
+  body > h2,
+  body > form {
+    margin-left: 0;
+    padding: 0 20px;
+  }
+}
+
+/* Pagina titel */
+.main h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Container rond de tabel */
+.support-table-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+  max-width: 1100px;   /* 🔥 dit bepaalt hoe breed hij mag zijn */
+  margin: 0 auto;      /* centreren */
+  overflow-x: auto;    /* scroll indien nodig */
+}
+
+/* Tabel styling */
+.support-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.support-table-container th,
+.support-table-container td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.support-table-container th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Lange teksten netjes afkappen */
+.support-table-container td {
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Actie link */
+.support-table-container a {
+  color: #3b82f6;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.support-table-container a:hover {
+  text-decoration: underline;
+}
+
+/* Mobiel */
+@media (max-width: 900px) {
+  .support-table-container {
+    max-width: 100%;
+  }
+}
