@@ -15,7 +15,7 @@
         <div class="logo">"Wolken"</div>
         <ul>
             <li class="{% if request.path == '/home' %}active-link{% endif %}">
-                <a href="{{ url_for('main.index') }}">Dashboard</a>
+                <a href="{{ url_for('main.index') }}">Dashboard</a> 
             </li>
             <li><a href="#">Data Beheren</a></li>
             <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
@@ -41,9 +41,20 @@
     <div class="main">
         <header>
             <button class="menu-toggle">☰</button>
+
             <h1>{% block header %}{% endblock %}</h1>
-            <button class="logout">Uitloggen</button>
+
+            {% if session.get("gebruikersnaam") %}
+            <div class="user-info">
+                Ingelogd als <strong>{{ session["gebruikersnaam"] }}</strong>
+                |
+                <a href="{{ url_for('main.logout') }}">Uitloggen</a>
+            </div>
+            {% else %}
+            <a href="{{ url_for('main.login') }}">Inloggen</a>
+            {% endif %}
         </header>
+
         <!-- 
         <section class="stats">
             <div class="card">

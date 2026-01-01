@@ -3,6 +3,8 @@ from app.main import bp
 from app.settings import DATABASE
 import mysql.connector
 from app.contact_model import ContactAanvraag #maakt connectie met contact_model.py, daar gebeurt alle magie
+from flask import url_for
+
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -20,7 +22,7 @@ def get_db_connection():
 def index():
     if "user_id" not in session:
         return redirect("/login")
-    return render_template("base.html")
+    return render_template("base.html") 
 
 
 @bp.route("/info")
@@ -164,11 +166,17 @@ def login():
         if row and check_password_hash(row[1], wachtwoord):
             session["user_id"] = row[0]
             session["gebruikersnaam"] = gebruikersnaam
-            return redirect("/")
+            return redirect(url_for("main.index"))
 
         return render_template("login.html", error="Onjuiste gebruikersnaam of wachtwoord.")
 
     return render_template("login.html")
+
+@bp.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
 
 @bp.route("/design1/<int:article_id>")
 def design1(article_id):
