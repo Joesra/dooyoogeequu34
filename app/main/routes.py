@@ -115,7 +115,7 @@ def registreer():
 
     return render_template("registreer.html")
 
-@bp.route("/login", methods={ 'GET', 'POST' })
+@bp.route("/login", methods={ "GET", "POST" })
 def login():
     if request.method == "POST":
         gebruikersnaam = request.form["gebruikersnaam"]
