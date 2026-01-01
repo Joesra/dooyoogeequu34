@@ -9,11 +9,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def get_db_connection():
     """Connectie maken met mysql database"""
     return mysql.connector.connect(
-        host=DATABASE["HOST"],
-        user=DATABASE["USER"],
-        password=DATABASE["PASSWORD"],
-        database=DATABASE["NAME"],
-        port=DATABASE["PORT"]
+        host=DATABASE["host"],
+        user=DATABASE["user"],
+        password=DATABASE["password"],
+        database=DATABASE["database"],
+        port=DATABASE["port"]
     )
 
 @bp.route("/home")
@@ -60,7 +60,7 @@ def admin_contact():
     return render_template("dev.html", aanvragen=aanvragen)
 
 @bp.route("/admin")
-def home():
+def admin():
     return render_template("admin.html")
 
 @bp.route("/admin/contact/<int:id>")
