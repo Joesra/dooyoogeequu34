@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
 
-
 <body>
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
@@ -19,7 +18,7 @@
             <li class="{% if request.path == '/home' %}active-link{% endif %}">
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
-            <li><a href="{{ url_for('bestanden.upload') }}">Bestanden</a>
+            <li><a href="{{ url_for('bestanden.upload_bestand') }}">Bestanden</a></li>
             </li>
             <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
                 <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
@@ -55,7 +54,7 @@
         {% endif %}
         {% endwith %}
 
-        <form method="POST" enctype="multipart/form-data"> <!--enctype= bestand versturen met html-->
+        <form method="POST" action="{{ url_for('bestanden.upload_bestand') }}" enctype="multipart/form-data"> <!--enctype= bestand versturen met html-->
             <label for="bestand">Kies een bestand</label>
             <input type="file" name="bestand" id="bestand" required>
 

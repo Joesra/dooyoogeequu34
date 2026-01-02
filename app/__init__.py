@@ -4,6 +4,7 @@ from flask import Flask
 
 from app.events import bp as events_bp
 from app.main import bp as main_bp
+from app.bestanden import bp as bestanden_bp
 
 
 def create_app():
@@ -16,5 +17,7 @@ def create_app():
     app.register_blueprint(main_bp)
 
     app.register_blueprint(events_bp, url_prefix="/events")
+    
+    app.register_blueprint(bestanden_bp)
 
     return app
