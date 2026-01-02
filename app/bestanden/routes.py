@@ -11,10 +11,12 @@ def upload_bestand():
             flash("Geen bestand geselecteerd", "error")
             return redirect("/bestanden")
 
-        #upload naar Supabase
-        url = upload_file(file)
+        try:
+            url = upload_file(file)
+            flash(f"Bestand succesvol geüpload! URL: {url}", "success")
+        except Exception as e:
+            flash(f"Fout bij uploaden: {e}")
 
-        flash("Bestand succesvol geüpload!", "success")
         return redirect("/bestanden")
 
     return render_template("bestanden.html")

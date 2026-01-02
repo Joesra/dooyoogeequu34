@@ -5,6 +5,8 @@ from flask import Flask
 from app.events import bp as events_bp
 from app.main import bp as main_bp
 from app.bestanden import bp as bestanden_bp
+from dotenv import load_dotenv
+load_dotenv()
 
 
 def create_app():
