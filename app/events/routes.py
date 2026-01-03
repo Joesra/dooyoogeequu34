@@ -1,24 +1,11 @@
 from dateutil.parser import isoparse
-
 from flask import abort, redirect, render_template, request, url_for
-
 from app.events import bp, create_event, get_event, get_events, update_event
 from flask import render_template, request, redirect, session, jsonify, current_app
-from app.settings import DATABASE
-import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Blueprint
+from app.database import get_db_connection
 
-
-def get_db_connection():
-    """Connectie maken met mysql database"""
-    return mysql.connector.connect(
-        host=DATABASE["HOST"],
-        user=DATABASE["USER"],
-        password=DATABASE["PASSWORD"],
-        database=DATABASE["NAME"],
-        port=DATABASE["PORT"]
-    )
 
 @bp.route("/")
 def index():
