@@ -16,6 +16,9 @@
         <div class="breadcrumb">
             Home / Nieuws / <span class="design-color">Artikel</span>
         </div>
+        {% if db_error %}
+        <div class="error-message"> Database niet bereikbaar. Artikelen kunnen tijdelijk niet geladen worden.</div>
+        {% endif %}
         <img class="search_icon" src="/static/img/search_icon.png" alt="">
     </div>
     {% for article in articles %}
@@ -26,7 +29,7 @@
             <p class="beschrijving-tekst_artikel">5-10-2025</p>
             <img src="\static\img\book_mark.png" alt="">
 
-            <button class="like-button" data-article-id="{{ article.newsarticle_id }}">
+            <button class="like-button" data-article-id="{{ article.newsarticle_id }}" {% if db_error %}disabled title="Database offline"{% endif %}>
                 <img src="/static/img/thumbs_up.png" alt="">
             </button>
             <span class="like-count" data-article-id="{{ article.newsarticle_id }}">{{ article.likes }}</span>
@@ -131,13 +134,17 @@
         <h3>comments</h3>
 
         <div class="comment-list">
+            {% if db_error %}
+            <div class="comment-disabled">Reacties tijdelijk uitgeschakeld omdat de database niet bereikbaar is.</div>
+            {% else %}
             <form class="comment-form" method="POST"
                 action="{{ url_for('events.add_comment', article_id=article.newsarticle_id) }}">
                 <input type="text" name="author" placeholder="Je naam" required>
                 <textarea name="content" placeholder="Plaats je comment..." required></textarea>
                 <button type="submit">Plaats comment</button>
             </form>
-            {% for comment in comments_per_article[article.newsarticle_id] %}
+            {% endif %}
+            {% for comment in comments_per_article.get(article.newsarticle_id, []) %}
             <div class="comment">
                 <div class="comment-author">
                     {{ comment.author}}
