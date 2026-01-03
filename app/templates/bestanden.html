@@ -54,12 +54,38 @@
         {% endif %}
         {% endwith %}
 
-        <form method="POST" action="{{ url_for('bestanden.upload_bestand') }}" enctype="multipart/form-data"> <!--enctype= bestand versturen met html-->
+        <form method="POST" action="{{ url_for('bestanden.upload_bestand') }}" enctype="multipart/form-data">
+            <!--enctype= bestand versturen met html-->
             <label for="bestand">Kies een bestand</label>
             <input type="file" name="bestand" id="bestand" required>
 
             <button type="submit">Upload bestand</button>
         </form>
+    </div>
+
+    <div class="main">
+        <h1>Mijn bestanden</h1>
+
+        <div class="files">
+            {% for bestand in bestanden %}
+            <div class="file-row">
+                <div class="file-icon">📄</div>
+
+                <div class="file-info">
+                    <a href="{{ bestand.url }}" target="_blank">
+                        {{ bestand.naam }}
+                    </a>
+                    {% if bestand.datum %}
+                    <small>Toegevoegd op {{ bestand.datum[:10] }}</small>
+                    {% else %}
+                    <small>Datum onbekend</small>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <p>Geen bestanden gevonden.</p>
+            {% endfor %}
+        </div>
     </div>
 
 </body>
