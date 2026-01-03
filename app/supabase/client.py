@@ -40,3 +40,16 @@ def list_buckets():
     print("Buckets gevonden:")
     for bucket in buckets:
         print("-", bucket.name)
+
+def get_files(bucket="uploads"):
+    result = supabase.storage.from_(bucket).list()
+
+    bestanden = []
+    for file in result:
+        bestanden.append({
+            "naam": file["name"],
+            "datum": file["created_at"],
+            "url": supabase.storage.from_(bucket).get_public_url(file["name"])
+        })
+
+    return bestanden

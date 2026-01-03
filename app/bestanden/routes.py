@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, flash
 from app.bestanden import bp
-from app.supabase.client import upload_file
+from app.supabase.client import upload_file, get_files
 
 @bp.route("/bestanden", methods=["GET", "POST"])
 def upload_bestand():
@@ -11,12 +11,10 @@ def upload_bestand():
             flash("Geen bestand geselecteerd", "error")
             return redirect("/bestanden")
 
-        try:
-            url = upload_file(file)
-            flash(f"Bestand succesvol geüpload! URL: {url}", "success")
-        except Exception as e:
-            flash(f"Fout bij uploaden: {e}")
+        upload_file(file)
+        flash("Bestand succesvol geüpload!", "success")
+        return redirect("/bestanden")  #PRG 
 
-        return redirect("/bestanden")
-
-    return render_template("bestanden.html")
+    #GET: bestanden ophalen
+    bestanden = get_files()
+    return render_template("bestanden.html", bestanden=bestanden)
