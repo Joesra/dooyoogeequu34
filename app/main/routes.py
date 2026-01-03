@@ -5,7 +5,6 @@ import mysql.connector
 from app.contact_model import ContactAanvraag #maakt connectie met contact_model.py, daar gebeurt alle magie
 from flask import url_for
 
-
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_db_connection():
@@ -32,11 +31,6 @@ def informatie():
 @bp.route("/nieuws")        
 def nieuws():
     return render_template("nieuws.html")
-
-# @bp.route("/")
-# def home():
-#     return render_template("index.html")
-
 
 @bp.route("/contact", methods=["GET", "POST"])
 def contact():
