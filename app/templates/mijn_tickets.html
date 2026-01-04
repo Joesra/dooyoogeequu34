@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offerte Aanvraag</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <title>Overheids Cloud Database</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/nieuws.css')}}" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -18,7 +17,9 @@
             <li class="{% if request.path == '/home' %}active-link{% endif %}">
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
-            <li><a href="#">Data Beheren</a></li>
+            <li class="{% if request.path == '/bestanden' %}active-link{% endif %}">
+                <a href="{{ url_for('bestanden.upload_bestand') }}">Data Beheren</a>
+            </li>
             <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
                 <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
             </li>
@@ -38,20 +39,38 @@
         </ul>
     </div>
 
-        <h1>Aanvraag #{{ aanvraag.id }}</h1>
+<div class="main">
+    <header>
+        <h1>Mijn supporttickets</h1>
+    </header>
 
-        <p><strong>Naam:</strong> {{ aanvraag.naam }}</p>
-        <p><strong>Email:</strong> {{ aanvraag.email }}</p>
-        <p><strong>Onderwerp:</strong> {{ aanvraag.onderwerp }}</p>
-        <p><strong>Bericht:</strong> {{ aanvraag.bericht }}</p>
+    {% if tickets and tickets|length > 0 %}
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Onderwerp</th>
+            <th>Status</th>
+            <th>Antwoord</th>
+        </tr>
 
-        <hr>
+        {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.onderwerp }}</td>
+            <td>{{ ticket.status }}</td>
+            <td>
+                {% if ticket.antwoord %}
+                    {{ ticket.antwoord }}
+                {% else %}
+                    Nog geen antwoord
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
 
-        <h2>Beantwoord aanvraag</h2>
+    </table>
+    {% else %}
+        <p>Je hebt nog geen supporttickets.</p>
+    {% endif %}
+</div>
 
-        <form method="POST">
-            <textarea name="antwoord" rows="6" cols="60" required></textarea><br><br>
-            <button type="submit">Opslaan</button>
-        </form>
-
-    </div>
+</body>
+</html>

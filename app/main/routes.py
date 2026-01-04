@@ -49,37 +49,75 @@ def nieuws():
 
 @bp.route("/contact", methods=["GET", "POST"])
 def contact():
+    if "user_id" not in session:
+        return redirect("/login")
+
     if request.method == "POST":
         aanvraag = ContactAanvraag(
             naam=request.form["naam"],
             email=request.form["email"],
             onderwerp=request.form["onderwerp"],
-            bericht=request.form["bericht"]
+            bericht=request.form["bericht"],
+            user_id=session["user_id"]
         )
-        aanvraag.opslaan()  #slaat de aanvraag op in de database
+        aanvraag.opslaan() #slaat de aanvraag op in de database
 
         flash(
             "Bedankt voor je vraag, we zullen het zo spoedig beantwoorden!",
             "success"
-        ) #support_aanvraag.html
-
-        return redirect("/contact")  #stuurt gebruiker terug naar contactpagina
+        )
+        return redirect("/mijn-tickets") #stuurt gebruiker terug naar contactpagina
 
     return render_template("support_aanvraag.html")
 
 @bp.route("/admin/contact")
 def admin_contact():
-    #haalt alle open contactaanvragen op
-    aanvragen = ContactAanvraag.get_open_vragen()
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT * FROM contact_aanvragen ORDER BY id DESC"
+    )
+    aanvragen = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
     return render_template("dev.html", aanvragen=aanvragen)
 
-@bp.route("/admin")
-def admin():
-    return render_template("admin.html")
+@bp.route("/admin/contact/<int:id>", methods=["GET", "POST"])
+def admin_contact_detail(id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
 
-@bp.route("/admin/contact/<int:id>")
-def contact_detail(id):
-    aanvraag = ContactAanvraag.get_by_id(id)
+    if request.method == "POST":
+        antwoord = request.form["antwoord"]
+        status = request.form["status"]
+
+        cursor.execute(
+            """
+            UPDATE contact_aanvragen
+            SET antwoord = %s, status = %s
+            WHERE id = %s
+            """,
+            (antwoord, status, id)
+        )
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return redirect("/admin/contact")
+
+    cursor.execute(
+        "SELECT * FROM contact_aanvragen WHERE id = %s",
+        (id,)
+    )
+    aanvraag = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
     return render_template("contact_beantwoorden.html", aanvraag=aanvraag)
 
 @bp.route("/contact/beantwoord/<int:id>", methods=["POST"])
@@ -230,49 +268,6 @@ def design1(article_id):
 
     return render_template("design1.html", newsarticle=newsarticle)
 
-
-
-@bp.route("/dev", methods=["GET"])
-def dev_dashboard():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM contact_aanvragen ORDER BY id DESC")
-    aanvragen = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    return render_template("dev.html", aanvragen=aanvragen)
-
-@bp.route("/dev/aanvraag/<int:id>", methods=["GET"])
-def aanvraag_detail(id):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM contact_aanvragen WHERE id = %s", (id,))
-    aanvraag = cursor.fetchone()
-
-    cursor.close()
-    conn.close()
-
-    return render_template("aanvraag_detail.html", aanvraag=aanvraag)
-
-@bp.route("/dev/aanvraag/<int:id>", methods=["POST"])
-def aanvraag_beantwoorden(id):
-    antwoord = request.form["antwoord"]
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("UPDATE contact_aanvragen SET antwoord = %s WHERE id = %s", (antwoord, id))
-    conn.commit()
-
-    cursor.close()
-    conn.close()
-
-    return redirect("/dev")
-
 @bp.route("/incidenten")
 def incidenten():
     conn = get_db_connection()
@@ -306,3 +301,10 @@ def nieuwe_incident():
     
     return render_template("nieuwe_incident.html")
 
+@bp.route("/mijn-tickets")
+def mijn_tickets():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    tickets = ContactAanvraag.get_by_user(session["user_id"])
+    return render_template("mijn_tickets.html", tickets=tickets)
