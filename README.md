@@ -40,3 +40,15 @@ $ pytest
 ## Studiehandleiding
 
 In de Studiehandleiding op de DLO staat beschreven welke competenties je gaat ontwikkelen en wat de leeruitkomsten zijn voor dit blok.
+
+## Juiste .env
+
+SUPABASE_URL=https://zqzszirvffuebbfogfxr.supabase.co
+SUPABASE_KEY=sb_secret_DDyZjtWp4gnH34vwXhDygQ_4stwbR4F
+
+DB_HOST=db.hbo-ict.cloud
+DB_PORT=3366
+
+DB_USER=pb3bims2526_dooyoogeequu34
+DB_PASSWORD=BZdu7e9siSYqPtUc
+DB_NAME=pb3bims2526_dooyoogeequu34_dev
