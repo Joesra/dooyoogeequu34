@@ -14,7 +14,7 @@
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
-            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+            <li class="{% if request.path == url_for('main.index') %}active-link{% endif %}">
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
             <li class="{% if request.path == '/bestanden' %}active-link{% endif %}">

@@ -44,6 +44,15 @@
 <div class="main">
     <header>
         <h1>Mijn supporttickets</h1>
+                    {% if session.get("gebruikersnaam") %}
+            <div class="user-info">
+                Ingelogd als <strong>{{ session["gebruikersnaam"] }}</strong>
+                |
+                <a href="{{ url_for('main.logout') }}">Uitloggen</a>
+            </div>
+            {% else %}
+            <a href="{{ url_for('main.login') }}">Inloggen</a>
+            {% endif %}
     </header>
 
     {% if tickets and tickets|length > 0 %}

@@ -15,7 +15,7 @@
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
-            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+            <li class="{% if request.path == url_for('main.index') %}active-link{% endif %}">
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
             <li class="{% if request.path == '/bestanden' %}active-link{% endif %}">
@@ -46,6 +46,7 @@
 
         <header class="page-header">
             <h1>Bestanden</h1>
+            <h1>{% block header %}{% endblock %}</h1>
 
             {% if session.get("gebruikersnaam") %}
             <div class="user-info">
@@ -53,6 +54,8 @@
                 |
                 <a href="{{ url_for('main.logout') }}">Uitloggen</a>
             </div>
+            {% else %}
+            <a href="{{ url_for('main.login') }}">Inloggen</a>
             {% endif %}
         </header>
 
