@@ -4,6 +4,9 @@ from app.settings import DATABASE
 import mysql.connector
 from app.contact_model import ContactAanvraag #maakt connectie met contact_model.py, daar gebeurt alle magie
 from flask import url_for
+import re
+from flask import session
+
 
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -143,7 +146,25 @@ def registreer():
 
     return render_template("registreer.html")
 
-from flask import session
+
+def is_overheid_email(email):
+    return email.lower().endswith("@amsterdam.nl") #checkt of email eindigt met @amsterdam
+
+
+def is_sterk_wachtwoord(wachtwoord):
+    if len(wachtwoord) < 8: #wachtwoord lengte langer dan 8
+        return False
+        #re voor regex
+    if not re.search(r"[A-Z]", wachtwoord): #moet een hoofdletter bevatten
+        return False
+
+    if not re.search(r"[0-9]", wachtwoord): #moet een cijfer van 1-9 bevatten
+        return False
+
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", wachtwoord): #moet een teken bevatten
+        return False
+
+    return True
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -176,7 +197,6 @@ def login():
 def logout():
     session.clear()
     return redirect("/login")
-
 
 @bp.route("/design1/<int:article_id>")
 def design1(article_id):
