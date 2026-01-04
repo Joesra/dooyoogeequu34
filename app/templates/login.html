@@ -29,6 +29,9 @@
             <li class="{% if request.path == '/contact' %}active-link{% endif %}">
                 <a href="{{ url_for('main.contact') }}">Support</a>
             </li>
+            <li class="{% if request.path == '/mijn-tickets' %}active-link{% endif %}">
+                <a href="{{ url_for('main.mijn_tickets') }}">Mijn aanvragen</a>
+            </li>
             <li class="{% if request.path == '/info' %}active-link{% endif %}">
                 <a href="{{ url_for('main.informatie') }}">Informatie</a>
             <li><a href="#">Instellingen</a></li>

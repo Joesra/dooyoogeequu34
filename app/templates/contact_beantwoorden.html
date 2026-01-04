@@ -33,47 +33,49 @@
             <li class="{% if request.path == '/contact' %}active-link{% endif %}">
                 <a href="{{ url_for('main.contact') }}">Support</a>
             </li>
+            <li class="{% if request.path == '/mijn-tickets' %}active-link{% endif %}">
+                <a href="{{ url_for('main.mijn_tickets') }}">Mijn aanvragen</a>
+            </li>
             <li class="{% if request.path == '/info' %}active-link{% endif %}">
                 <a href="{{ url_for('main.informatie') }}">Informatie</a>
             <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
 
-</div>
+    </div>
 
-<div class="main">
-    <header>
-        <h1>Support aanvraag</h1>
-        <a href="/admin/contact" class="back-link">← Terug naar overzicht</a>
-    </header>
+    <div class="main">
+        <header>
+            <h1>Support aanvraag</h1>
+            <a href="/admin/contact" class="back-link">← Terug naar overzicht</a>
+        </header>
 
-    <section class="ticket-container">
+        <section class="ticket-container">
 
-        <div class="ticket-info card">
-            <h2>Gegevens aanvraag</h2>
+            <div class="ticket-info card">
+                <h2>Gegevens aanvraag</h2>
 
-            <p><strong>Naam:</strong> {{ aanvraag.naam }}</p>
-            <p><strong>Email:</strong> {{ aanvraag.email }}</p>
-            <p><strong>Onderwerp:</strong> {{ aanvraag.onderwerp }}</p>
+                <p><strong>Naam:</strong> {{ aanvraag.naam }}</p>
+                <p><strong>Email:</strong> {{ aanvraag.email }}</p>
+                <p><strong>Onderwerp:</strong> {{ aanvraag.onderwerp }}</p>
 
-            <div class="ticket-message">
-                {{ aanvraag.bericht }}
+                <div class="ticket-message">
+                    {{ aanvraag.bericht }}
+                </div>
             </div>
-        </div>
 
-        <div class="ticket-reply card">
-            <h2>Antwoord</h2>
+            <div class="ticket-reply card">
+                <form method="POST" action="/contact/beantwoord/{{ aanvraag.id }}" class="reply-form">
+                    <textarea name="antwoord" id="antwoord" class="antwoord-textarea" placeholder="Typ je antwoord"
+                        required></textarea>
 
-            <form method="POST" action="/contact/beantwoord/{{ aanvraag.id }}">
-                <label for="antwoord">Typ je antwoord</label>
-                <textarea name="antwoord" id="antwoord" rows="6" required></textarea>
+                    <button type="submit">Verstuur antwoord</button>
+                </form>
+            </div>
 
-                <button type="submit">Verstuur antwoord</button>
-            </form>
-        </div>
-
-    </section>
-</div>
+        </section>
+    </div>
 
 </body>
+
 </html>

@@ -8,17 +8,35 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
-
 <body>
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
-            <li><a href="{{ url_for('main.index') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('bestanden.upload_bestand') }}">Data Beheren</a></li>
-            <li><a href="{{ url_for('main.incidenten') }}">Incidenten</a></li>
-            <li><a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a></li>
-            <li><a href="{{ url_for('main.nieuws') }}">Nieuws</a></li>
-            <li class="active-link"><a href="{{ url_for('main.contact') }}">Support</a></li>
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
+            </li>
+            <li class="{% if request.path == '/bestanden' %}active-link{% endif %}">
+                <a href="{{ url_for('bestanden.upload_bestand') }}">Data Beheren</a>
+            </li>
+            <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
+                <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
+            </li>
+            <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
+            </li>
+            <li class="{% if request.path == '/nieuws' %}active-link{% endif %}">
+                <a href="{{ url_for('main.nieuws') }}">Nieuws</a>
+            </li>
+
+            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                <a href="{{ url_for('main.contact') }}">Support</a>
+            </li>
+            <li class="{% if request.path == '/mijn-tickets' %}active-link{% endif %}">
+                <a href="{{ url_for('main.mijn_tickets') }}">Mijn aanvragen</a>
+            </li>
+            <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                <a href="{{ url_for('main.informatie') }}">Informatie</a>
+            <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
 

@@ -357,3 +357,13 @@ form button[type="submit"] {
   margin: 0;
   max-width: none;
 }
+
+/* Verwijder form-kader in ticket reply */
+.reply-form {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+}
