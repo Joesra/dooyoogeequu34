@@ -15,7 +15,7 @@
         <div class="logo">"Wolken"</div>
         <ul>
             <li class="{% if request.path == '/home' %}active-link{% endif %}">
-                <a href="{{ url_for('main.index') }}">Dashboard</a> 
+                <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
             <li><a href="#">Data Beheren</a></li>
             <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
@@ -55,7 +55,6 @@
             {% endif %}
         </header>
 
-        <!-- 
         <section class="stats">
             <div class="card">
                 <p>Totaal Datasets</p>
@@ -114,49 +113,29 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for bestand in recente_bestanden %}
                     <tr>
-                        <td>Bevolkingsregister Q3 2024</td>
-                        <td>Demografie</td>
-                        <td>Amsterdam</td>
-                        <td>850.000</td>
+                        <td>{{ bestand.naam }}</td>
+                        <td>Upload</td>
+                        <td>—</td>
+                        <td>—</td>
                         <td class="active">actief</td>
-                        <td>30-9-2024</td>
-                        <td>👁️ ⬇️</td>
+                        <td>{{ bestand.datum[:10] }}</td>
+                        <td>
+                            <a href="{{ bestand.url }}" target="_blank">⬇️</a>
+                        </td>
                     </tr>
+                    {% else %}
                     <tr>
-                        <td>Vergunningen September</td>
-                        <td>Vergunningen</td>
-                        <td>Rotterdam</td>
-                        <td>12.500</td>
-                        <td class="processing">verwerking</td>
-                        <td>29-9-2024</td>
-                        <td>👁️ ⬇️</td>
+                        <td colspan="7">Geen recente uploads gevonden</td>
                     </tr>
-                    <tr>
-                        <td>WOZ Waarderingen 2024</td>
-                        <td>Belastingen</td>
-                        <td>Den Haag</td>
-                        <td>275.000</td>
-                        <td class="active">actief</td>
-                        <td>28-9-2024</td>
-                        <td>👁️ ⬇️</td>
-                    </tr>
-                    <tr>
-                        <td>Sociale Voorzieningen</td>
-                        <td>Uitkeringen</td>
-                        <td>Utrecht</td>
-                        <td>45.000</td>
-                        <td class="active">actief</td>
-                        <td>27-9-2024</td>
-                        <td>👁️ ⬇️</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
     </div>
- -->
 
-        <section class="mainsection">
-            <div>{% block content %}{% endblock %}</div>
-        </section>
+    <section class="mainsection">
+        <div>{% block content %}{% endblock %}</div>
+    </section>
     </div>
 
 </body>

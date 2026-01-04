@@ -6,12 +6,33 @@ from app.database import get_db_connection
 import re
 from flask import session
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.supabase.client import get_files
+
 
 @bp.route("/")
 def index():
     if "user_id" not in session:
         return redirect("/login")
-    return render_template("base.html") 
+
+    bestanden = get_files()
+
+    bestanden = [
+        b for b in bestanden if b["datum"] is not None
+    ]
+
+    #sorteer nieuwste eerst
+    bestanden = sorted(
+        bestanden,
+        key=lambda b: b["datum"],
+        reverse=True
+    )
+
+    recente_bestanden = bestanden[:5]
+
+    return render_template(
+        "base.html",
+        recente_bestanden=recente_bestanden
+    )
 
 @bp.route("/info")
 def informatie():
