@@ -1,32 +1,17 @@
 from flask import render_template, redirect, request, flash
 from app.main import bp
-from app.settings import DATABASE
-import mysql.connector
 from app.contact_model import ContactAanvraag #maakt connectie met contact_model.py, daar gebeurt alle magie
 from flask import url_for
+from app.database import get_db_connection
 import re
 from flask import session
-
-
-
 from werkzeug.security import generate_password_hash, check_password_hash
-
-def get_db_connection():
-    """Connectie maken met mysql database"""
-    return mysql.connector.connect(
-        host=DATABASE["host"],
-        user=DATABASE["user"],
-        password=DATABASE["password"],
-        database=DATABASE["database"],
-        port=DATABASE["port"]
-    )
 
 @bp.route("/")
 def index():
     if "user_id" not in session:
         return redirect("/login")
     return render_template("base.html") 
-
 
 @bp.route("/info")
 def informatie():

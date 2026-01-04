@@ -1,4 +1,4 @@
-from app.database import get_connection
+from app.database import get_db_connection
 
 class ContactAanvraag:
     repo = True  #geeft aan dat deze class database-logica bevat
@@ -14,7 +14,7 @@ class ContactAanvraag:
         self.datum_ingediend = datum_ingediend
 
     def opslaan(self):
-        conn = get_connection()
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         #query om de aanvraag op te slaan
@@ -31,7 +31,8 @@ class ContactAanvraag:
     @staticmethod
     def get_open_vragen():
         #maakt verbinding met de database
-        conn = get_connection()
+        conn = get_db_connection()
+
         cursor = conn.cursor(dictionary=True)
 
         #query om alle vragen zonder antwoord op te halen
@@ -52,7 +53,7 @@ class ContactAanvraag:
     @staticmethod
     def beantwoord(vraag_id, antwoord):
         #maakt verbinding met de database
-        conn = get_connection()
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         #query om een vraag te beantwoorden
@@ -69,7 +70,8 @@ class ContactAanvraag:
 
     @staticmethod
     def get_by_id(vraag_id): #haalt specifieke id op die wordt gekozen
-        conn = get_connection()
+        conn = get_db_connection()
+
         cursor = conn.cursor(dictionary=True)
 
         query = "SELECT * FROM contact_aanvragen WHERE id = %s" #selecteert id in de database
