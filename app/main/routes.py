@@ -90,66 +90,9 @@ def beantwoord_contact(id):
 def services():
     return render_template("services.html")
 
- #test        
-@bp.route("/registreer", methods=["GET", "POST"])
-def registreer():
-    if request.method == "POST":
-        voornaam = request.form["voornaam"]
-        achternaam = request.form["achternaam"]
-        email = request.form["email"]
-        telefoonnummer = request.form["telefoonnummer"]
-        gebruikersnaam = request.form["gebruikersnaam"]
-        wachtwoord = request.form["wachtwoord"]
-        wachtwoord_confirm = request.form["wachtwoord_confirm"]
-
-        # 1. Wachtwoorden controleren
-        if wachtwoord != wachtwoord_confirm:
-            return render_template(
-                "registreer.html",
-                error="Wachtwoorden komen niet overeen."
-            )
-
-        conn = get_db_connection()
-        cursor = conn.cursor()
-
-        # 2. Check of gebruikersnaam al bestaat
-        cursor.execute(
-            "SELECT id FROM users WHERE gebruikersnaam = %s",
-            (gebruikersnaam,)
-        )
-        if cursor.fetchone():
-            cursor.close()
-            conn.close()
-            return render_template(
-                "registreer.html",
-                error="Gebruikersnaam bestaat al."
-            )
-
-        # 3. Wachtwoord hashen
-        hashed_password = generate_password_hash(wachtwoord)
-
-        # 4. Gebruiker opslaan
-        cursor.execute(
-            """
-            INSERT INTO users
-            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, wachtwoord)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """,
-            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, hashed_password)
-        )
-
-        conn.commit()
-        cursor.close()
-        conn.close()
-
-        return redirect("/login")
-
-    return render_template("registreer.html")
-
 
 def is_overheid_email(email):
     return email.lower().endswith("@amsterdam.nl") #checkt of email eindigt met @amsterdam
-
 
 def is_sterk_wachtwoord(wachtwoord):
     if len(wachtwoord) < 8: #wachtwoord lengte langer dan 8
@@ -165,6 +108,73 @@ def is_sterk_wachtwoord(wachtwoord):
         return False
 
     return True
+
+ #test        
+@bp.route("/registreer", methods=["GET", "POST"])
+def registreer():
+    if request.method == "POST":
+        voornaam = request.form["voornaam"]
+        achternaam = request.form["achternaam"]
+        email = request.form["email"]
+        telefoonnummer = request.form["telefoonnummer"]
+        gebruikersnaam = request.form["gebruikersnaam"]
+        wachtwoord = request.form["wachtwoord"]
+        wachtwoord_confirm = request.form["wachtwoord_confirm"]
+
+        if not is_overheid_email(email):
+            return render_template(
+                "registreer.html",
+                error="Alleen e-mailadressen met @amsterdam.nl zijn toegestaan."
+            )
+
+        if wachtwoord != wachtwoord_confirm:
+            return render_template(
+                "registreer.html",
+                error="Wachtwoorden komen niet overeen."
+            )
+
+        if not is_sterk_wachtwoord(wachtwoord):
+            return render_template(
+                "registreer.html",
+                error=(
+                    "Wachtwoord moet minimaal 8 tekens bevatten, "
+                    "1 hoofdletter, 1 cijfer en 1 speciaal teken."
+                )
+            )
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT id FROM users WHERE gebruikersnaam = %s", #checkt of gebruikresnaam al bestaat 
+            (gebruikersnaam,)
+        )
+        if cursor.fetchone():
+            cursor.close()
+            conn.close()
+            return render_template(
+                "registreer.html",
+                error="Gebruikersnaam bestaat al."
+            )
+
+        hashed_password = generate_password_hash(wachtwoord)
+
+        cursor.execute( #slaat gebruiker op in de db
+            """
+            INSERT INTO users
+            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, wachtwoord)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (voornaam, achternaam, email, telefoonnummer, gebruikersnaam, hashed_password)
+        )
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return redirect("/login")
+
+    return render_template("registreer.html")
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
