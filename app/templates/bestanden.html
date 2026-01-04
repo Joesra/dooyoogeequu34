@@ -43,6 +43,17 @@
         <header>
             <h1>Bestand uploaden</h1>
         </header>
+        <h1>{% block header %}{% endblock %}</h1>
+
+        {% if session.get("gebruikersnaam") %}
+        <div class="user-info">
+            Ingelogd als <strong>{{ session["gebruikersnaam"] }}</strong>
+            |
+            <a href="{{ url_for('main.logout') }}">Uitloggen</a>
+        </div>
+        {% else %}
+        <a href="{{ url_for('main.login') }}">Inloggen</a>
+        {% endif %}
 
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
