@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, flash
 from app.bestanden import bp
-from app.supabase.client import upload_file, get_files
+from app.supabase.client import upload_file, get_files, delete_file
 
 @bp.route("/bestanden", methods=["GET", "POST"])
 def upload_bestand():
@@ -18,3 +18,16 @@ def upload_bestand():
     #GET: bestanden ophalen
     bestanden = get_files()
     return render_template("bestanden.html", bestanden=bestanden)
+
+@bp.route("/bestanden/verwijder", methods=["POST"])
+def verwijder_bestand():
+    bestandsnaam = request.form.get("bestandsnaam")
+
+    if not bestandsnaam:
+        flash("Bestand niet gevonden", "error")
+        return redirect("/bestanden")
+
+    delete_file(bestandsnaam)
+    flash("Bestand verwijderd", "success")
+
+    return redirect("/bestanden")  # PRG

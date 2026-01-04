@@ -41,48 +41,56 @@
 
     <div class="main">
 
-    <!-- HEADER -->
-    <header class="page-header">
-        <h1>Bestanden</h1>
+        <header class="page-header">
+            <h1>Bestanden</h1>
 
-        {% if session.get("gebruikersnaam") %}
-        <div class="user-info">
-            Ingelogd als <strong>{{ session["gebruikersnaam"] }}</strong>
-            |
-            <a href="{{ url_for('main.logout') }}">Uitloggen</a>
-        </div>
-        {% endif %}
-    </header>
-
-    <form method="POST"
-          action="{{ url_for('bestanden.upload_bestand') }}"
-          enctype="multipart/form-data"
-          class="upload-box">
-
-        <label for="bestand">Kies een bestand</label>
-        <input type="file" name="bestand" id="bestand" required>
-        <button type="submit">Upload bestand</button>
-    </form>
-
-    <section class="files-section">
-        <h2>Mijn bestanden</h2>
-
-        <div class="files">
-            {% for bestand in bestanden %}
-            <div class="file-row">
-                <div class="file-icon">📄</div>
-                <div class="file-info">
-                    <a href="{{ bestand.url }}" target="_blank">{{ bestand.naam }}</a>
-                    <small>{{ bestand.datum[:10] if bestand.datum else "Datum onbekend" }}</small>
-                </div>
+            {% if session.get("gebruikersnaam") %}
+            <div class="user-info">
+                Ingelogd als <strong>{{ session["gebruikersnaam"] }}</strong>
+                |
+                <a href="{{ url_for('main.logout') }}">Uitloggen</a>
             </div>
-            {% else %}
-            <p>Geen bestanden gevonden.</p>
-            {% endfor %}
-        </div>
-    </section>
+            {% endif %}
+        </header>
 
-</div>
+        <form method="POST" action="{{ url_for('bestanden.upload_bestand') }}" enctype="multipart/form-data"
+            class="upload-box">
+
+            <label for="bestand">Kies een bestand</label>
+            <input type="file" name="bestand" id="bestand" required>
+            <button type="submit">Upload bestand</button>
+        </form>
+
+        <section class="files-section">
+            <h2>Mijn bestanden</h2>
+
+            <div class="files">
+                {% for bestand in bestanden %}
+                <div class="file-row">
+                    <div class="file-icon">📄</div>
+
+                    <div class="file-info">
+                        <a href="{{ bestand.url }}" target="_blank">
+                            {{ bestand.naam }}
+                        </a>
+                        <small>{{ bestand.datum[:10] if bestand.datum else "Datum onbekend" }}</small>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('bestanden.verwijder_bestand') }}" class="delete-form"
+                        onsubmit="return confirm('Weet je zeker dat je dit bestand wilt verwijderen?');">
+
+                        <input type="hidden" name="bestandsnaam" value="{{ bestand.naam }}">
+                        <button type="submit" class="delete-btn">X</button>
+                    </form>
+                </div>
+
+                {% else %}
+                <p>Geen bestanden gevonden.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+    </div>
 
 </body>
 

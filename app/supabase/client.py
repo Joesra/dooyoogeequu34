@@ -53,3 +53,6 @@ def get_files(bucket="uploads"):
         })
 
     return bestanden
+
+def delete_file(bestandsnaam):
+    supabase.storage.from_("uploads").remove([bestandsnaam])
