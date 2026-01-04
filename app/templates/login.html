@@ -13,7 +13,9 @@
             <li class="{% if request.path == '/home' %}active-link{% endif %}">
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
-            <li><a href="#">Data Beheren</a></li>
+            <li class="{% if request.path == '/bestanden' %}active-link{% endif %}">
+                <a href="{{ url_for('bestanden.upload_bestand') }}">Data Beheren</a>
+            </li>
             <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
                 <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
             </li>
