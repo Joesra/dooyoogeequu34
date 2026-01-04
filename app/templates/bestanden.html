@@ -40,10 +40,10 @@
     </div>
 
     <div class="main">
-        <header>
-            <h1>Bestand uploaden</h1>
-        </header>
-        <h1>{% block header %}{% endblock %}</h1>
+
+    <!-- HEADER -->
+    <header class="page-header">
+        <h1>Bestanden</h1>
 
         {% if session.get("gebruikersnaam") %}
         <div class="user-info">
@@ -51,53 +51,38 @@
             |
             <a href="{{ url_for('main.logout') }}">Uitloggen</a>
         </div>
-        {% else %}
-        <a href="{{ url_for('main.login') }}">Inloggen</a>
         {% endif %}
+    </header>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="flash flash-{{ category }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+    <form method="POST"
+          action="{{ url_for('bestanden.upload_bestand') }}"
+          enctype="multipart/form-data"
+          class="upload-box">
 
-        <form method="POST" action="{{ url_for('bestanden.upload_bestand') }}" enctype="multipart/form-data">
-            <!--enctype= bestand versturen met html-->
-            <label for="bestand">Kies een bestand</label>
-            <input type="file" name="bestand" id="bestand" required>
+        <label for="bestand">Kies een bestand</label>
+        <input type="file" name="bestand" id="bestand" required>
+        <button type="submit">Upload bestand</button>
+    </form>
 
-            <button type="submit">Upload bestand</button>
-        </form>
-    </div>
-
-    <div class="main">
-        <h1>Mijn bestanden</h1>
+    <section class="files-section">
+        <h2>Mijn bestanden</h2>
 
         <div class="files">
             {% for bestand in bestanden %}
             <div class="file-row">
                 <div class="file-icon">📄</div>
-
                 <div class="file-info">
-                    <a href="{{ bestand.url }}" target="_blank">
-                        {{ bestand.naam }}
-                    </a>
-                    {% if bestand.datum %}
-                    <small>Toegevoegd op {{ bestand.datum[:10] }}</small>
-                    {% else %}
-                    <small>Datum onbekend</small>
-                    {% endif %}
+                    <a href="{{ bestand.url }}" target="_blank">{{ bestand.naam }}</a>
+                    <small>{{ bestand.datum[:10] if bestand.datum else "Datum onbekend" }}</small>
                 </div>
             </div>
             {% else %}
             <p>Geen bestanden gevonden.</p>
             {% endfor %}
         </div>
-    </div>
+    </section>
+
+</div>
 
 </body>
 

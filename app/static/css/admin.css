@@ -77,3 +77,39 @@
   color: #6b7280;
   font-size: 13px;
 }
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.user-info {
+  font-size: 14px;
+  color: #374151;
+}
+
+.user-info a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.user-info a:hover {
+  text-decoration: underline;
+}
+
+.main {
+  margin-left: 220px;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.files-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
