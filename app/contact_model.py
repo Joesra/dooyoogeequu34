@@ -1,9 +1,21 @@
 from app.database import get_db_connection
 
-class ContactAanvraag:
-    repo = True  #geeft aan dat deze class database-logica bevat
 
-    def __init__(self, id=None, naam=None, email=None, onderwerp=None, bericht=None, antwoord=None, status=None, datum_ingediend=None):
+class ContactAanvraag:
+    repo = True
+
+    def __init__(
+        self,
+        id=None,
+        naam=None,
+        email=None,
+        onderwerp=None,
+        bericht=None,
+        antwoord=None,
+        status=None,
+        datum_ingediend=None,
+        user_id=None
+    ):
         self.id = id
         self.naam = naam
         self.email = email
@@ -12,72 +24,98 @@ class ContactAanvraag:
         self.antwoord = antwoord
         self.status = status
         self.datum_ingediend = datum_ingediend
+        self.user_id = user_id
 
+    # =========================
+    # Ticket opslaan
+    # =========================
     def opslaan(self):
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        #query om de aanvraag op te slaan
         query = """
-            INSERT INTO contact_aanvragen (naam, email, onderwerp, bericht)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO contact_aanvragen
+            (naam, email, onderwerp, bericht, user_id, status)
+            VALUES (%s, %s, %s, %s, %s, 'Nieuw')
         """
-        cursor.execute(query, (self.naam, self.email, self.onderwerp, self.bericht))
 
-        conn.commit() #slaat de ingevulde variable op in de database
+        cursor.execute(
+            query,
+            (self.naam, self.email, self.onderwerp, self.bericht, self.user_id)
+        )
+
+        conn.commit()
         cursor.close()
-        conn.close()  #sluit de verbinding met de database af
+        conn.close()
 
+    # =========================
+    # Tickets van 1 gebruiker
+    # =========================
     @staticmethod
-    def get_open_vragen():
-        #maakt verbinding met de database
+    def get_by_user(user_id):
         conn = get_db_connection()
-
         cursor = conn.cursor(dictionary=True)
 
-        #query om alle vragen zonder antwoord op te halen
-        query = """
-            SELECT * FROM contact_aanvragen
-            WHERE antwoord IS NULL
-        """
-        cursor.execute(query)
+        cursor.execute(
+            "SELECT * FROM contact_aanvragen WHERE user_id = %s ORDER BY id DESC",
+            (user_id,)
+        )
 
-        rows = cursor.fetchall()  #haalt alle resultaten op
-
+        rows = cursor.fetchall()
         cursor.close()
-        conn.close()  #sluit de databaseverbinding
+        conn.close()
 
-        #zet elke database rij om in een ContactAanvraag object
         return [ContactAanvraag(**row) for row in rows]
 
+    # =========================
+    # Open vragen (admin)
+    # =========================
+    @staticmethod
+    def get_open_vragen():
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT * FROM contact_aanvragen WHERE antwoord IS NULL"
+        )
+
+        rows = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        return [ContactAanvraag(**row) for row in rows]
+
+    # =========================
+    # Vraag beantwoorden
+    # =========================
     @staticmethod
     def beantwoord(vraag_id, antwoord):
-        #maakt verbinding met de database
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        #query om een vraag te beantwoorden
-        query = """
-            UPDATE contact_aanvragen
-            SET antwoord = %s
-            WHERE id = %s
-        """
-        cursor.execute(query, (antwoord, vraag_id))
+        cursor.execute(
+            "UPDATE contact_aanvragen SET antwoord = %s WHERE id = %s",
+            (antwoord, vraag_id)
+        )
 
-        conn.commit()  #slaat het antwoord op in de database
+        conn.commit()
         cursor.close()
-        conn.close()  #sluit de databaseverbinding
+        conn.close()
 
+    # =========================
+    # Ticket ophalen op ID
+    # =========================
     @staticmethod
-    def get_by_id(vraag_id): #haalt specifieke id op die wordt gekozen
+    def get_by_id(vraag_id):
         conn = get_db_connection()
-
         cursor = conn.cursor(dictionary=True)
 
-        query = "SELECT * FROM contact_aanvragen WHERE id = %s" #selecteert id in de database
-        cursor.execute(query, (vraag_id,))
-        row = cursor.fetchone()
+        cursor.execute(
+            "SELECT * FROM contact_aanvragen WHERE id = %s",
+            (vraag_id,)
+        )
 
+        row = cursor.fetchone()
         cursor.close()
         conn.close()
 

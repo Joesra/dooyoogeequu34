@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overheids Cloud Database</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='css/contact.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/nieuws.css')}}" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
 </head>
 
@@ -14,7 +14,7 @@
     <div class="sidebar">
         <div class="logo">"Wolken"</div>
         <ul>
-            <li class="{% if request.path == url_for('main.index') %}active-link{% endif %}">
+            <li class="{% if request.path == '/home' %}active-link{% endif %}">
                 <a href="{{ url_for('main.index') }}">Dashboard</a>
             </li>
             <li class="{% if request.path == '/bestanden' %}active-link{% endif %}">
@@ -41,41 +41,47 @@
             <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
-
-    </div>
-
-    <div class="main">
-        <header>
-            <h1>Support aanvraag</h1>
-            <a href="/admin/contact" class="back-link">← Terug naar overzicht</a>
-        </header>
-
-        <section class="ticket-container">
-
-            <div class="ticket-info card">
-                <h2>Gegevens aanvraag</h2>
-
-                <p><strong>Naam:</strong> {{ aanvraag.naam }}</p>
-                <p><strong>Email:</strong> {{ aanvraag.email }}</p>
-                <p><strong>Onderwerp:</strong> {{ aanvraag.onderwerp }}</p>
-
-                <div class="ticket-message">
-                    {{ aanvraag.bericht }}
-                </div>
+<div class="main">
+    <header>
+        <h1>Mijn supporttickets</h1>
+                    {% if session.get("gebruikersnaam") %}
+            <div class="user-info">
+                Ingelogd als <strong>{{ session["gebruikersnaam"] }}</strong>
+                |
+                <a href="{{ url_for('main.logout') }}">Uitloggen</a>
             </div>
+            {% else %}
+            <a href="{{ url_for('main.login') }}">Inloggen</a>
+            {% endif %}
+    </header>
 
-            <div class="ticket-reply card">
-                <form method="POST" action="/contact/beantwoord/{{ aanvraag.id }}" class="reply-form">
-                    <textarea name="antwoord" id="antwoord" class="antwoord-textarea" placeholder="Typ je antwoord"
-                        required></textarea>
+    {% if tickets and tickets|length > 0 %}
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Onderwerp</th>
+            <th>Status</th>
+            <th>Antwoord</th>
+        </tr>
 
-                    <button type="submit">Verstuur antwoord</button>
-                </form>
-            </div>
+        {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.onderwerp }}</td>
+            <td>{{ ticket.status }}</td>
+            <td>
+                {% if ticket.antwoord %}
+                    {{ ticket.antwoord }}
+                {% else %}
+                    Nog geen antwoord
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
 
-        </section>
-    </div>
+    </table>
+    {% else %}
+        <p>Je hebt nog geen supporttickets.</p>
+    {% endif %}
+</div>
 
 </body>
-
 </html>

@@ -5,59 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<head>   
-<body>
-    <div class="sidebar">
-        <div class="logo">"Wolken"</div>
-        <ul>
-            <li class="{% if request.path == '/home' %}active-link{% endif %}">
-                <a href="{{ url_for('main.index') }}">Dashboard</a>
-            </li>
-            <li><a href="#">Data Beheren</a></li>
-            <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
-                <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
-            </li>
-            <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
-                <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
-            </li>
-            <li class="{% if request.path == '/nieuws' %}active-link{% endif %}">
-                <a href="{{ url_for('main.nieuws') }}">Nieuws</a>
-            </li>
 
-            <li class="{% if request.path == '/contact' %}active-link{% endif %}">
-                <a href="{{ url_for('main.contact') }}">Support</a>
-            </li>
-            <li class="{% if request.path == '/info' %}active-link{% endif %}">
-                <a href="{{ url_for('main.informatie') }}">Informatie</a>
-            <li><a href="#">Instellingen</a></li>
-        </ul>
-    </div>
+    <head>
 
-    <div class="main login-page">
-        <header>
-            <h1>inloggen</h1>
-        </header>
+    <body>
+        <div class="sidebar">
+            <div class="logo">"Wolken"</div>
+            <ul>
+                <li class="{% if request.path == url_for('main.index') %}active-link{% endif %}">
+                    <a href="{{ url_for('main.index') }}">Dashboard</a>
+                </li>
+                <li class="{% if request.path == '/bestanden' %}active-link{% endif %}">
+                    <a href="{{ url_for('bestanden.upload_bestand') }}">Data Beheren</a>
+                </li>
+                <li class="{% if request.path == '/incidenten' %}active-link{% endif %}">
+                    <a href="{{ url_for('main.incidenten') }}">Incidenten</a>
+                </li>
+                <li class="{% if request.path == '/nieuwe_incident' %}active-link{% endif %}">
+                    <a href="{{ url_for('main.nieuwe_incident') }}">Maak Incident</a>
+                </li>
+                <li class="{% if request.path == '/nieuws' %}active-link{% endif %}">
+                    <a href="{{ url_for('main.nieuws') }}">Nieuws</a>
+                </li>
 
-        {% block content %}
-  <p> <div class="form-container">
-                                {% if error %}
-                                        <div class="form-error">{{ error }}</div>
-                                {% endif %}
+                <li class="{% if request.path == '/contact' %}active-link{% endif %}">
+                    <a href="{{ url_for('main.contact') }}">Support</a>
+                </li>
+                <li class="{% if request.path == '/mijn-tickets' %}active-link{% endif %}">
+                    <a href="{{ url_for('main.mijn_tickets') }}">Mijn aanvragen</a>
+                </li>
+                <li class="{% if request.path == '/info' %}active-link{% endif %}">
+                    <a href="{{ url_for('main.informatie') }}">Informatie</a>
+                <li><a href="#">Instellingen</a></li>
+            </ul>
+        </div>
+
+        <div class="main login-page">
+            <header>
+                <h1>Inloggen</h1>
+            </header>
+
+            {% block content %}
+            <p>
+            <div class="form-container">
+                {% if error %}
+                <div class="form-error">{{ error }}</div>
+                {% endif %}
                 <form method="POST" action="/login" class="login-form">
                     <div class="form-group">
                         <label for="gebruikersnaam">Gebruikersnaam</label>
-                        <input type="text" id="gebruikersnaam" name="gebruikersnaam" required placeholder="Voer uw gebruikersnaam in">
+                        <input type="text" id="gebruikersnaam" name="gebruikersnaam" required
+                            placeholder="Voer uw gebruikersnaam in">
                         <div class="form-group">
                             <br>
-                        <label for="wachtwoord">Wachtwoord</label>
-                        <input type="password" id="wachtwoord" name="wachtwoord" required placeholder="Voer uw wachtwoord in">
-                    </div>
-                    <br>
-                    <button type="submit" class="btn-submit">Inloggen</button>
-                    <br>
-                    <p class="small">Nog geen account? <a href="{{ url_for('main.registreer') }}">Registreer hier</a></p>
+                            <label for="wachtwoord">Wachtwoord</label>
+                            <input type="password" id="wachtwoord" name="wachtwoord" required
+                                placeholder="Voer uw wachtwoord in">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn-submit">Inloggen</button>
+                        <br>
+                        <p class="small">Nog geen account? <a href="{{ url_for('main.registreer') }}">Registreer
+                                hier</a></p>
                 </form>
             </div>
-        </p>
+            </p>
 
-{% endblock %}
+            {% endblock %}

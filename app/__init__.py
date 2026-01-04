@@ -6,6 +6,10 @@ from dotenv import load_dotenv
 
 from app.events import bp as events_bp
 from app.main import bp as main_bp
+from app.bestanden import bp as bestanden_bp
+from dotenv import load_dotenv
+load_dotenv()
+
 
 def create_app():
     app = Flask(__name__)
@@ -27,4 +31,6 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(events_bp, url_prefix="/events")
     
+    app.register_blueprint(bestanden_bp)
+
     return app

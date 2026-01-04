@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Aanvraag</title>
+    <title>Offerte Aanvraag</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/support_aanvraag.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
 
 <body>
@@ -41,10 +42,12 @@
             <li><a href="#">Instellingen</a></li>
         </ul>
     </div>
+    <div class="main">
 
-    <div class="main offerte-page">
-        <header>
-            <h1>Support Aanvraag</h1>
+        <header class="page-header">
+            <h1>Bestanden</h1>
+            <h1>{% block header %}{% endblock %}</h1>
+
             {% if session.get("gebruikersnaam") %}
             <div class="user-info">
                 Ingelogd als <strong>{{ session["gebruikersnaam"] }}</strong>
@@ -56,49 +59,45 @@
             {% endif %}
         </header>
 
-        <section>
-            <p>
-                Vul onderstaand formulier in en wij nemen zo snel mogelijk contact met u op over uw vraag.
-            </p>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
-            <div class="flash flash-{{ category }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
+        <form method="POST" action="{{ url_for('bestanden.upload_bestand') }}" enctype="multipart/form-data"
+            class="upload-box">
 
-            <div class="form-container">
-                <form method="POST" action="/contact" class="contact-form">
-                    <div class="form-group">
-                        <label for="naam">Naam*</label>
-                        <input type="text" id="naam" name="naam" required placeholder="Uw naam">
+            <label for="bestand">Kies een bestand</label>
+            <input type="file" name="bestand" id="bestand" required>
+            <button type="submit">Upload bestand</button>
+        </form>
+
+        <section class="files-section">
+            <h2>Mijn bestanden</h2>
+
+            <div class="files">
+                {% for bestand in bestanden %}
+                <div class="file-row">
+                    <div class="file-icon">📄</div>
+
+                    <div class="file-info">
+                        <a href="{{ bestand.url }}" target="_blank">
+                            {{ bestand.naam }}
+                        </a>
+                        <small>{{ bestand.datum[:10] if bestand.datum else "Datum onbekend" }}</small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">E-mail*</label>
-                        <input type="email" id="email" name="email" required placeholder="Uw e-mailadres">
-                    </div>
+                    <form method="POST" action="{{ url_for('bestanden.verwijder_bestand') }}" class="delete-form"
+                        onsubmit="return confirm('Weet je zeker dat je dit bestand wilt verwijderen?');">
 
-                    <div class="form-group">
-                        <label for="onderwerp">Onderwerp*</label>
-                        <input type="text" id="onderwerp" name="onderwerp" required
-                            placeholder="Waar gaat uw vraag over?">
-                    </div>
+                        <input type="hidden" name="bestandsnaam" value="{{ bestand.naam }}">
+                        <button type="submit" class="delete-btn">X</button>
+                    </form>
+                </div>
 
-                    <div class="form-group">
-                        <label for="bericht">Bericht*</label>
-                        <textarea id="bericht" name="bericht" required
-                            placeholder="Beschrijf uw vraag of project..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Verstuur Support Aanvraag</button>
-                </form>
+                {% else %}
+                <p>Geen bestanden gevonden.</p>
+                {% endfor %}
             </div>
         </section>
+
     </div>
+
 </body>
 
 </html>
